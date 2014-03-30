@@ -74,23 +74,23 @@ try:
                             Libations     BOOLEAN,
                             Witchcraft    BOOLEAN,
                             Other         TEXT,
-                            Notes         TEXT,
+                            Notes         TEXT
         );
 
         CREATE TABLE Entry(EntryID INTEGER NOT NULL, 
-                           PersonGroupID INTEGER PRIMARY KEY, 
-                           PersonID      INTEGER PRIMARY KEY,  
-                           SourceID      INTEGER PRIMARY KEY,  
-                           MatrixID      INTEGER PRIMARY KEY,  
-                           FOREIGN KEY(PersonGroupID) REFERENCES Person(PersonGroupID)
-                           FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
-                           FOREIGN KEY(SourceID) REFERENCES Source(SourceID)
-                           FOREIGN KEY(MatrixID) REFERENCES Matrix(MatrixID)
-                           PRIMARY KEY(EntryID),
+                           PersonGroupID INTEGER, 
+                           PersonID      INTEGER,  
+                           SourceID      INTEGER,  
+                           MatrixID      INTEGER,  
+                           FOREIGN KEY(PersonGroupID) REFERENCES Person(PersonGroupID),
+                           FOREIGN KEY(PersonID) REFERENCES Person(PersonID),
+                           FOREIGN KEY(SourceID) REFERENCES Source(SourceID),
+                           FOREIGN KEY(MatrixID) REFERENCES Matrix(MatrixID),
+                           PRIMARY KEY(EntryID)
         );
         
         CREATE TABLE PersonGroup(PersonGroupId INTEGER NOT NULL, 
-                                 PRIMARY KEY(PersonGroupId),
+                                 PRIMARY KEY(PersonGroupId)
         );
         
         """)

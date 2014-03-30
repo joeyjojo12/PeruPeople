@@ -30,7 +30,13 @@ WITNESS = 'Witness'
 PROSECUTOR = 'Prosecutor'
 DEFENDANT = 'Defendant'
 
+PERSON = 'Person'
+SOURCE = 'Source'
+MATRIX = 'Matrix'
+ENTRY  = 'Entry'
+
 
 PERSON_FIELDS = ['PersonId','FirstName','LastName','Title','Location','Region','Gender','Age','AgeRange','Occupation','Religion','Notes']
 SOURCE_FIELDS = ['SourceId','Citation','Archive','Stack','Number','DocName','Author','Year','Type','Notes']
 MATRIX_FIELDS = ['MatrixId',]
+ENTRY_FIELDS = ['EntryId',]
