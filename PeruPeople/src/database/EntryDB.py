@@ -1,5 +1,4 @@
-import PeruConstants
-import PeruDB
+import PeruConstants, PeruDB
 
 def EntryInsertFromList(entries):
     resultString = ""
