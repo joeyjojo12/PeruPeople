@@ -1,41 +1,18 @@
 import wx
 
 #Import UI elements
-import PeruConstants
+import PeruConstants, EntryUI
 
-class PeruNotebook(wx.Notebook):
-    
-    def __init__(self, parent):
-        wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=wx.BK_DEFAULT)
-
-
-        self.AddPage(EntryUI.NestedEntryPanel(self), "Defendant")
-"""
-        self.AddPage(Reference.NestedReferencePanel(self), "Reference")
-        self.AddPage(Official.OfficialPanel(self), "Official")
-        self.AddPage(Defendant.NestedDefendantPanel(self), "Defendant")
-        self.AddPage(Plaintiff.NestedPlaintiffPanel(self), "Plaintiff")
-        self.AddPage(Prosecutor.NestedProsecutorPanel(self), "Prosecutor")
-        self.AddPage(Witness.NestedWitnessPanel(self), "Witness")
-        self.AddPage(Charges.ChargesPanel(self), "Charges")
-        self.AddPage(Summary.SummaryPanel(self), "Summary")
-        self.AddPage(CaseNotes.CaseNotesPanel(self), "Case Notes")
-        self.AddPage(HealingNotes.HealingNotesPanel(self), "Healing Notes")
-        self.AddPage(FurtherNotes.FurtherNotesPanel(self), "Further Research Notes")
-        """
-
-########################################################################
-
-class PeruFrame(wx.Frame):
+class PeruMainUIFrame(wx.Frame):
     """
     Frame that holds all other widgets
     """
 
-    def __init__(self):
+    def __init__(self, parent, EntryInfo):
         """Constructor"""
-        wx.Frame.__init__(self, None, wx.ID_ANY,"Traditional Healers - Peru",size=(1200,800))        
+        wx.Frame.__init__(self, parent, wx.ID_ANY,"Traditional Healers - Peru",size=(1200,800))
+        
         self.CenterOnScreen()
-
         self.CreateStatusBar()
         self.SetStatusText("I love you!")
 
@@ -56,15 +33,13 @@ class PeruFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.AboutInfo, id=201)
 
         
-        self.notebook = PeruNotebook(self)
+        self.notebook = EntryUI.NestedEntryPanel(self, EntryInfo)
 
         self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.saveCaseButton = wx.Button(self, -1, "Save")
-        self.readCaseButton = wx.Button(self, -1, "Read")
-        self.buttonSizer.Add(self.saveCaseButton, 0, wx.ALIGN_RIGHT)
-        self.buttonSizer.Add(self.readCaseButton, 0, wx.ALIGN_RIGHT)
+        self.saveButton = wx.Button(self, -1, "Save")
+        self.buttonSizer.Add(self.saveButton, 0, wx.ALIGN_RIGHT)
         
-        self.Bind(wx.EVT_BUTTON, self.OnButtonSave, self.saveCaseButton)
+        self.Bind(wx.EVT_BUTTON, self.OnButtonSave, self.saveButton)
         
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer.Add(self.notebook, 1, wx.EXPAND)
@@ -103,9 +78,3 @@ class PeruFrame(wx.Frame):
         dlg = wx.MessageDialog(self, 'I love you', 'About', wx.OK )
         dlg.ShowModal()
         dlg.Destroy()
-
-#----------------------------------------------------------------------
-if __name__ == "__main__":
-    app = wx.PySimpleApp()
-    frame = PeruFrame()
-    app.MainLoop()
