@@ -6,75 +6,59 @@ class MatrixPanel(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
         
-        label1 = wx.StaticText(self, label="Healing Classifications :")
+
+        label1 = wx.statictext(self, label="type of minister :")
         
-        Societal = self.Societal = wx.CheckBox(self, -1, "Societal")
-        Financial = self.Financial = wx.CheckBox(self, -1, "Financial/Success")
-        Emotional = self.Emotional = wx.CheckBox(self, -1, "Emotional/Psychological")
-        Spiritual = self.Spiritual = wx.CheckBox(self, -1, "Spiritual")
-        Physical = self.Physical = wx.CheckBox(self, -1, "Physical")
-        Curse = self.Curse = wx.CheckBox(self, -1, "Curse/Harm/Malintentions")
+        Consulter = self.societal = wx.checkbox(self, -1, "Consulter")
+        Huaca = self.societal = wx.checkbox(self, -1, "Huaca")
+        Malqui = self.societal = wx.checkbox(self, -1, "Malqui/Muñaos")
+        Lightning = self.societal = wx.checkbox(self, -1, "Lightning")
+        Sun = self.Societal = wx.CheckBox(self, -1, "Sun")
+        Capycocha = self.Societal = wx.CheckBox(self, -1, "Capycocha")
+        OtherConsulter = self.Societal = wx.CheckBox(self, -1, "Other")
+
+        Diviners = self.societal = wx.checkbox(self, -1, "Diviners")
+        Spiders = self.societal = wx.checkbox(self, -1, "Spiders (Ex: Pacharicucc or Pachacaricc or Pachacucc)")
+        Molle = self.societal = wx.checkbox(self, -1, "Molle (Ex: Rapiac)")
+        Love = self.societal = wx.checkbox(self, -1, "Love")
+        LostThings = self.Societal = wx.CheckBox(self, -1, "Lost things (Ex. Moscocc)")
+        Mushrooms = self.Societal = wx.CheckBox(self, -1, "Mushrooms")
+ 
+        CuyExaminers = self.societal = wx.checkbox(self, -1, "Cuy Examiners (Ex. Hacaricucc o Cuyricucc)")
+        Purpose = self.societal = wx.checkbox(self, -1, "Purpose")
         
-        label2 = wx.StaticText(self, label="Healing Methods :")
-               
-        Divination = self.Divination = wx.CheckBox(self, -1, "Divination")
-        Rituals1 = self.Rituals1 = wx.CheckBox(self, -1, "Rituals (community)")
-        Rituals2 = self.Rituals2 = wx.CheckBox(self, -1, "Rituals (per person/small group)")
-        Libations = self.Libations = wx.CheckBox(self, -1, "Libations")
-        Protection = self.Protection = wx.CheckBox(self, -1, "Protection/Wards")
-        Herbs = self.Herbs = wx.CheckBox(self, -1, "Herbs/Ethnomedicine")
-        Prayers = self.Prayers = wx.CheckBox(self, -1, "Prayers/Chants/Words/Spells")
-        Sacrifices = self.Sacrifices = wx.CheckBox(self, -1, "Sacrifices")
-        Blood = self.Blood = wx.CheckBox(self, -1, "Blood Use")
-        Surgery = self.Surgery = wx.CheckBox(self, -1, "Surgery")
-        Repentance = self.Repentance = wx.CheckBox(self, -1, "Repentance/Redemption")
-        Price = self.Price = wx.CheckBox(self, -1, "Price/Cost of Service")
-        Clothing = self.Clothing = wx.CheckBox(self, -1, "Special Clothing Required")
-        Music = self.Music = wx.CheckBox(self, -1, "Dance/Singing/Music")
-        
-        
-        label3 = wx.StaticText(self, label="Other1 :")
-        Other1 = self.Other1 = wx.TextCtrl(self, size=(150,-1))
-        label4 = wx.StaticText(self, label="Other2 :")
-        Other2 = self.Other2 = wx.TextCtrl(self, size=(150,-1))
-        label5 = wx.StaticText(self, label="Other3 :")
-        Other3 = self.Other3 = wx.TextCtrl(self, size=(150,-1))
+        Curer = self.societal = wx.checkbox(self, -1, "Curer (Ex: Macsa or Viha)")
+
+        Confessor = self.societal = wx.checkbox(self, -1, "Confessor (Ex: Aucachic/Ychuris in Cuzco)")
+
+        Curandero = self.societal = wx.checkbox(self, -1, "Curandero/Curandera")
+
+        HelperSacristan = self.societal = wx.checkbox(self, -1, "Helper/Sacristan (Ex; Yanapac)")
+
+        ChichaAsuacAccacMaker = self.societal = wx.checkbox(self, -1, "Chicha/Asuac/ Accac Maker")
+
+        ChacraLandGuardian = self.societal = wx.checkbox(self, -1, "Chacra/ Land Guardian (Ex: Ministros de los Parianas)")
+
+        BloodsuckersDeathDealersCaptains = self.societal = wx.checkbox(self, -1, "Bloodsuckers/ Death Dealers/ captains (Ex: Runapmícuc/ Cauchus)")
+
+
+
+
+
+
 
         space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
         
         infoSizer.Add(label1,   (1,0))        
-        infoSizer.Add(Societal,  (1,1))
-        infoSizer.Add(Financial, (2,1))
-        infoSizer.Add(Emotional, (3,1))
-        infoSizer.Add(Spiritual, (1,2))
-        infoSizer.Add(Physical,  (2,2))
-        infoSizer.Add(Curse,     (3,2))
+        infoSizer.Add(Consulter,  (1,1))
+        infoSizer.Add(Huaca, (2,1))
+        infoSizer.Add(Malqui, (3,1))
+        infoSizer.Add(Lightning, (1,2))
+        infoSizer.Add(Sun,  (2,2))
+        infoSizer.Add(Capycocha,     (3,2))
         
-        infoSizer.Add(label2,    (4,0))
-        infoSizer.Add(Divination, (5,1))
-        infoSizer.Add(Rituals1,   (6,1))
-        infoSizer.Add(Rituals2,   (7,1))
-        infoSizer.Add(Libations,  (8,1))
-        infoSizer.Add(Protection, (9,1))
-        infoSizer.Add(Herbs,      (10,1))
-        infoSizer.Add(Prayers,    (11,1))
-        
-        infoSizer.Add(Sacrifices, (5,2))
-        infoSizer.Add(Blood,      (6,2))
-        infoSizer.Add(Surgery,    (7,2))
-        infoSizer.Add(Repentance, (8,2))
-        infoSizer.Add(Price,      (9,2))
-        infoSizer.Add(Clothing,   (10,2))
-        infoSizer.Add(Music,      (11,2))
-        
-        infoSizer.Add(label3,    (12,1))
-        infoSizer.Add(Other1,     (12,2))
-        infoSizer.Add(label4,    (13,1))
-        infoSizer.Add(Other2,     (13,2))
-        infoSizer.Add(label5,    (14,1))
-        infoSizer.Add(Other3,     (14,2))
-            
+           
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
 

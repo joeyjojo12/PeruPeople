@@ -6,6 +6,9 @@ DEFAULT_GENDER = GENDER_LIST[0]
 REGION_LIST = ['Coastal','Andes','Jungle']
 DEFAULT_REGION = REGION_LIST[0]
 
+DOCUMENT_LIST = ['Book','Archival']
+DEFAULT_DOCUMENT = DOCUMENT_LIST[0]
+
 AGE_RANGE_LIST = ['0 - 9',
                   '10 - 19',
                   '20 - 29',
@@ -22,13 +25,6 @@ AGE_RANGE_DEFAULT = AGE_RANGE_LIST[0]
 
 NUMBER_OF_PEOPLE = 20
 TAB_NUMBER_LIST = [str(x) for x in range(1,NUMBER_OF_PEOPLE + 1)]
-
-REFERENCE = 'Reference'
-OFFICIAL = 'Official'
-PLAINTIFF = 'Plaintiff'
-WITNESS = 'Witness'
-PROSECUTOR = 'Prosecutor'
-DEFENDANT = 'Defendant'
 
 PERSON = 'Person'
 SOURCE = 'Source'

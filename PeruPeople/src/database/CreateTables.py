@@ -17,6 +17,7 @@ try:
         DROP TABLE IF EXISTS Source;
         DROP TABLE IF EXISTS Matrix;
         DROP TABLE IF EXISTS RegionType;
+        DROP TABLE IF EXISTS DocumentType;
         DROP TABLE IF EXISTS GenderType;
       
        
@@ -27,6 +28,13 @@ try:
         INSERT INTO RegionType(Region, Seq) VALUES ('Costal', 1);
         INSERT INTO RegionType(Region, Seq) VALUES ('Andes',  2);
         INSERT INTO RegionType(Region, Seq) VALUES ('Jungle', 3);
+
+        CREATE TABLE DocumentType (Document    TEXT PRIMARY KEY NOT NULL,
+                                   Seq         INTEGER
+        );
+        
+        INSERT INTO DocumentType(Document, Seq) VALUES ('Book', 1);
+        INSERT INTO DocumentType(Document, Seq) VALUES ('Archival',  2);
     
         CREATE TABLE GenderType (Gender    CHAR(1) PRIMARY KEY NOT NULL,
                                  Seq       INTEGER
@@ -36,8 +44,7 @@ try:
         INSERT INTO GenderType(Gender, Seq) VALUES ('F', 2);
 
         CREATE TABLE Person(PersonID    INTEGER PRIMARY KEY, 
-                            Type        REFERENCES PersonType(Type),
-                            FristName   TEXT, 
+                            FirstName   TEXT, 
                             LastName    TEXT,
                             Location    TEXT,
                             Ayllu       TEXT,
@@ -51,30 +58,42 @@ try:
                             Notes       TEXT
         );
         
-        CREATE TABLE Source(SourceId     INTEGER PRIMARY KEY, 
-                            Citation     TEXT, 
-                            Archive      TEXT, 
-                            Stack        TEXT, 
-                            Number       INTEGER,
-                            DocName      TEXT,
-                            Author       TEXT,
-                            Year         INTEGER,
-                            Type         TEXT,
-                            Notes        TEXT
+        CREATE TABLE Source(SourceId          INTEGER PRIMARY KEY, 
+                            Type              REFERENCES DocumentType (Document),
+                            Citation          TEXT, 
+                            Archive           TEXT, 
+                            Stack             TEXT, 
+                            PageNumbers       TEXT,
+                            Author            TEXT,
+                            DocNameTitle      TEXT,
+                            Publisher         TEXT,
+                            PubPlace          TEXT,
+                            Year              INTEGER,
+                            ReferencedByFirst TEXT,
+                            ReferencedByLast  TEXT,
+                            Notes             TEXT
         );
-        
+
            
-        CREATE TABLE Matrix(MatrixID      INTEGER PRIMARY KEY,
-                            Divination    BOOLEAN,
-                            Healing       BOOLEAN,
-                            Herbs         BOOLEAN,
-                            Psychology    BOOLEAN,
-                            Rituals       BOOLEAN,
-                            Sacrifices    BOOLEAN,
-                            Libations     BOOLEAN,
-                            Witchcraft    BOOLEAN,
-                            Other         TEXT,
-                            Notes         TEXT
+        CREATE TABLE Matrix(MatrixID                INTEGER PRIMARY KEY,
+                            Divination              BOOLEAN,
+                            Rituals(community)      BOOLEAN,
+                            Rituals(persongroup)    BOOLEAN,
+                            Libations               BOOLEAN,
+                            Protection              BOOLEAN,
+                            Herbs                   BOOLEAN,
+                            Prayers                 BOOLEAN,
+                            Sacrifices              BOOLEAN,
+                            BloodUse                BOOLEAN,
+                            Surgery                 BOOLEAN,
+                            Repentance              BOOLEAN,
+                            Price                   BOOLEAN,
+                            SpecialClothing         BOOLEAN,
+                            DanceMusic              BOOLEAN,
+                            Other1                  TEXT,
+                            Other2                  TEXT,
+                            Other3                  TEXT,
+                            Notes                   TEXT
         );
 
         CREATE TABLE Entry(EntryID INTEGER NOT NULL, 
@@ -82,7 +101,7 @@ try:
                            PersonID      INTEGER,  
                            SourceID      INTEGER,  
                            MatrixID      INTEGER,  
-                           FOREIGN KEY(PersonGroupID) REFERENCES Person(PersonGroupID),
+                           FOREIGN KEY(PersonGroupID) REFERENCES PersonGroup(PersonGroupID),
                            FOREIGN KEY(PersonID) REFERENCES Person(PersonID),
                            FOREIGN KEY(SourceID) REFERENCES Source(SourceID),
                            FOREIGN KEY(MatrixID) REFERENCES Matrix(MatrixID),
@@ -110,7 +129,4 @@ finally:
     if con:
         con.close()
     
-  
-  
-  
   
