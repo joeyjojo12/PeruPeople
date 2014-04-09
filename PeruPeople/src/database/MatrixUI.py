@@ -97,18 +97,18 @@ class MatrixPanel(wx.Panel):
         OtherPunishment                  = self.societal = wx.CheckBox(self, -1, "Other Punishment")
         
 
-#        labelTechniqes = wx.StaticText(self, label="Techniques/Methods :")
-#        labelTechniqes.SetFont(largefont)
-#        
-#        Sacrifices                       = self.societal = wx.CheckBox(self, -1, "Sacrifices")
-#        Chants                           = self.societal = wx.CheckBox(self, -1, "Chants")
-#        Incantations                     = self.societal = wx.CheckBox(self, -1, "Incantations/prayers")
-#        Song                             = self.societal = wx.CheckBox(self, -1, "Song")
-#        Dance                            = self.societal = wx.CheckBox(self, -1, "Dance")
-#        Ritual                           = self.societal = wx.CheckBox(self, -1, "Ritual")
-#        Celebration                      = self.societal = wx.CheckBox(self, -1, "Celebration")
-#        OtherTechniques                  = self.societal = wx.CheckBox(self, -1, "Other")
-#        NotesTechniques                  = self.societal = wx.CheckBox(self, -1, "Notes")
+        labelTechniqes = wx.StaticText(self, label="Techniques/Methods :")
+        labelTechniqes.SetFont(largefont)
+        
+        Sacrifices                       = self.societal = wx.CheckBox(self, -1, "Sacrifices")
+        Chants                           = self.societal = wx.CheckBox(self, -1, "Chants")
+        Incantations                     = self.societal = wx.CheckBox(self, -1, "Incantations/prayers")
+        Song                             = self.societal = wx.CheckBox(self, -1, "Song")
+        Dance                            = self.societal = wx.CheckBox(self, -1, "Dance")
+        Ritual                           = self.societal = wx.CheckBox(self, -1, "Ritual")
+        Celebration                      = self.societal = wx.CheckBox(self, -1, "Celebration")
+        OtherTechniques                  = self.societal = wx.CheckBox(self, -1, "Other")
+        NotesTechniques                  = self.societal = wx.CheckBox(self, -1, "Notes")
 #        
 #        labelSpecialClothingNotes = wx.StaticText(self, label="Techniques/Methods :")
 #        labelSpecialClothingNotes.SetFont(largefont)
@@ -148,7 +148,18 @@ class MatrixPanel(wx.Panel):
         infoSizer.Add(HelperSacristan                 ,(8,2))        
         infoSizer.Add(ChichaAsuacAccacMaker           ,(10,2))        
         infoSizer.Add(ChacraLandGuardian              ,(12,2))        
-        infoSizer.Add(BloodsuckersDeathDealersCaptains,(14,2))       
+        infoSizer.Add(BloodsuckersDeathDealersCaptains,(14,2))    
+         
+        infoSizer.Add(labelTechniqes                  ,(20,0))
+        infoSizer.Add(Sacrifices                      ,(21,0))
+        infoSizer.Add(Chants                          ,(22,0))
+        infoSizer.Add(Incantations                    ,(23,0))
+        infoSizer.Add(Song                            ,(24,0))
+        infoSizer.Add(Dance                           ,(25,0))
+        infoSizer.Add(Ritual                          ,(26,0))
+        infoSizer.Add(Celebration                     ,(27,0))
+        infoSizer.Add(OtherTechniques                 ,(28,0))
+        infoSizer.Add(NotesTechniques                 ,(29,0))   
 
         infoSizer.Add(labelChurch                     ,(0,4))
         infoSizer.Add(Dogmatizer                      ,(1,4))
@@ -197,7 +208,6 @@ class MatrixPanel(wx.Panel):
         infoSizer.Add(Executed                        ,(9,12))
         infoSizer.Add(Exiled                          ,(10,12))
         infoSizer.Add(OtherPunishment                 ,(11,12))
-
 
 
 
