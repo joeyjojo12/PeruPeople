@@ -75,6 +75,6 @@ class PeruMainUIFrame(wx.Frame):
         self.Close()
 
     def AboutInfo(self, event):
-        dlg = wx.MessageDialog(self, 'I love you', 'About', wx.OK )
+        dlg = wx.MessageDialog(self, 'Work in progress', 'About', wx.OK )
         dlg.ShowModal()
         dlg.Destroy()

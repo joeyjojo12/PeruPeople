@@ -6,8 +6,13 @@ import PeruMainUI
 #---------------------------------------------------------------------------
 
 musicdata = {
-1 : ("Pablo Picasso"),
-2 : ("Ricardo Estiban")
+1 : ("Person 1"),
+2 : ("Person 2"),
+3 : ("Person 3"),
+4 : ("Person 4"),
+5 : ("Person 5"),
+6 : ("Person 6"),
+7 : ("Person 7")
 }
 
 class PeruListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):

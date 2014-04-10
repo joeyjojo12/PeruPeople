@@ -25,7 +25,8 @@ class PersonPanel(wx.Panel):
         label9 = wx.StaticText(self, label="Religion :")
         Religion = self.Religion = wx.TextCtrl(self, value="Catholic", size=(400,-1))
         label10 = wx.StaticText(self, label="Notes :")
-        Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)        
+        Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
+        TagForExample = self.TagForExample = wx.CheckBox(self, -1, "Tag For Example")    
         
         self.Bind(wx.EVT_TEXT, self.EvtText, Age)
 
@@ -51,6 +52,7 @@ class PersonPanel(wx.Panel):
         infoSizer.Add(Religion, (9,1))
         infoSizer.Add(label10,  (10,0))
         infoSizer.Add(Notes,    (10,1), (4,2), wx.EXPAND)
+        infoSizer.Add(TagForExample, (14,0))
         
         
         
