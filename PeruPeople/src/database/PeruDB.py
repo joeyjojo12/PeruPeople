@@ -43,7 +43,7 @@ class PeruDB:
             cur = self.con.cursor()
             cur.execute(commandString)
             self.con.commit()
-            return[0, cur.rowcount]
+            return[0, cur.lastrowid]
         
         except lite.Error, e:
             return [1, "Error %s:" % e.args[0]]

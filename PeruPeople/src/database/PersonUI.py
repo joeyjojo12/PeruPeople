@@ -1,10 +1,30 @@
 import wx
-import PeruConstants
+import PeruConstants, PersonDB
+
+def getPersonInfo(personPage):    
+    return [str(personPage.PersonID),
+            str(personPage.FirstName.GetValue()),
+            str(personPage.LastName.GetValue()),
+            str(personPage.Location.GetValue()),
+            str(personPage.Ayllu.GetValue()),
+            str(personPage.Region.GetValue()),
+            str(personPage.Gender.GetValue()),
+            str(personPage.Age.GetValue()),
+            str(personPage.AgeRange.GetValue()),
+            str(personPage.Occupation.GetValue()),
+            str(personPage.Religion.GetValue()),
+            str(personPage.Profession.GetValue()),
+            str(personPage.Notes.GetValue())]
+    
+def savePerson(personPage):   
+        return PersonDB.InsertUpdatePerson(getPersonInfo(personPage))
 
 class PersonPanel(wx.Panel):
     def __init__(self, parent):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
+        
+        PersonID = self.PersonID = ''
 
         label1 = wx.StaticText(self, label="First Name :")
         FirstName = self.FirstName = wx.TextCtrl(self, size=(400,-1),name="First Name")
@@ -22,9 +42,13 @@ class PersonPanel(wx.Panel):
         Age = self.Age = wx.TextCtrl(self, size=(50,-1))
         label8 = wx.StaticText(self, label="Age Range :")
         AgeRange = self.AgeRange = wx.ComboBox(self, 500, PeruConstants.AGE_RANGE_DEFAULT, (90, 50), (90, -1), PeruConstants.AGE_RANGE_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
-        label9 = wx.StaticText(self, label="Religion :")
+        label9 = wx.StaticText(self, label="Occupation :")
+        Occupation = self.Occupation = wx.TextCtrl(self, size=(400,-1))
+        label10 = wx.StaticText(self, label="Religion :")
         Religion = self.Religion = wx.TextCtrl(self, value="Catholic", size=(400,-1))
-        label10 = wx.StaticText(self, label="Notes :")
+        label11 = wx.StaticText(self, label="Profession :")
+        Profession = self.Profession = wx.TextCtrl(self, size=(400,-1))
+        label12 = wx.StaticText(self, label="Notes :")
         Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         TagForExample = self.TagForExample = wx.CheckBox(self, -1, "Tag For Example")    
         
@@ -32,39 +56,34 @@ class PersonPanel(wx.Panel):
 
         space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
-        infoSizer.Add(label1,   (1,0))
-        infoSizer.Add(FirstName,(1,1))
-        infoSizer.Add(label2,   (2,0))
-        infoSizer.Add(LastName, (2,1))
-        infoSizer.Add(label3,   (3,0))
-        infoSizer.Add(Location, (3,1))
-        infoSizer.Add(label4,   (4,0))
-        infoSizer.Add(Ayllu,    (4,1))
-        infoSizer.Add(label5,   (5,0))
-        infoSizer.Add(Region,   (5,1))
-        infoSizer.Add(label6,   (6,0))
-        infoSizer.Add(Gender,   (6,1))
-        infoSizer.Add(label7,   (7,0))
-        infoSizer.Add(Age,      (7,1))
-        infoSizer.Add(label8,   (8,0))
-        infoSizer.Add(AgeRange, (8,1))
-        infoSizer.Add(label9,   (9,0))
-        infoSizer.Add(Religion, (9,1))
-        infoSizer.Add(label10,  (10,0))
-        infoSizer.Add(Notes,    (10,1), (4,2), wx.EXPAND)
-        infoSizer.Add(TagForExample, (14,0))
-        
-        
-        
-        self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.savePersonButton = wx.Button(self, -1, "Save Person")
-        self.readPersonButton = wx.Button(self, -1, "Read Person")        
-        self.buttonSizer.Add(self.savePersonButton, 0, wx.ALIGN_RIGHT)
-        self.buttonSizer.Add(self.readPersonButton, 0, wx.ALIGN_RIGHT)
+        infoSizer.Add(label1,    (1,0))
+        infoSizer.Add(FirstName, (1,1))
+        infoSizer.Add(label2,    (2,0))
+        infoSizer.Add(LastName,  (2,1))
+        infoSizer.Add(label3,    (3,0))
+        infoSizer.Add(Location,  (3,1))
+        infoSizer.Add(label4,    (4,0))
+        infoSizer.Add(Ayllu,     (4,1))
+        infoSizer.Add(label5,    (5,0))
+        infoSizer.Add(Region,    (5,1))
+        infoSizer.Add(label6,    (6,0))
+        infoSizer.Add(Gender,    (6,1))
+        infoSizer.Add(label7,    (7,0))
+        infoSizer.Add(Age,       (7,1))
+        infoSizer.Add(label8,    (8,0))
+        infoSizer.Add(AgeRange,  (8,1))
+        infoSizer.Add(label9,    (9,0))
+        infoSizer.Add(Occupation,(9,1))
+        infoSizer.Add(label10,   (10,0))
+        infoSizer.Add(Religion,  (10,1))
+        infoSizer.Add(label11,   (11,0))
+        infoSizer.Add(Profession,(11,1))
+        infoSizer.Add(label12,   (12,0))
+        infoSizer.Add(Notes,     (12,1), (4,2), wx.EXPAND)
+        infoSizer.Add(TagForExample, (14,0))  
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
-        sizer.Add(self.buttonSizer, 0, wx.ALIGN_RIGHT)
 
         self.SetSizer(sizer)
         

@@ -8,7 +8,7 @@ class PeruMainUIFrame(wx.Frame):
     Frame that holds all other widgets
     """
 
-    def __init__(self, parent, EntryInfo):
+    def __init__(self, parent, EntryInfo, PersonGroupID):
         """Constructor"""
         wx.Frame.__init__(self, parent, wx.ID_ANY,"Traditional Healers - Peru",size=(1200,800))
         
@@ -31,9 +31,8 @@ class PeruMainUIFrame(wx.Frame):
 
         self.Bind(wx.EVT_MENU, self.CloseWindow, id=101)
         self.Bind(wx.EVT_MENU, self.AboutInfo, id=201)
-
         
-        self.notebook = EntryUI.NestedEntryPanel(self, EntryInfo)
+        self.notebook = EntryUI.NestedEntryPanel(self, EntryInfo, PersonGroupID)
 
         self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
         self.saveButton = wx.Button(self, -1, "Save")
@@ -53,21 +52,8 @@ class PeruMainUIFrame(wx.Frame):
     def OnButtonSave(self, evt):
         dlg = wx.MessageDialog(self, 'Jeremy, are you sure you want to save this case?', 'Save Case?', wx.YES_NO )
         if dlg.ShowModal() == wx.ID_YES:
-                        
-                        """
-            courtCaseInfo = self.getCourtCaseInfo(self.notebook.GetPage(0))
-            officialInfo = self.getOfficialInfo(self.notebook.GetPage(1))
-            referenceInfo = self.getReferenceInfo(self.notebook.GetPage(2))
-            defendantInfo = self.getDefendantInfo(self.notebook.GetPage(3))
-            plaintiffInfo = self.getPlaintiffInfo(self.notebook.GetPage(4))
-            prosecutorInfo = self.getProsecutorInfo(self.notebook.GetPage(5))
-            witnessInfo = self.getWitnessInfo(self.notebook.GetPage(6))
-            chargesInfo = self.getChargesInfo(self.notebook.GetPage(7))
-            summaryInfo = self.getSummaryInfo(self.notebook.GetPage(8))
-            caseNotesInfo = self.getCaseNotesInfo(self.notebook.GetPage(9))
-            healingNotesInfo = self.getHealingNotesInfo(self.notebook.GetPage(10))
-            furtherNotesInfo = self.getFurtherNotesInfo(self.notebook.GetPage(11))
-            """
+            
+            self.notebook.SaveEntries()
             
         dlg.Destroy()
 

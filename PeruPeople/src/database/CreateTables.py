@@ -77,8 +77,8 @@ try:
            
         CREATE TABLE Matrix(MatrixID                INTEGER PRIMARY KEY,
                             Divination              BOOLEAN,
-                            Rituals(community)      BOOLEAN,
-                            Rituals(persongroup)    BOOLEAN,
+                            RitualsCommunity        BOOLEAN,
+                            RitualsPersongroup      BOOLEAN,
                             Libations               BOOLEAN,
                             Protection              BOOLEAN,
                             Herbs                   BOOLEAN,
@@ -97,15 +97,13 @@ try:
         );
 
         CREATE TABLE Entry(EntryID INTEGER NOT NULL, 
-                           PersonGroupID INTEGER, 
-                           PersonID      INTEGER,  
-                           SourceID      INTEGER,  
-                           MatrixID      INTEGER,  
+                           PersonGroupID INTEGER,
+                           PersonID      INTEGER,
+                           SourceID      INTEGER,
+                           MatrixID      INTEGER,
+                           PRIMARY KEY(EntryID),
                            FOREIGN KEY(PersonGroupID) REFERENCES PersonGroup(PersonGroupID),
-                           FOREIGN KEY(PersonID) REFERENCES Person(PersonID),
-                           FOREIGN KEY(SourceID) REFERENCES Source(SourceID),
-                           FOREIGN KEY(MatrixID) REFERENCES Matrix(MatrixID),
-                           PRIMARY KEY(EntryID)
+                           FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
         );
         
         CREATE TABLE PersonGroup(PersonGroupId INTEGER NOT NULL, 

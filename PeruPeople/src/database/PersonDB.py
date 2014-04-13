@@ -17,7 +17,7 @@ def PersonReadSingleStatement(fields):
 def PersonInsertStatement(fields):
     
     if len(fields) > len(PeruConstants.PERSON_FIELDS) or len(fields) < (len(PeruConstants.PERSON_FIELDS) - 1):
-        return -1
+        return [1,"Improper format"]
     
     strFields = [str(field) for field in fields]
     

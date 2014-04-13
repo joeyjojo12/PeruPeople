@@ -1,5 +1,5 @@
 import wx
-import PeruConstants, PersonUI, SourceUI, MatrixUI
+import PeruConstants, PersonUI, SourceUI, MatrixUI, EntryDB
 
 def GetEntries():
     return 2
@@ -21,9 +21,10 @@ class NestedEntryPanel(wx.Panel):
     """
     Panel contains multiple 'Entry' tabs
     """
-    def __init__(self, parent, EntryInfo):
+    def __init__(self, parent, EntryInfo, PersonGroupID):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-        NumEntries = self.NumEntries = EntryInfo # GetEntries()
+        NumEntries = self.NumEntries = EntryInfo # GetEntries()        
+        self.PersonGroupID = PersonGroupID
         
         nestedNotebook = self.nestedNotebook = wx.Notebook(self, wx.ID_ANY)
         
@@ -47,6 +48,21 @@ class NestedEntryPanel(wx.Panel):
     def OnButtonAddEntry(self, evt):
         self.NumEntries += 1
         self.nestedNotebook.AddPage(EntryNotebook(self.nestedNotebook), "Entry " + str(self.NumEntries))
+    
+    def SaveEntries(self):
+
+        for i in range(self.nestedNotebook.GetPageCount()):
+            result = PersonUI.savePerson(self.nestedNotebook.GetPage(i).GetPage(0))
+            if result[0] != 0:
+                print(result[1])
+                break
+            Person = result[1]
+            
+            EntryDB.InsertUpdateEntry(self.PersonGroupID, Person, 0, 0)
+            
+            
+            #SourceID = SourceUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(1))
+            #MatrixID = MatrixUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(2))
         
         
         

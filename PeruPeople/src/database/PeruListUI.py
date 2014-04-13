@@ -1,7 +1,7 @@
 import sys
 import  wx
 import  wx.lib.mixins.listctrl  as  listmix
-import PeruMainUI
+import PeruMainUI, PersonGroupDB
 
 #---------------------------------------------------------------------------
 
@@ -68,7 +68,7 @@ class PeruListCtrlFrame(wx.Frame):
         self.addPerson = wx.Button(self, -1, "Add Person")
         self.buttonSizer.Add(self.addPerson , 0, wx.ALIGN_RIGHT)
 
-        self.Bind(wx.EVT_BUTTON, self.OnButtonSave, self.addPerson)
+        self.Bind(wx.EVT_BUTTON, self.OnButtonAdd, self.addPerson)
 
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer.Add(self.buttonSizer, 0, wx.EXPAND)
@@ -88,7 +88,14 @@ class PeruListCtrlFrame(wx.Frame):
         info.m_format = 0
         info.m_text = "Person"
         self.list.InsertColumnInfo(0, info)
-
+        
+        items = PersonGroupDB.ListPersonGroups()[1]
+        print(items)
+        if len(items) == 0:
+            self.curentPersonGroupID = 1
+        else:
+            self.curentPersonGroupID = int(items[len(items)-1][0]) + 1
+        
         items = musicdata.items()
         for key, data in items:
             print data
@@ -168,8 +175,9 @@ class PeruListCtrlFrame(wx.Frame):
         
         event.Skip()
 
-    def OnButtonSave(self, event):
-        win = PeruMainUI.PeruMainUIFrame(self, 1)
+    def OnButtonAdd(self, event):
+        PersonGroupDB.InsertPersonGroup(self.curentPersonGroupID)
+        win = PeruMainUI.PeruMainUIFrame(self, 1, self.curentPersonGroupID)
         win.Show(True)
         self.frame = win
         

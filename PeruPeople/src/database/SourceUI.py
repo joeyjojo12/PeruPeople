@@ -53,17 +53,8 @@ class SourcePanel(wx.Panel):
         infoSizer.Add(ReferencedByLast,  (10,1))
         infoSizer.Add(label11,           (11,0))
         infoSizer.Add(Notes,             (11,1), (4,2), wx.EXPAND)
-        
-        
-        
-        self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
-        self.savePersonButton = wx.Button(self, -1, "Save Person")
-        self.readPersonButton = wx.Button(self, -1, "Read Person")        
-        self.buttonSizer.Add(self.savePersonButton, 0, wx.ALIGN_RIGHT)
-        self.buttonSizer.Add(self.readPersonButton, 0, wx.ALIGN_RIGHT)
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
-        sizer.Add(self.buttonSizer, 0, wx.ALIGN_RIGHT)
 
         self.SetSizer(sizer)

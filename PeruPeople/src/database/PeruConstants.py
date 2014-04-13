@@ -26,13 +26,14 @@ AGE_RANGE_DEFAULT = AGE_RANGE_LIST[0]
 NUMBER_OF_PEOPLE = 20
 TAB_NUMBER_LIST = [str(x) for x in range(1,NUMBER_OF_PEOPLE + 1)]
 
+PERSONGROUP = 'PersonGroup'
 PERSON = 'Person'
 SOURCE = 'Source'
 MATRIX = 'Matrix'
 ENTRY  = 'Entry'
 
 
-PERSON_FIELDS = ['PersonId','FirstName','LastName','Title','Location','Region','Gender','Age','AgeRange','Occupation','Religion','Notes']
-SOURCE_FIELDS = ['SourceId','Citation','Archive','Stack','Number','DocName','Author','Year','Type','Notes']
-MATRIX_FIELDS = ['MatrixId',]
-ENTRY_FIELDS = ['EntryId',]
+PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Age','AgeRange','Occupation','Religion','Profession','Notes']
+SOURCE_FIELDS = ['SourceId','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
+MATRIX_FIELDS = ['MatrixId']
+ENTRY_FIELDS  = ['EntryId','PersonGroupID','PersonID','SourceID','MatrixID']
