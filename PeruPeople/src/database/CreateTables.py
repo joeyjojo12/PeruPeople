@@ -19,6 +19,7 @@ try:
         DROP TABLE IF EXISTS RegionType;
         DROP TABLE IF EXISTS DocumentType;
         DROP TABLE IF EXISTS GenderType;
+        DROP TABLE IF EXISTS GenderType;
       
        
         CREATE TABLE RegionType (Region    TEXT PRIMARY KEY NOT NULL,
@@ -35,6 +36,22 @@ try:
         
         INSERT INTO DocumentType(Document, Seq) VALUES ('Book', 1);
         INSERT INTO DocumentType(Document, Seq) VALUES ('Archival',  2);
+        
+         
+        CREATE TABLE CastaType (Casta    TEXT PRIMARY KEY NOT NULL,
+                                Seq      INTEGER
+        );
+        
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Indigenous',         1);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Indigenous/Quetcha', 2);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Indigenous/Aymara',  3);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Spanish',            4);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Mestizo',            5);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('African',            6);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Pardos',             7);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Mulattos',           8);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Zambos',             9);
+        INSERT INTO CastaType(Casta, Seq) VALUES ('Slave',              10);
     
         CREATE TABLE GenderType (Gender    CHAR(1) PRIMARY KEY NOT NULL,
                                  Seq       INTEGER
@@ -43,13 +60,14 @@ try:
         INSERT INTO GenderType(Gender, Seq) VALUES ('M', 1);
         INSERT INTO GenderType(Gender, Seq) VALUES ('F', 2);
 
-        CREATE TABLE Person(PersonID    INTEGER PRIMARY KEY, 
-                            FirstName   TEXT, 
+        CREATE TABLE Person(PersonID    INTEGER PRIMARY KEY,
+                            FirstName   TEXT,
                             LastName    TEXT,
                             Location    TEXT,
                             Ayllu       TEXT,
                             Region      REFERENCES RegionType(Region),
                             Gender      REFERENCES GenderType(Gender),
+                            Casta       REFERENCES CastaType(Casta),
                             Age         INTEGER,
                             AgeRange    INTEGER,
                             Occupation  TEXT,

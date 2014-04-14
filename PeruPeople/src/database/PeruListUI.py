@@ -5,16 +5,6 @@ import PeruMainUI, PersonGroupDB
 
 #---------------------------------------------------------------------------
 
-musicdata = {
-1 : ("Person 1"),
-2 : ("Person 2"),
-3 : ("Person 3"),
-4 : ("Person 4"),
-5 : ("Person 5"),
-6 : ("Person 6"),
-7 : ("Person 7")
-}
-
 class PeruListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
     def __init__(self, parent, ID, pos=wx.DefaultPosition,
                  size=wx.DefaultSize, style=0):
@@ -89,18 +79,20 @@ class PeruListCtrlFrame(wx.Frame):
         info.m_text = "Person"
         self.list.InsertColumnInfo(0, info)
         
-        items = PersonGroupDB.ListPersonGroups()[1]
-        print(items)
-        if len(items) == 0:
-            self.curentPersonGroupID = 1
+        people = PersonGroupDB.ListPersonGroups()[1]
+        if len(people) == 0:
+            self.curentPersonGroupID = 0
         else:
-            self.curentPersonGroupID = int(items[len(items)-1][0]) + 1
+            self.curentPersonGroupID = int(people[len(people)-1][0])
         
-        items = musicdata.items()
-        for key, data in items:
-            print data
-            index = self.list.InsertStringItem(0, data)
-            self.list.SetItemData(index, key)
+        peopleDict = {}
+        
+        for person in people:
+            peopleDict[person[0]] = person[0]
+        
+        for item in peopleDict.iteritems():
+            index = self.list.InsertStringItem(0, str(item[1]))
+            self.list.SetItemData(index, item[0])
 
         self.list.SetColumnWidth(0, 100)
 
@@ -176,6 +168,7 @@ class PeruListCtrlFrame(wx.Frame):
         event.Skip()
 
     def OnButtonAdd(self, event):
+        self.curentPersonGroupID = self.curentPersonGroupID + 1
         PersonGroupDB.InsertPersonGroup(self.curentPersonGroupID)
         win = PeruMainUI.PeruMainUIFrame(self, 1, self.curentPersonGroupID)
         win.Show(True)

@@ -9,6 +9,9 @@ DEFAULT_REGION = REGION_LIST[0]
 DOCUMENT_LIST = ['Book','Archival']
 DEFAULT_DOCUMENT = DOCUMENT_LIST[0]
 
+CASTA_LIST = ['Indigenous','Indigenous/Quetcha','Indigenous/Aymara','Spanish','Mestizo','African','Pardos','Mulattos','Zambos','Slave']
+DEFAULT_CASTA = CASTA_LIST[0]
+
 AGE_RANGE_LIST = ['0 - 9',
                   '10 - 19',
                   '20 - 29',

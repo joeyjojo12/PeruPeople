@@ -50,12 +50,12 @@ class PeruMainUIFrame(wx.Frame):
         self.Show()
         
     def OnButtonSave(self, evt):
-        dlg = wx.MessageDialog(self, 'Jeremy, are you sure you want to save this case?', 'Save Case?', wx.YES_NO )
-        if dlg.ShowModal() == wx.ID_YES:
+        #dlg = wx.MessageDialog(self, 'Jeremy, are you sure you want to save this case?', 'Save Case?', wx.YES_NO )
+        #if dlg.ShowModal() == wx.ID_YES:
             
-            self.notebook.SaveEntries()
+        self.notebook.SaveEntries()
             
-        dlg.Destroy()
+        #dlg.Destroy()
 
     def CloseWindow(self, event):
         self.Close()

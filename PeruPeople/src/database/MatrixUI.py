@@ -142,19 +142,6 @@ class MainMatrixPanel(wx.ScrolledWindow):
         OtherTechniquesText              = wx.TextCtrl(self, size=(150,-1),name="OtherTechniquesText")
         NotesTechniques                  = self.societal = wx.CheckBox(self, -1, "Notes")
         NotesTechniquesText              = wx.TextCtrl(self, size=(150,-1),name="NotesTechniquesText")
-#        
-#        labelSpecialClothingNotes = wx.StaticText(self, label="Techniques/Methods :")
-#        labelSpecialClothingNotes.SetFont(largefont)
-#        
-#        labelCosmologyNotes = wx.StaticText(self, label="Techniques/Methods :")
-#        labelCosmologyNotes.SetFont(largefont)
-#        
-#        labelEthnomedicineNotes = wx.StaticText(self, label="Techniques/Methods :")
-#        labelEthnomedicineNotes.SetFont(largefont)
-#        
-#        Tag                  = self.societal = wx.CheckBox(self, -1, "Tag individual for example")
-        
-        
 
         space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)

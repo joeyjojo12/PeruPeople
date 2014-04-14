@@ -58,7 +58,7 @@ class NestedEntryPanel(wx.Panel):
                 break
             Person = result[1]
             
-            EntryDB.InsertUpdateEntry(self.PersonGroupID, Person, 0, 0)
+            EntryDB.InsertUpdateEntry(['', self.PersonGroupID, Person, 0, 0])
             
             
             #SourceID = SourceUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(1))

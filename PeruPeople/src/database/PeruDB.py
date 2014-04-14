@@ -15,7 +15,6 @@ class PeruDB:
             cur = self.con.cursor()
             cur.execute('SELECT SQLITE_VERSION()')
             data = cur.fetchone()
-            print "SQLite version: %s" % data
     
         except lite.Error, e:
             print "Error %s:" % e.args[0]

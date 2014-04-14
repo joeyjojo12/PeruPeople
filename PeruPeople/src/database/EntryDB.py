@@ -37,7 +37,7 @@ def EntryUpdateStatement(fields):
     
     return ("UPDATE ENTRY" +
             " SET " + ",".join(strFields) + 
-            " WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = " + fields[0] + ";\n")
+            " WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = " + str(fields[0]) + ";\n")
 
 def EntryDeleteStatement(fields):    
     return("DELETE FROM ENTRY WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = " + fields[0] + ";\n")
@@ -63,10 +63,12 @@ def InsertEntry(fields):
     return output
 
 def UpdateEntry(fields):
-    database = PeruDB.PeruDB()
-    output = database.update(EntryUpdateStatement(fields))
-    database.closeDB()
-    return output
+    print(EntryUpdateStatement(fields))
+    return 0
+    #database = PeruDB.PeruDB()
+    #output = database.update(EntryUpdateStatement(fields))
+    #database.closeDB()
+    #return output
 
 def DeleteEntry(fields):
     database = PeruDB.PeruDB()    
