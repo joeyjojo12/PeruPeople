@@ -49,26 +49,26 @@ def ReadSource(fields):
     return output
     
     
-def InsertUpdateSource(fields):
+def InsertUpdateSource(database, fields):
     if fields[0] != '':
-        return UpdateSource(fields)
+        return UpdateSource(database, fields)
     else:
-        return InsertSource(fields)
+        return InsertSource(database, fields)
         
 
-def InsertSource(fields):
+def InsertSource(database, fields):
     database = PeruDB.PeruDB()
     output = database.insert(SourceInsertStatement(fields))
     database.closeDB()
     return output
 
-def UpdateSource(fields):
+def UpdateSource(database, fields):
     database = PeruDB.PeruDB()
     output = database.update(SourceUpdateStatement(fields))
     database.closeDB()
     return output
 
-def DeleteSource(fields):
+def DeleteSource(database, fields):
     database = PeruDB.PeruDB()    
     output = database.delete(SourceDeleteStatement(fields))
     database.closeDB()

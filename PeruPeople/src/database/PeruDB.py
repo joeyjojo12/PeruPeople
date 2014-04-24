@@ -24,6 +24,14 @@ class PeruDB:
     def closeDB(self):        
         if self.con:
             self.con.close()
+
+    def commit(self):
+        if self.con:
+            self.con.commit()
+    
+    def rollback(self):
+        if self.con:
+            self.con.rollback()
     
     def querry(self, querryString):
         try:
@@ -41,7 +49,6 @@ class PeruDB:
         try:
             cur = self.con.cursor()
             cur.execute(commandString)
-            self.con.commit()
             return[0, cur.lastrowid]
         
         except lite.Error, e:

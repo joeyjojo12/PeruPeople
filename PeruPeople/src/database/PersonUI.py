@@ -77,9 +77,6 @@ class PersonPanel(wx.Panel):
         for i in range(len(fieldList) - 1):
             infoSizer.Add(fieldList[i][0],    (i+1,0))
             infoSizer.Add(fieldList[i][1],    (i+1,1))
-            print(i)
-            
-        print(len(fieldList))
         
         #Add notes    
         infoSizer.Add(fieldList[len(fieldList)-1][0],     (len(fieldList),0))

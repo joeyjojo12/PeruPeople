@@ -1,60 +1,91 @@
 import wx
 import PeruConstants
 
+
+def getSourceInfo(sourcePage):    
+    return [str(sourcePage.SourceID),
+            str(sourcePage.Type.GetValue()),
+            str(sourcePage.Stack.GetValue()),
+            str(sourcePage.Citation.GetValue()),
+            str(sourcePage.Archive.GetValue()),
+            str(sourcePage.PageNumbers.GetValue()),
+            str(sourcePage.Author.GetValue()),
+            str(sourcePage.DocNameTitle.GetValue()),
+            str(sourcePage.PubPlace.GetValue()),
+            str(sourcePage.Year.GetValue()),
+            str(sourcePage.ReferencedByFirst.GetValue()),
+            str(sourcePage.ReferencedByLast.GetValue()),
+            str(sourcePage.Notes.GetValue())]
+    
+def saveSource(sourcePage):
+        return SourceDB.InsertUpdateSource(getSourceInfo(sourcePage))
+
+
+
+
 class SourcePanel(wx.Panel):
     def __init__(self, parent):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
 
-        label1 = wx.StaticText(self, label="Type :")
-        Type = self.Type = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (150, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
-        label2 = wx.StaticText(self, label="Stack :")
-        Stack = self.Stack = wx.TextCtrl(self, size=(400,-1))
-        label3 = wx.StaticText(self, label="Page Numbers :")
-        PageNumbers = self.PageNumbers = wx.TextCtrl(self, size=(400,-1))
-        label4 = wx.StaticText(self, label="Author :")
-        Author = self.Author = wx.TextCtrl(self, size=(400,-1))
-        label5 = wx.StaticText(self, label="Document Name :")
-        DocNameTitle = self.DocNameTitle = wx.TextCtrl(self, size=(400,-1))
-        label6 = wx.StaticText(self, label="Type :")
-        Publisher = self.Publisher = wx.TextCtrl(self, size=(400,-1))
-        label7 = wx.StaticText(self, label="Place of Publication :")
-        PubPlace = self.PubPlace = wx.TextCtrl(self, size=(400,-1))
-        label8 = wx.StaticText(self, label="Year :")
-        Year = self.Year = wx.TextCtrl(self, size=(100,-1))
-        label9 = wx.StaticText(self, label="Referenced By First Name :")
-        ReferencedByFirst = self.ReferencedByFirst = wx.TextCtrl(self, size=(400,-1))
-        label10 = wx.StaticText(self, label="Referenced By Last Name :")
-        ReferencedByLast = self.ReferencedByLast = wx.TextCtrl(self, size=(400,-1))
-        label11 = wx.StaticText(self, label="Notes :")
-        Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)        
+        SourceID = self.SourceID  = ''
         
+        fieldList = []
+
+        Type = self.Type = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (150, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
+        fieldList.append((wx.StaticText(self, label="Type :"), Type))
+        
+        Stack = self.Stack = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Stack :"), Stack ))
+
+        Citation = self.Stack = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Citation :"), Citation))
+
+        Archive = self.Stack = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Archive :"), Archive))
+
+        PageNumbers = self.PageNumbers = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Page Numbers :"), PageNumbers))
+
+        Author = self.Author = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Author :"), Author))
+
+        DocNameTitle = self.DocNameTitle = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Document Name :"), DocNameTitle))
+
+        PubPlace = self.PubPlace = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Place of Publication :"), PubPlace))
+
+        Year = self.Year = wx.TextCtrl(self, size=(100,-1))
+        fieldList.append((wx.StaticText(self, label="Year :"), Year))
+
+        ReferencedByFirst = self.ReferencedByFirst = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Referenced By First Name :"), ReferencedByFirst))
+
+        ReferencedByLast = self.ReferencedByLast = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Referenced By Last Name :"), ReferencedByLast))
+        
+        Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
+        fieldList.append((wx.StaticText(self, label="Notes :"), Notes))
+       
         space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
-        infoSizer.Add(label1,            (1,0))
-        infoSizer.Add(Type,              (1,1))
-        infoSizer.Add(label2,            (2,0))
-        infoSizer.Add(Stack,             (2,1))
-        infoSizer.Add(label3,            (3,0))
-        infoSizer.Add(PageNumbers,       (3,1))
-        infoSizer.Add(label4,            (4,0))
-        infoSizer.Add(Author,            (4,1))
-        infoSizer.Add(label5,            (5,0))
-        infoSizer.Add(DocNameTitle,      (5,1))
-        infoSizer.Add(label6,            (6,0))
-        infoSizer.Add(Publisher,         (6,1))
-        infoSizer.Add(label7,            (7,0))
-        infoSizer.Add(PubPlace,          (7,1))
-        infoSizer.Add(label8,            (8,0))
-        infoSizer.Add(Year,              (8,1))
-        infoSizer.Add(label9,            (9,0))
-        infoSizer.Add(ReferencedByFirst, (9,1))
-        infoSizer.Add(label10,           (10,0))
-        infoSizer.Add(ReferencedByLast,  (10,1))
-        infoSizer.Add(label11,           (11,0))
-        infoSizer.Add(Notes,             (11,1), (4,2), wx.EXPAND)
+        
+        for i in range(len(fieldList) - 1):
+            infoSizer.Add(fieldList[i][0],    (i+1,0))
+            infoSizer.Add(fieldList[i][1],    (i+1,1))
+        
+        #Add notes    
+        infoSizer.Add(fieldList[len(fieldList)-1][0],     (len(fieldList),0))
+        infoSizer.Add(fieldList[len(fieldList)-1][1],     (len(fieldList),1), (4,2), wx.EXPAND)
+       
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
 
         self.SetSizer(sizer)
+
+
+
+
+

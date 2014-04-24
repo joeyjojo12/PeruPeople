@@ -1,6 +1,82 @@
 import wx
 import PeruConstants
 
+def getMatrixInfo(matrixPage):    
+    return [str(matrixPage.MatrixId),
+            str(matrixPage.Consulter.GetValue()),
+            str(matrixPage.Huaca.GetValue()),
+            str(matrixPage.Malqui.GetValue()),
+            str(matrixPage.Lightning.GetValue()),
+            str(matrixPage.Sun.GetValue()),
+            str(matrixPage.Capycocha.GetValue()),
+            str(matrixPage.OtherConsulter.GetValue()),
+            str(matrixPage.OtherConsulterText.GetValue()),
+            str(matrixPage.GuardianOf.GetValue()),
+            str(matrixPage.GuardianOfText.GetValue()),
+            str(matrixPage.Diviners.GetValue()),
+            str(matrixPage.Spiders.GetValue()),
+            str(matrixPage.Molle.GetValue()),
+            str(matrixPage.Love.GetValue()),
+            str(matrixPage.LostThings.GetValue()),
+            str(matrixPage.Mushrooms.GetValue()),
+            str(matrixPage.CuyExaminers.GetValue()),
+            str(matrixPage.PurposeText.GetValue()),
+            str(matrixPage.Curer.GetValue()),
+            str(matrixPage.Confessor.GetValue()),
+            str(matrixPage.Curandero.GetValue()),
+            str(matrixPage.HelperSacristan.GetValue()),
+            str(matrixPage.ChichaAsuacAccacMaker.GetValue()),
+            str(matrixPage.ChacraLandGuardian.GetValue()),
+            str(matrixPage.BloodsuckersDeathDealersCaptains.GetValue()),
+            str(matrixPage.Dogmatizer.GetValue()),
+            str(matrixPage.EmbustaroLiar.GetValue()),
+            str(matrixPage.Hecicero.GetValue()),
+            str(matrixPage.Brujo.GetValue()),
+            str(matrixPage.Sortilejo.GetValue()),
+            str(matrixPage.SacristanHelper.GetValue()),
+            str(matrixPage.ChichaMaker.GetValue()),
+            str(matrixPage.RelapserBackslider.GetValue()),
+            str(matrixPage.OtherChurchClassText.GetValue()),
+            str(matrixPage.YesTortured.GetValue()),
+            str(matrixPage.NoTortured.GetValue()),
+            str(matrixPage.UnableToDetermineTorture.GetValue()),
+            str(matrixPage.FamilySuccession.GetValue()),
+            str(matrixPage.Elected.GetValue()),
+            str(matrixPage.PersonalElection.GetValue()),
+            str(matrixPage.UnableToDetermineProf.GetValue()),
+            str(matrixPage.Blind.GetValue()),
+            str(matrixPage.OneEyed.GetValue()),
+            str(matrixPage.Lame.GetValue()),
+            str(matrixPage.Deaf.GetValue()),
+            str(matrixPage.Mute.GetValue()),
+            str(matrixPage.Crippled.GetValue()),
+            str(matrixPage.OtherConditionText.GetValue()),
+            str(matrixPage.YesDevil.GetValue()),
+            str(matrixPage.NoDevil.GetValue()),
+            str(matrixPage.UnableToDetermineDevil.GetValue()),
+            str(matrixPage.Whipped.GetValue()),
+            str(matrixPage.PublicService.GetValue()),
+            str(matrixPage.CutHair.GetValue()),
+            str(matrixPage.Executed.GetValue()),
+            str(matrixPage.Exiled.GetValue()),
+            str(matrixPage.OtherPunishment.GetValue()),
+            str(matrixPage.Sacrifices.GetValue()),
+            str(matrixPage.Chants.GetValue()),
+            str(matrixPage.Incantations.GetValue()),
+            str(matrixPage.Song.GetValue()),
+            str(matrixPage.Dance.GetValue()),
+            str(matrixPage.Ritual.GetValue()),
+            str(matrixPage.Celebration.GetValue()),
+            str(matrixPage.OtherTechniquesText.GetValue()),
+            str(matrixPage.NotesTechniquesText.GetValue()),
+            str(matrixPage.SpecialClothing.GetValue()),
+            str(matrixPage.Cosmology.GetValue()),
+            str(matrixPage.Ethnomedicine.GetValue()),
+            str(matrixPage.GeneralNotes.GetValue())]
+    
+def saveMatrix(matrixPage):   
+        return MatrixDB.InsertUpdateMatrix(getMatrixInfo(matrixPage))
+
 class MainMatrixPanel(wx.ScrolledWindow):
     def __init__(self, parent):
 
@@ -23,125 +99,125 @@ class MainMatrixPanel(wx.ScrolledWindow):
         labelMinister = wx.StaticText(self, label="Type of Minister :")
         labelMinister.SetFont(largefont)
         
-        Consulter                        = self.societal = wx.CheckBox(self, -1, "Consulter")
+        Consulter                        = self.Consulter = wx.CheckBox(self, -1, "Consulter")
         Consulter.Font = boxfont
-        Huaca                            = self.societal = wx.CheckBox(self, -1, "Huaca")
-        Malqui                           = self.societal = wx.CheckBox(self, -1, "Malqui/Munaos")
-        Lightning                        = self.societal = wx.CheckBox(self, -1, "Lightning")
-        Sun                              = self.Societal = wx.CheckBox(self, -1, "Sun")
-        Capycocha                        = self.Societal = wx.CheckBox(self, -1, "Capycocha")
-        OtherConsulter                   = self.Societal = wx.CheckBox(self, -1, "Other")        
-        OtherConsulterText               = wx.TextCtrl(self, size=(150,-1),name="OtherConsulterText")
-        GuardianOf                       = self.Societal = wx.CheckBox(self, -1, "Guardian Of")
-        GuardianOfText                   = wx.TextCtrl(self, size=(150,-1),name="GuardianOfText")
+        Huaca                            = self.Huaca = wx.CheckBox(self, -1, "Huaca")
+        Malqui                           = self.Malqui = wx.CheckBox(self, -1, "Malqui/Munaos")
+        Lightning                        = self.Lightning = wx.CheckBox(self, -1, "Lightning")
+        Sun                              = self.Sun = wx.CheckBox(self, -1, "Sun")
+        Capycocha                        = self.Capycocha = wx.CheckBox(self, -1, "Capycocha")
+        OtherConsulter                   = self.OtherConsulter = wx.CheckBox(self, -1, "Other")        
+        OtherConsulterText               = self.OtherConsulterText = wx.TextCtrl(self, size=(150,-1),name="OtherConsulterText")
+        GuardianOf                       = self.GuardianOf = wx.CheckBox(self, -1, "Guardian Of")
+        GuardianOfText                   = self.GuardianOfText = wx.TextCtrl(self, size=(150,-1),name="GuardianOfText")
         
-        Diviners                         = self.societal = wx.CheckBox(self, -1, "Diviners")
+        Diviners                         = self.Diviners = wx.CheckBox(self, -1, "Diviners")
         Diviners.Font = boxfont
-        Spiders                          = self.societal = wx.CheckBox(self, -1, "Spiders")
-        Molle                            = self.societal = wx.CheckBox(self, -1, "Molle")
-        Love                             = self.societal = wx.CheckBox(self, -1, "Love")
-        LostThings                       = self.Societal = wx.CheckBox(self, -1, "Lost things")
-        Mushrooms                        = self.Societal = wx.CheckBox(self, -1, "Mushrooms")
-        CuyExaminers                     = self.societal = wx.CheckBox(self, -1, "Cuy Examiners")
+        Spiders                          = self.Spiders = wx.CheckBox(self, -1, "Spiders")
+        Molle                            = self.Molle = wx.CheckBox(self, -1, "Molle")
+        Love                             = self.Love = wx.CheckBox(self, -1, "Love")
+        LostThings                       = self.LostThings = wx.CheckBox(self, -1, "Lost things")
+        Mushrooms                        = self.Mushrooms = wx.CheckBox(self, -1, "Mushrooms")
+        CuyExaminers                     = self.CuyExaminers = wx.CheckBox(self, -1, "Cuy Examiners")
         CuyExaminers.Font = boxfont
         labelPurpose = wx.StaticText(self, label="Purpose :")
-        PurposeText                   = wx.TextCtrl(self, size=(150,-1),name="PurposeText")
+        PurposeText                      = self.PurposeText = wx.TextCtrl(self, size=(150,-1),name="PurposeText")
         
-        Curer                            = self.societal = wx.CheckBox(self, -1, "Curer")
+        Curer                            = self.Curer = wx.CheckBox(self, -1, "Curer")
         Curer.Font = boxfont
-        Confessor                        = self.societal = wx.CheckBox(self, -1, "Confessor")
+        Confessor                        = self.Confessor = wx.CheckBox(self, -1, "Confessor")
         Confessor.Font = boxfont
-        Curandero                        = self.societal = wx.CheckBox(self, -1, "Curandero/Curandera")
+        Curandero                        = self.Curandero = wx.CheckBox(self, -1, "Curandero/Curandera")
         Curandero.Font = boxfont
-        HelperSacristan                  = self.societal = wx.CheckBox(self, -1, "Helper/Sacristan")
+        HelperSacristan                  = self.HelperSacristan = wx.CheckBox(self, -1, "Helper/Sacristan")
         HelperSacristan.Font = boxfont
-        ChichaAsuacAccacMaker            = self.societal = wx.CheckBox(self, -1, "Chicha/Asuac/ Accac Maker")
+        ChichaAsuacAccacMaker            = self.ChichaAsuacAccacMaker = wx.CheckBox(self, -1, "Chicha/Asuac/ Accac Maker")
         ChichaAsuacAccacMaker.Font = boxfont
-        ChacraLandGuardian               = self.societal = wx.CheckBox(self, -1, "Chacra/ Land Guardian ")
+        ChacraLandGuardian               = self.ChacraLandGuardian = wx.CheckBox(self, -1, "Chacra/ Land Guardian ")
         ChacraLandGuardian.Font = boxfont
-        BloodsuckersDeathDealersCaptains = self.societal = wx.CheckBox(self, -1, "Bloodsuckers/ Death Dealers/ captains")
+        BloodsuckersDeathDealersCaptains = self.BloodsuckersDeathDealersCaptains = wx.CheckBox(self, -1, "Bloodsuckers/ Death Dealers/ captains")
         BloodsuckersDeathDealersCaptains.Font = boxfont
 
         labelChurch = wx.StaticText(self, label="Church Classifications :")
         labelChurch.SetFont(largefont)
         
-        Dogmatizer                       = self.societal = wx.CheckBox(self, -1, "Dogmatizer")
-        EmbustaroLiar                    = self.societal = wx.CheckBox(self, -1, "Embustaro/a or Liar")
-        Hecicero                         = self.societal = wx.CheckBox(self, -1, "Hecicero/a")
-        Brujo                            = self.societal = wx.CheckBox(self, -1, "Brujo/a")
-        Sortilejo                        = self.societal = wx.CheckBox(self, -1, "Sortilejo")
-        SacristanHelper                  = self.societal = wx.CheckBox(self, -1, "Sacristan/ Helper")
-        ChichaMaker                      = self.societal = wx.CheckBox(self, -1, "Chicha Maker")
-        RelapserBackslider               = self.societal = wx.CheckBox(self, -1, "Relapser/ Backslider")
-        OtherChurchClass                 = self.societal = wx.CheckBox(self, -1, "Other")
-        OtherChurchClassText             = wx.TextCtrl(self, size=(150,-1),name="OtherChurchClassText")
+        Dogmatizer                       = self.Dogmatizer = wx.CheckBox(self, -1, "Dogmatizer")
+        EmbustaroLiar                    = self.EmbustaroLiar = wx.CheckBox(self, -1, "Embustaro/a or Liar")
+        Hecicero                         = self.Heciceroocietal = wx.CheckBox(self, -1, "Hecicero/a")
+        Brujo                            = self.Brujo = wx.CheckBox(self, -1, "Brujo/a")
+        Sortilejo                        = self.Sortilejo = wx.CheckBox(self, -1, "Sortilejo")
+        SacristanHelper                  = self.SacristanHelper = wx.CheckBox(self, -1, "Sacristan/ Helper")
+        ChichaMaker                      = self.ChichaMaker = wx.CheckBox(self, -1, "Chicha Maker")
+        RelapserBackslider               = self.RelapserBackslider = wx.CheckBox(self, -1, "Relapser/ Backslider")
+        OtherChurchClass                 = self.OtherChurchClass = wx.CheckBox(self, -1, "Other")
+        OtherChurchClassText             = self.OtherChurchClassText = wx.TextCtrl(self, size=(150,-1),name="OtherChurchClassText")
         
         
 
         labelTourtured = wx.StaticText(self, label="Tourtured :")
         labelTourtured.SetFont(largefont)
         
-        YesTortured                      = self.societal = wx.CheckBox(self, -1, "Yes")
-        NoTortured                       = self.societal = wx.CheckBox(self, -1, "No")
-        UnableToDetermineTorture         = self.societal = wx.CheckBox(self, -1, "Unable to Determine")
+        YesTortured                      = self.YesTorturedocietal = wx.CheckBox(self, -1, "Yes")
+        NoTortured                       = self.NoTortured = wx.CheckBox(self, -1, "No")
+        UnableToDetermineTorture         = self.UnableToDetermineTorture = wx.CheckBox(self, -1, "Unable to Determine")
         
 
         labelProfession = wx.StaticText(self, label="Entered Profession :")
         labelProfession.SetFont(largefont)
         
-        FamilySuccession                 = self.societal = wx.CheckBox(self, -1, "Family Succession")
-        Elected                          = self.societal = wx.CheckBox(self, -1, "Elected")
-        PersonalElection                 = self.societal = wx.CheckBox(self, -1, "Personal Election")
-        UnableToDetermineProf            = self.societal = wx.CheckBox(self, -1, "Unable to Determine")
+        FamilySuccession                 = self.FamilySuccession = wx.CheckBox(self, -1, "Family Succession")
+        Elected                          = self.Elected = wx.CheckBox(self, -1, "Elected")
+        PersonalElection                 = self.PersonalElectionocietal = wx.CheckBox(self, -1, "Personal Election")
+        UnableToDetermineProf            = self.UnableToDetermineProf = wx.CheckBox(self, -1, "Unable to Determine")
         
 
         labelCondition = wx.StaticText(self, label="Condition :")
         labelCondition.SetFont(largefont)
         
-        Blind                            = self.societal = wx.CheckBox(self, -1, "Blind")
-        OneEyed                          = self.societal = wx.CheckBox(self, -1, "One-Eyed")
-        Lame                             = self.societal = wx.CheckBox(self, -1, "Lame")
-        Deaf                             = self.societal = wx.CheckBox(self, -1, "Deaf")
-        Mute                             = self.societal = wx.CheckBox(self, -1, "Mute")
-        Crippled                         = self.societal = wx.CheckBox(self, -1, "Crippled")
-        OtherCondition                   = self.societal = wx.CheckBox(self, -1, "Other")
-        OtherConditionText               = wx.TextCtrl(self, size=(150,-1),name="OtherConditionText")
+        Blind                            = self.Blind = wx.CheckBox(self, -1, "Blind")
+        OneEyed                          = self.OneEyed = wx.CheckBox(self, -1, "One-Eyed")
+        Lame                             = self.Lame = wx.CheckBox(self, -1, "Lame")
+        Deaf                             = self.Deaf = wx.CheckBox(self, -1, "Deaf")
+        Mute                             = self.Mute = wx.CheckBox(self, -1, "Mute")
+        Crippled                         = self.Crippled = wx.CheckBox(self, -1, "Crippled")
+        OtherCondition                   = self.OtherCondition = wx.CheckBox(self, -1, "Other")
+        OtherConditionText               = self.OtherConditionText = wx.TextCtrl(self, size=(150,-1),name="OtherConditionText")
         
 
         labelDevil = wx.StaticText(self, label="Pact w/ the Devil or Demon :")
         labelDevil.SetFont(largefont)
         
-        YesDevil                         = self.societal = wx.CheckBox(self, -1, "Yes")
-        NoDevil                          = self.societal = wx.CheckBox(self, -1, "No")
-        UnableToDetermineDevil           = self.societal = wx.CheckBox(self, -1, "Unable to Determine")
+        YesDevil                         = self.YesDevil = wx.CheckBox(self, -1, "Yes")
+        NoDevil                          = self.NoDevil = wx.CheckBox(self, -1, "No")
+        UnableToDetermineDevil           = self.UnableToDetermineDevil = wx.CheckBox(self, -1, "Unable to Determine")
         
 
         labelPunishment = wx.StaticText(self, label="Punishment :")
         labelPunishment.SetFont(largefont)
         
-        Whipped                          = self.societal = wx.CheckBox(self, -1, "Whipped")
-        PublicService                    = self.societal = wx.CheckBox(self, -1, "Public Service")
-        CutHair                          = self.societal = wx.CheckBox(self, -1, "Cut Hair")
-        Executed                         = self.societal = wx.CheckBox(self, -1, "Executed")
-        Exiled                           = self.societal = wx.CheckBox(self, -1, "Exiled")
-        OtherPunishment                  = self.societal = wx.CheckBox(self, -1, "Other Punishment")
-        OtherPunishmentText              = wx.TextCtrl(self, size=(150,-1),name="OtherPunishmentText")
+        Whipped                          = self.Whipped = wx.CheckBox(self, -1, "Whipped")
+        PublicService                    = self.PublicService = wx.CheckBox(self, -1, "Public Service")
+        CutHair                          = self.CutHair = wx.CheckBox(self, -1, "Cut Hair")
+        Executed                         = self.Executedocietal = wx.CheckBox(self, -1, "Executed")
+        Exiled                           = self.Exiled = wx.CheckBox(self, -1, "Exiled")
+        OtherPunishment                  = self.OtherPunishment = wx.CheckBox(self, -1, "Other Punishment")
+        OtherPunishmentText              = self.OtherPunishmentText = wx.TextCtrl(self, size=(150,-1),name="OtherPunishmentText")
         
 
         labelTechniqes = wx.StaticText(self, label="Techniques/Methods :")
         labelTechniqes.SetFont(largefont)
         
-        Sacrifices                       = self.societal = wx.CheckBox(self, -1, "Sacrifices")
-        Chants                           = self.societal = wx.CheckBox(self, -1, "Chants")
-        Incantations                     = self.societal = wx.CheckBox(self, -1, "Incantations/prayers")
-        Song                             = self.societal = wx.CheckBox(self, -1, "Song")
-        Dance                            = self.societal = wx.CheckBox(self, -1, "Dance")
-        Ritual                           = self.societal = wx.CheckBox(self, -1, "Ritual")
-        Celebration                      = self.societal = wx.CheckBox(self, -1, "Celebration")
-        OtherTechniques                  = self.societal = wx.CheckBox(self, -1, "Other")
-        OtherTechniquesText              = wx.TextCtrl(self, size=(150,-1),name="OtherTechniquesText")
-        NotesTechniques                  = self.societal = wx.CheckBox(self, -1, "Notes")
-        NotesTechniquesText              = wx.TextCtrl(self, size=(150,-1),name="NotesTechniquesText")
+        Sacrifices                       = self.Sacrifices = wx.CheckBox(self, -1, "Sacrifices")
+        Chants                           = self.Chants = wx.CheckBox(self, -1, "Chants")
+        Incantations                     = self.Incantations = wx.CheckBox(self, -1, "Incantations/prayers")
+        Song                             = self.Song = wx.CheckBox(self, -1, "Song")
+        Dance                            = self.Dance = wx.CheckBox(self, -1, "Dance")
+        Ritual                           = self.Ritual = wx.CheckBox(self, -1, "Ritual")
+        Celebration                      = self.Celebration = wx.CheckBox(self, -1, "Celebration")
+        OtherTechniques                  = self.OtherTechniques = wx.CheckBox(self, -1, "Other")
+        OtherTechniquesText              = self.OtherTechniquesText = wx.TextCtrl(self, size=(150,-1),name="OtherTechniquesText")
+        NotesTechniques                  = self.NotesTechniques = wx.CheckBox(self, -1, "Notes")
+        NotesTechniquesText              = self.NotesTechniquesText = wx.TextCtrl(self, size=(150,-1),name="NotesTechniquesText")
 
         space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
@@ -268,10 +344,10 @@ class SpecialClothingMatrixPanel(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
                 
-        Summary = self.Summary = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
+        SpecialClothing = self.SpecialClothing = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(Summary, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(SpecialClothing , 1, wx.ALL|wx.EXPAND, 5)
 
         self.SetSizer(sizer)
         
@@ -280,10 +356,10 @@ class CosmologyMatrixPanel(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
                 
-        Summary = self.Summary = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
+        Cosmology = self.Cosmology = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(Summary, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(Cosmology , 1, wx.ALL|wx.EXPAND, 5)
 
         self.SetSizer(sizer)
         
@@ -292,10 +368,10 @@ class EthnomedicineMatrixPanel(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
                 
-        Summary = self.Summary = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
+        Ethnomedicine = self.Ethnomedicine = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(Summary, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(Ethnomedicine , 1, wx.ALL|wx.EXPAND, 5)
 
         self.SetSizer(sizer)
         
@@ -304,10 +380,10 @@ class GeneralNotesMatrixPanel(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
                 
-        Summary = self.Summary = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
+        GeneralNotes = self.GeneralNotes = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
         
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(Summary, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(GeneralNotes, 1, wx.ALL|wx.EXPAND, 5)
 
         self.SetSizer(sizer)
 

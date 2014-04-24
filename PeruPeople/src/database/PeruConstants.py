@@ -35,8 +35,94 @@ SOURCE = 'Source'
 MATRIX = 'Matrix'
 ENTRY  = 'Entry'
 
-
+ENTRY_FIELDS  = ['EntryId','PersonGroupID','PersonID','SourceID','MatrixID']
 PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Age','AgeRange','Occupation','Religion','Profession','Notes']
 SOURCE_FIELDS = ['SourceId','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
-MATRIX_FIELDS = ['MatrixId']
-ENTRY_FIELDS  = ['EntryId','PersonGroupID','PersonID','SourceID','MatrixID']
+MATRIX_FIELDS = ['MatrixId',
+                 'Consulter',
+                 'ConsulterHuaca',
+                 'ConsulterMalqui',
+                 'ConsulterLightning',
+                 'ConsulterSun',
+                 'ConsulterCapycocha',
+                 'ConsulterOtherConsulter',
+                 'ConsulterOtherConsulterText',
+                 'ConsulterGuardianOf',
+                 'ConsulterGuardianOfText',
+                 'Diviners',
+                 'DivinersSpiders',
+                 'DivinersMolle',
+                 'DivinersLove',
+                 'DivinersLostThings',
+                 'DivinersMushrooms',
+                 'DivinersCuyExaminers',
+                 'DivinersPurposeText',
+                 'Curer',
+                 'Confessor',
+                 'Curandero',
+                 'HelperSacristan',
+                 'ChichaAsuacAccacMaker',
+                 'ChacraLandGuardian',
+                 'BloodsuckersDeathDealersCaptains',
+                 'ChurchDogmatizer',
+                 'ChurchEmbustaroLiar',
+                 'ChurchHecicero',
+                 'ChurchBrujo',
+                 'ChurchSortilejo',
+                 'ChurchSacristanHelper',
+                 'ChurchChichaMaker',
+                 'ChurchRelapserBackslider',
+                 'ChurchOtherChurchClassText',
+                 'YesTortured',
+                 'NoTortured',
+                 'UnableToDetermineTorture',
+                 'ProfessionFamilySuccession',
+                 'ProfessionElected',
+                 'ProfessionPersonalElection',
+                 'ProfessionUnableToDetermineProf',
+                 'ConditionBlind',
+                 'ConditionOneEyed',
+                 'ConditionLame',
+                 'ConditionDeaf',
+                 'ConditionMute',
+                 'ConditionCrippled',
+                 'ConditionOtherConditionText',
+                 'YesDevil',
+                 'NoDevil',
+                 'UnableToDetermineDevil',
+                 'PunishmentWhipped',
+                 'PunishmentPublicService',
+                 'PunishmentCutHair',
+                 'PunishmentExecuted',
+                 'PunishmentExiled',
+                 'PunishmentOtherPunishment',
+                 'Sacrifices',
+                 'Chants',
+                 'Incantations',
+                 'Song',
+                 'Dance',
+                 'Ritual',
+                 'Celebration',
+                 'OtherTechniquesText',
+                 'NotesTechniquesText',
+                 'SpecialClothing',
+                 'Cosmology',
+                 'Ethnomedicine',
+                 'GeneralNotes']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -49,31 +49,33 @@ def ReadPerson(fields):
     return output
     
     
-def InsertUpdatePerson(fields):
+def InsertUpdatePerson(database, fields):
     if fields[0] != '':
-        return UpdatePerson(fields)
+        return UpdatePerson(database, fields)
     else:
-        return InsertPerson(fields)
+        return InsertPerson(database, fields)
         
 
-def InsertPerson(fields):
+def InsertPerson(database, fields):
     database = PeruDB.PeruDB()
     output = database.insert(PersonInsertStatement(fields))
     database.closeDB()
     return output
 
-def UpdatePerson(fields):
+def UpdatePerson(database, fields):
     database = PeruDB.PeruDB()
     output = database.update(PersonUpdateStatement(fields))
     database.closeDB()
     return output
 
-def DeletePerson(fields):
+def DeletePerson(database, fields):
     database = PeruDB.PeruDB()    
     output = database.delete(PersonDeleteStatement(fields))
     database.closeDB()
     return output
 
 def PersonReadStatement(ID):
-    
     return "SELECT * FROM " + PeruConstants.PERSON + " WHERE PersonId = " + ID + ";\n"
+
+
+

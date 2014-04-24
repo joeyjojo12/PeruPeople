@@ -14,8 +14,6 @@ class EntryNotebook(wx.Notebook):
         self.AddPage(SourceUI.SourcePanel(self), "Source")
         self.AddPage(MatrixUI.MatrixPanel(self), "Matrix")
 
-########################################################################
-
 
 class NestedEntryPanel(wx.Panel):
     """
@@ -51,18 +49,44 @@ class NestedEntryPanel(wx.Panel):
     
     def SaveEntries(self):
 
+        noErrors = True
+        database = PeruDB.PeruDB()
+
         for i in range(self.nestedNotebook.GetPageCount()):
+            #Save Person for this entry
             result = PersonUI.savePerson(self.nestedNotebook.GetPage(i).GetPage(0))
             if result[0] != 0:
                 print(result[1])
+                noErrors = False
                 break
             Person = result[1]
+
+            #Save Source for this entry
+            result = SourceUI.saveSource(self.nestedNotebook.GetPage(i).GetPage(1))
+            if result[0] != 0:
+                print(result[1])
+                noErrors = False
+                break
+            Source = result[1]
+
+            #Save Matrix for this entry
+            #result = MatrixUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(2))
+            #if result[0] != 0:
+            #    print(result[1])
+            #    noErrors = False
+            #    break
+            #Matrix = result[1]
+            Matrix = 0
             
-            EntryDB.InsertUpdateEntry(['', self.PersonGroupID, Person, 0, 0])
+            EntryDB.InsertUpdateEntry(['', self.PersonGroupID, Person, Source, Matrix])
             
+        if(noErrors):
+            database.commit()
+        else:
+            database.rollback()
+
+        database.closeDB()
             
-            #SourceID = SourceUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(1))
-            #MatrixID = MatrixUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(2))
         
         
         
