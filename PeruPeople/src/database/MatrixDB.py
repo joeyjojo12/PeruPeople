@@ -1,4 +1,5 @@
-import PeruConstants, PeruDB
+from . import PeruDB
+from .. import PeruConstants
 
 def MatrixInsertFromList(matricies):
     resultString = ""

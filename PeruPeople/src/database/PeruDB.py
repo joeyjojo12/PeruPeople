@@ -1,6 +1,6 @@
 import sqlite3 as lite
 import sys
-import PeruConstants
+from .. import PeruConstants
 
 class PeruDB:
     
