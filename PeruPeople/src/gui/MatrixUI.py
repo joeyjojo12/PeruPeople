@@ -1,81 +1,84 @@
 import wx
-from .. import PeruConstants
+import PeruConstants
+from database import MatrixDB
 
-def getMatrixInfo(matrixPage):    
-    return [str(matrixPage.MatrixId),
-            str(matrixPage.Consulter.GetValue()),
-            str(matrixPage.Huaca.GetValue()),
-            str(matrixPage.Malqui.GetValue()),
-            str(matrixPage.Lightning.GetValue()),
-            str(matrixPage.Sun.GetValue()),
-            str(matrixPage.Capycocha.GetValue()),
-            str(matrixPage.OtherConsulter.GetValue()),
-            str(matrixPage.OtherConsulterText.GetValue()),
-            str(matrixPage.GuardianOf.GetValue()),
-            str(matrixPage.GuardianOfText.GetValue()),
-            str(matrixPage.Diviners.GetValue()),
-            str(matrixPage.Spiders.GetValue()),
-            str(matrixPage.Molle.GetValue()),
-            str(matrixPage.Love.GetValue()),
-            str(matrixPage.LostThings.GetValue()),
-            str(matrixPage.Mushrooms.GetValue()),
-            str(matrixPage.CuyExaminers.GetValue()),
-            str(matrixPage.PurposeText.GetValue()),
-            str(matrixPage.Curer.GetValue()),
-            str(matrixPage.Confessor.GetValue()),
-            str(matrixPage.Curandero.GetValue()),
-            str(matrixPage.HelperSacristan.GetValue()),
-            str(matrixPage.ChichaAsuacAccacMaker.GetValue()),
-            str(matrixPage.ChacraLandGuardian.GetValue()),
-            str(matrixPage.BloodsuckersDeathDealersCaptains.GetValue()),
-            str(matrixPage.Dogmatizer.GetValue()),
-            str(matrixPage.EmbustaroLiar.GetValue()),
-            str(matrixPage.Hecicero.GetValue()),
-            str(matrixPage.Brujo.GetValue()),
-            str(matrixPage.Sortilejo.GetValue()),
-            str(matrixPage.SacristanHelper.GetValue()),
-            str(matrixPage.ChichaMaker.GetValue()),
-            str(matrixPage.RelapserBackslider.GetValue()),
-            str(matrixPage.OtherChurchClassText.GetValue()),
-            str(matrixPage.YesTortured.GetValue()),
-            str(matrixPage.NoTortured.GetValue()),
-            str(matrixPage.UnableToDetermineTorture.GetValue()),
-            str(matrixPage.FamilySuccession.GetValue()),
-            str(matrixPage.Elected.GetValue()),
-            str(matrixPage.PersonalElection.GetValue()),
-            str(matrixPage.UnableToDetermineProf.GetValue()),
-            str(matrixPage.Blind.GetValue()),
-            str(matrixPage.OneEyed.GetValue()),
-            str(matrixPage.Lame.GetValue()),
-            str(matrixPage.Deaf.GetValue()),
-            str(matrixPage.Mute.GetValue()),
-            str(matrixPage.Crippled.GetValue()),
-            str(matrixPage.OtherConditionText.GetValue()),
-            str(matrixPage.YesDevil.GetValue()),
-            str(matrixPage.NoDevil.GetValue()),
-            str(matrixPage.UnableToDetermineDevil.GetValue()),
-            str(matrixPage.Whipped.GetValue()),
-            str(matrixPage.PublicService.GetValue()),
-            str(matrixPage.CutHair.GetValue()),
-            str(matrixPage.Executed.GetValue()),
-            str(matrixPage.Exiled.GetValue()),
-            str(matrixPage.OtherPunishment.GetValue()),
-            str(matrixPage.Sacrifices.GetValue()),
-            str(matrixPage.Chants.GetValue()),
-            str(matrixPage.Incantations.GetValue()),
-            str(matrixPage.Song.GetValue()),
-            str(matrixPage.Dance.GetValue()),
-            str(matrixPage.Ritual.GetValue()),
-            str(matrixPage.Celebration.GetValue()),
-            str(matrixPage.OtherTechniquesText.GetValue()),
-            str(matrixPage.NotesTechniquesText.GetValue()),
-            str(matrixPage.SpecialClothing.GetValue()),
-            str(matrixPage.Cosmology.GetValue()),
-            str(matrixPage.Ethnomedicine.GetValue()),
-            str(matrixPage.GeneralNotes.GetValue())]
+def getMatrixInfo(matrixPage):
+    return [str(matrixPage.GetPage(0).MatrixID),
+            str(matrixPage.GetPage(0).Consulter.GetValue()),
+            str(matrixPage.GetPage(0).Huaca.GetValue()),
+            str(matrixPage.GetPage(0).Malqui.GetValue()),
+            str(matrixPage.GetPage(0).Lightning.GetValue()),
+            str(matrixPage.GetPage(0).Sun.GetValue()),
+            str(matrixPage.GetPage(0).Capycocha.GetValue()),
+            str(matrixPage.GetPage(0).OtherConsulter.GetValue()),
+            str(matrixPage.GetPage(0).OtherConsulterText.GetValue()),
+            str(matrixPage.GetPage(0).GuardianOf.GetValue()),
+            str(matrixPage.GetPage(0).GuardianOfText.GetValue()),
+            str(matrixPage.GetPage(0).Diviners.GetValue()),
+            str(matrixPage.GetPage(0).Spiders.GetValue()),
+            str(matrixPage.GetPage(0).Molle.GetValue()),
+            str(matrixPage.GetPage(0).Love.GetValue()),
+            str(matrixPage.GetPage(0).LostThings.GetValue()),
+            str(matrixPage.GetPage(0).Mushrooms.GetValue()),
+            str(matrixPage.GetPage(0).CuyExaminers.GetValue()),
+            str(matrixPage.GetPage(0).PurposeText.GetValue()),
+            str(matrixPage.GetPage(0).Curer.GetValue()),
+            str(matrixPage.GetPage(0).Confessor.GetValue()),
+            str(matrixPage.GetPage(0).Curandero.GetValue()),
+            str(matrixPage.GetPage(0).HelperSacristan.GetValue()),
+            str(matrixPage.GetPage(0).ChichaAsuacAccacMaker.GetValue()),
+            str(matrixPage.GetPage(0).ChacraLandGuardian.GetValue()),
+            str(matrixPage.GetPage(0).BloodsuckersDeathDealersCaptains.GetValue()),
+            str(matrixPage.GetPage(0).Dogmatizer.GetValue()),
+            str(matrixPage.GetPage(0).EmbustaroLiar.GetValue()),
+            str(matrixPage.GetPage(0).Hecicero.GetValue()),
+            str(matrixPage.GetPage(0).Brujo.GetValue()),
+            str(matrixPage.GetPage(0).Sortilejo.GetValue()),
+            str(matrixPage.GetPage(0).SacristanHelper.GetValue()),
+            str(matrixPage.GetPage(0).ChichaMaker.GetValue()),
+            str(matrixPage.GetPage(0).RelapserBackslider.GetValue()),
+            str(matrixPage.GetPage(0).OtherChurchClassText.GetValue()),
+            str(matrixPage.GetPage(0).YesTortured.GetValue()),
+            str(matrixPage.GetPage(0).NoTortured.GetValue()),
+            str(matrixPage.GetPage(0).UnableToDetermineTorture.GetValue()),
+            str(matrixPage.GetPage(0).FamilySuccession.GetValue()),
+            str(matrixPage.GetPage(0).Elected.GetValue()),
+            str(matrixPage.GetPage(0).PersonalElection.GetValue()),
+            str(matrixPage.GetPage(0).UnableToDetermineProf.GetValue()),
+            str(matrixPage.GetPage(0).Blind.GetValue()),
+            str(matrixPage.GetPage(0).OneEyed.GetValue()),
+            str(matrixPage.GetPage(0).Lame.GetValue()),
+            str(matrixPage.GetPage(0).Deaf.GetValue()),
+            str(matrixPage.GetPage(0).Mute.GetValue()),
+            str(matrixPage.GetPage(0).Crippled.GetValue()),
+            str(matrixPage.GetPage(0).OtherConditionText.GetValue()),
+            str(matrixPage.GetPage(0).YesDevil.GetValue()),
+            str(matrixPage.GetPage(0).NoDevil.GetValue()),
+            str(matrixPage.GetPage(0).UnableToDetermineDevil.GetValue()),
+            str(matrixPage.GetPage(0).Whipped.GetValue()),
+            str(matrixPage.GetPage(0).PublicService.GetValue()),
+            str(matrixPage.GetPage(0).CutHair.GetValue()),
+            str(matrixPage.GetPage(0).Executed.GetValue()),
+            str(matrixPage.GetPage(0).Exiled.GetValue()),
+            str(matrixPage.GetPage(0).OtherPunishment.GetValue()),
+            str(matrixPage.GetPage(0).Sacrifices.GetValue()),
+            str(matrixPage.GetPage(0).Chants.GetValue()),
+            str(matrixPage.GetPage(0).Incantations.GetValue()),
+            str(matrixPage.GetPage(0).Song.GetValue()),
+            str(matrixPage.GetPage(0).Dance.GetValue()),
+            str(matrixPage.GetPage(0).Ritual.GetValue()),
+            str(matrixPage.GetPage(0).Celebration.GetValue()),
+            str(matrixPage.GetPage(0).OtherTechniquesText.GetValue()),
+            str(matrixPage.GetPage(0).NotesTechniquesText.GetValue()),
+            str(matrixPage.GetPage(1).SpecialClothing.GetValue()),
+            str(matrixPage.GetPage(2).Cosmology.GetValue()),
+            str(matrixPage.GetPage(3).Ethnomedicine.GetValue()),
+            str(matrixPage.GetPage(4).African.GetValue()),
+            str(matrixPage.GetPage(5).GeneralNotes.GetValue())]
     
-def saveMatrix(matrixPage):   
-        return MatrixDB.InsertUpdateMatrix(getMatrixInfo(matrixPage))
+def saveMatrix(database, matrixPage):
+        print(getMatrixInfo(matrixPage))
+        return MatrixDB.InsertUpdateMatrix(database, getMatrixInfo(matrixPage))
 
 class MainMatrixPanel(wx.ScrolledWindow):
     def __init__(self, parent):
@@ -98,6 +101,8 @@ class MainMatrixPanel(wx.ScrolledWindow):
 
         labelMinister = wx.StaticText(self, label="Type of Minister :")
         labelMinister.SetFont(largefont)
+        
+        MatrixID = self.MatrixID = ''
         
         Consulter                        = self.Consulter = wx.CheckBox(self, -1, "Consulter")
         Consulter.Font = boxfont
@@ -143,7 +148,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         
         Dogmatizer                       = self.Dogmatizer = wx.CheckBox(self, -1, "Dogmatizer")
         EmbustaroLiar                    = self.EmbustaroLiar = wx.CheckBox(self, -1, "Embustaro/a or Liar")
-        Hecicero                         = self.Heciceroocietal = wx.CheckBox(self, -1, "Hecicero/a")
+        Hecicero                         = self.Hecicero = wx.CheckBox(self, -1, "Hecicero/a")
         Brujo                            = self.Brujo = wx.CheckBox(self, -1, "Brujo/a")
         Sortilejo                        = self.Sortilejo = wx.CheckBox(self, -1, "Sortilejo")
         SacristanHelper                  = self.SacristanHelper = wx.CheckBox(self, -1, "Sacristan/ Helper")
@@ -157,7 +162,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         labelTourtured = wx.StaticText(self, label="Tourtured :")
         labelTourtured.SetFont(largefont)
         
-        YesTortured                      = self.YesTorturedocietal = wx.CheckBox(self, -1, "Yes")
+        YesTortured                      = self.YesTortured = wx.CheckBox(self, -1, "Yes")
         NoTortured                       = self.NoTortured = wx.CheckBox(self, -1, "No")
         UnableToDetermineTorture         = self.UnableToDetermineTorture = wx.CheckBox(self, -1, "Unable to Determine")
         
@@ -167,7 +172,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         
         FamilySuccession                 = self.FamilySuccession = wx.CheckBox(self, -1, "Family Succession")
         Elected                          = self.Elected = wx.CheckBox(self, -1, "Elected")
-        PersonalElection                 = self.PersonalElectionocietal = wx.CheckBox(self, -1, "Personal Election")
+        PersonalElection                 = self.PersonalElection = wx.CheckBox(self, -1, "Personal Election")
         UnableToDetermineProf            = self.UnableToDetermineProf = wx.CheckBox(self, -1, "Unable to Determine")
         
 
@@ -198,7 +203,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         Whipped                          = self.Whipped = wx.CheckBox(self, -1, "Whipped")
         PublicService                    = self.PublicService = wx.CheckBox(self, -1, "Public Service")
         CutHair                          = self.CutHair = wx.CheckBox(self, -1, "Cut Hair")
-        Executed                         = self.Executedocietal = wx.CheckBox(self, -1, "Executed")
+        Executed                         = self.Executed = wx.CheckBox(self, -1, "Executed")
         Exiled                           = self.Exiled = wx.CheckBox(self, -1, "Exiled")
         OtherPunishment                  = self.OtherPunishment = wx.CheckBox(self, -1, "Other Punishment")
         OtherPunishmentText              = self.OtherPunishmentText = wx.TextCtrl(self, size=(150,-1),name="OtherPunishmentText")
@@ -375,6 +380,18 @@ class EthnomedicineMatrixPanel(wx.Panel):
 
         self.SetSizer(sizer)
         
+class AfricanMatrixPanel(wx.Panel):
+    def __init__(self, parent):
+
+        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
+                
+        African = self.African = wx.TextCtrl(self, -1, "", wx.DefaultPosition, (975,515), wx.TE_MULTILINE|wx.SUNKEN_BORDER)
+        
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        sizer.Add(African , 1, wx.ALL|wx.EXPAND, 5)
+
+        self.SetSizer(sizer)
+        
 class GeneralNotesMatrixPanel(wx.Panel):
     def __init__(self, parent):
 
@@ -397,4 +414,5 @@ class MatrixPanel(wx.Notebook):
         self.AddPage(SpecialClothingMatrixPanel(self), "Special Clothing Notes")
         self.AddPage(CosmologyMatrixPanel(self), "Cosmology Notes")
         self.AddPage(EthnomedicineMatrixPanel(self), "Ethnomedicine Notes")
+        self.AddPage(AfricanMatrixPanel(self), "African Notes")
         self.AddPage(GeneralNotesMatrixPanel(self), "General Notes")

@@ -1,5 +1,6 @@
-from . import PeruDB
-from .. import PeruConstants
+import PeruDB
+import PeruConstants
+
 
 def PersonInsertFromList(people):
     resultString = ""
@@ -12,8 +13,10 @@ def PersonInsertFromList(people):
     
     return resultString
 
+
 def PersonReadSingleStatement(fields):    
     return("SELECT * FROM PERSON WHERE " + PeruConstants.PERSON_FIELDS[0] + " = '" + fields[0] + "';\n")
+
 
 def PersonInsertStatement(fields):
     
@@ -28,6 +31,7 @@ def PersonInsertStatement(fields):
                 " VALUES(" + "\',\'".join(strFields) + ");\n")
     else:
         return "INSERT INTO " + PeruConstants.PERSON + " (" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" + " VALUES('" + "','".join(strFields[1:]) + "');\n"
+
 
 def PersonUpdateStatement(fields):
     
@@ -58,21 +62,15 @@ def InsertUpdatePerson(database, fields):
         
 
 def InsertPerson(database, fields):
-    database = PeruDB.PeruDB()
     output = database.insert(PersonInsertStatement(fields))
-    database.closeDB()
     return output
 
 def UpdatePerson(database, fields):
-    database = PeruDB.PeruDB()
     output = database.update(PersonUpdateStatement(fields))
-    database.closeDB()
     return output
 
 def DeletePerson(database, fields):
-    database = PeruDB.PeruDB()    
     output = database.delete(PersonDeleteStatement(fields))
-    database.closeDB()
     return output
 
 def PersonReadStatement(ID):

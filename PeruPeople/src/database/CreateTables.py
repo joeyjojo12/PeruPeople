@@ -3,10 +3,11 @@
 
 import sqlite3 as lite
 import sys
+import PeruConstants
 
 try:
   
-    con = lite.connect('peru.db')
+    con = lite.connect(PeruConstants.PERU_DB)
     
     cur = con.cursor()
     cur.executescript("""
@@ -20,6 +21,7 @@ try:
         DROP TABLE IF EXISTS DocumentType;
         DROP TABLE IF EXISTS GenderType;
         DROP TABLE IF EXISTS GenderType;
+        DROP TABLE IF EXISTS CastaType;
       
        
         CREATE TABLE RegionType (Region    TEXT PRIMARY KEY NOT NULL,
@@ -162,7 +164,8 @@ try:
                             NotesTechniquesText                   TEXT, 
                             SpecialClothing                       TEXT, 
                             Cosmology                             TEXT,     
-                            Ethnomedicine                         TEXT, 
+                            Ethnomedicine                         TEXT,     
+                            African                               TEXT, 
                             GeneralNotes                          TEXT
         );
 

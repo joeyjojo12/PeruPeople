@@ -1,8 +1,8 @@
 import wx
 
 #Import UI elements
-from . import EntryUI
-from .. import PeruConstants
+import EntryUI
+import PeruConstants
 
 class PeruMainUIFrame(wx.Frame):
     """

@@ -1,5 +1,5 @@
-from . import PeruDB
-from .. import PeruConstants
+import PeruDB
+import PeruConstants
 
 def MatrixInsertFromList(matricies):
     resultString = ""
@@ -17,6 +17,8 @@ def MatrixReadSingleStatement(fields):
 
 def MatrixInsertStatement(fields):
     
+    print(len(fields))
+    print(len(PeruConstants.MATRIX_FIELDS))
     if len(fields) > len(PeruConstants.MATRIX_FIELDS) or len(fields) < (len(PeruConstants.MATRIX_FIELDS) - 1):
         return -1
     
@@ -50,29 +52,23 @@ def ReadMatrix(fields):
     return output
     
     
-def InsertUpdateMatrix(fields):
+def InsertUpdateMatrix(database, fields):
     if fields[0] != '':
-        return UpdateMatrix(fields)
+        return UpdateMatrix(database, fields)
     else:
-        return InsertMatrix(fields)
+        return InsertMatrix(database, fields)
         
 
-def InsertMatrix(fields):
-    database = PeruDB.PeruDB()
+def InsertMatrix(database, fields):
     output = database.insert(MatrixInsertStatement(fields))
-    database.closeDB()
     return output
 
-def UpdateMatrix(fields):
-    database = PeruDB.PeruDB()
+def UpdateMatrix(database, fields):
     output = database.update(MatrixUpdateStatement(fields))
-    database.closeDB()
     return output
 
-def DeleteMatrix(fields):
-    database = PeruDB.PeruDB()    
+def DeleteMatrix(database, fields):
     output = database.delete(MatrixDeleteStatement(fields))
-    database.closeDB()
     return output
 
 def MatrixReadStatement(ID):

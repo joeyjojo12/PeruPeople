@@ -1,8 +1,10 @@
 import sys
 import  wx
 import  wx.lib.mixins.listctrl  as  listmix
-from . import PeruMainUI
-from ..database import PersonGroupDB
+import PeruMainUI
+from database import PeruDB
+from database import PersonGroupDB
+
 
 #---------------------------------------------------------------------------
 
@@ -72,6 +74,8 @@ class PeruListCtrlFrame(wx.Frame):
 
 
     def PopulateList(self):
+        self.list.ClearAll()
+        
         # but since we want images on the column header we have to do it the hard way:
         info = wx.ListItem()
         info.m_mask = wx.LIST_MASK_TEXT | wx.LIST_MASK_IMAGE | wx.LIST_MASK_FORMAT
@@ -169,8 +173,16 @@ class PeruListCtrlFrame(wx.Frame):
         event.Skip()
 
     def OnButtonAdd(self, event):
+        database = PeruDB.PeruDB()
         self.curentPersonGroupID = self.curentPersonGroupID + 1
-        PersonGroupDB.InsertPersonGroup(self.curentPersonGroupID)
+        PersonGroupDB.InsertPersonGroup(database, self.curentPersonGroupID)
+        database.commit()
+        database.closeDB()
+        
+        #Repopulate List
+        self.PopulateList()
+        
+        #Start Main Window
         win = PeruMainUI.PeruMainUIFrame(self, 1, self.curentPersonGroupID)
         win.Show(True)
         self.frame = win
@@ -194,13 +206,6 @@ class PeruListCtrlFrame(wx.Frame):
         # will be called before PopupMenu returns.
         self.PopupMenu(menu)
         menu.Destroy()
-
-
-#----------------------------------------------------------------------
-if __name__ == "__main__":
-    app = wx.App(False)
-    frame = PeruListCtrlFrame()
-    app.MainLoop()
 
 
 

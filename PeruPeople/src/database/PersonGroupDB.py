@@ -1,5 +1,5 @@
-from . import PeruDB
-from .. import PeruConstants
+import PeruDB
+import PeruConstants
 
 def ListPersonGroups():
     database = PeruDB.PeruDB()
@@ -7,9 +7,7 @@ def ListPersonGroups():
     database.closeDB()
     return output
 
-def InsertPersonGroup(PersonGroupID):
-    database = PeruDB.PeruDB()
+def InsertPersonGroup(database, PersonGroupID):
     output = database.insert("INSERT INTO " + PeruConstants.PERSONGROUP + " VALUES(" + str(PersonGroupID) + ")")
-    database.closeDB()
     return output
     

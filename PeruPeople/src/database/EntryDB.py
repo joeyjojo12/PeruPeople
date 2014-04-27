@@ -1,5 +1,5 @@
-from . import PeruDB
-from .. import PeruConstants
+import PeruDB
+import PeruConstants
 
 def EntryInsertFromList(entries):
     resultString = ""
@@ -50,31 +50,23 @@ def ReadEntry(fields):
     return output
     
     
-def InsertUpdateEntry(fields):
+def InsertUpdateEntry(database, fields):
     if fields[0] != '':
-        return UpdateEntry(fields)
+        return UpdateEntry(database, fields)
     else:
-        return InsertEntry(fields)
+        return InsertEntry(database, fields)
         
 
-def InsertEntry(fields):
-    database = PeruDB.PeruDB()
+def InsertEntry(database, fields):
     output = database.insert(EntryInsertStatement(fields))
-    database.closeDB()
     return output
 
-def UpdateEntry(fields):
-    print(EntryUpdateStatement(fields))
-    return 0
-    #database = PeruDB.PeruDB()
-    #output = database.update(EntryUpdateStatement(fields))
-    #database.closeDB()
-    #return output
+def UpdateEntry(database, fields):
+    output = database.update(EntryUpdateStatement(fields))
+    return output
 
-def DeleteEntry(fields):
-    database = PeruDB.PeruDB()    
+def DeleteEntry(database, fields):    
     output = database.delete(EntryDeleteStatement(fields))
-    database.closeDB()
     return output
 
 def EntryReadStatement(ID):

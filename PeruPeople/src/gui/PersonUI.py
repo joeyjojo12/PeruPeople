@@ -1,6 +1,6 @@
 import wx
-from .. import PeruConstants
-from ..database import PersonDB
+import PeruConstants
+from database import PersonDB
 
 def getPersonInfo(personPage):    
     return [str(personPage.PersonID),
@@ -17,8 +17,8 @@ def getPersonInfo(personPage):
             str(personPage.Profession.GetValue()),
             str(personPage.Notes.GetValue())]
     
-def savePerson(personPage):   
-        return PersonDB.InsertUpdatePerson(getPersonInfo(personPage))
+def savePerson(database, personPage):   
+        return PersonDB.InsertUpdatePerson(database, getPersonInfo(personPage))
 
 class PersonPanel(wx.Panel):
     def __init__(self, parent):
@@ -47,7 +47,7 @@ class PersonPanel(wx.Panel):
         Gender = self.Gender = wx.ComboBox(self, 500, PeruConstants.DEFAULT_GENDER, (90, 50), (50, -1), PeruConstants.GENDER_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
         fieldList.append((wx.StaticText(self, label="Gender :"), Gender))
         
-        Casta = self.Casta = wx.ComboBox(self, 500, PeruConstants.DEFAULT_CASTA, (90, 50), (50, -1), PeruConstants.CASTA_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
+        Casta = self.Casta = wx.ComboBox(self, 500, PeruConstants.DEFAULT_CASTA, (90, 50), (150, -1), PeruConstants.CASTA_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
         fieldList.append((wx.StaticText(self, label="Casta :"), Casta))
         
         Age = self.Age = wx.TextCtrl(self, size=(50,-1))

@@ -1,7 +1,8 @@
 import wx
-from . import PersonUI, SourceUI, MatrixUI
-from .. import PeruConstants
-from ..database import EntryDB
+import PersonUI, SourceUI, MatrixUI
+import PeruConstants
+from database import EntryDB
+from database import PeruDB
 
 def GetEntries():
     return 2
@@ -52,11 +53,12 @@ class NestedEntryPanel(wx.Panel):
     def SaveEntries(self):
 
         noErrors = True
+        
         database = PeruDB.PeruDB()
 
         for i in range(self.nestedNotebook.GetPageCount()):
             #Save Person for this entry
-            result = PersonUI.savePerson(self.nestedNotebook.GetPage(i).GetPage(0))
+            result = PersonUI.savePerson(database, self.nestedNotebook.GetPage(i).GetPage(0))
             if result[0] != 0:
                 print(result[1])
                 noErrors = False
@@ -64,7 +66,7 @@ class NestedEntryPanel(wx.Panel):
             Person = result[1]
 
             #Save Source for this entry
-            result = SourceUI.saveSource(self.nestedNotebook.GetPage(i).GetPage(1))
+            result = SourceUI.saveSource(database, self.nestedNotebook.GetPage(i).GetPage(1))
             if result[0] != 0:
                 print(result[1])
                 noErrors = False
@@ -72,15 +74,14 @@ class NestedEntryPanel(wx.Panel):
             Source = result[1]
 
             #Save Matrix for this entry
-            #result = MatrixUI.saveMatrix(self.nestedNotebook.GetPage(i).GetPage(2))
-            #if result[0] != 0:
-            #    print(result[1])
-            #    noErrors = False
-            #    break
-            #Matrix = result[1]
-            Matrix = 0
+            result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
+            if result[0] != 0:
+                print(result[1])
+                noErrors = False
+                break
+            Matrix = result[1]
             
-            EntryDB.InsertUpdateEntry(['', self.PersonGroupID, Person, Source, Matrix])
+            EntryDB.InsertUpdateEntry(database, ['', self.PersonGroupID, Person, Source, Matrix])
             
         if(noErrors):
             database.commit()

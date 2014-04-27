@@ -1,6 +1,6 @@
 import sqlite3 as lite
 import sys
-from .. import PeruConstants
+import PeruConstants
 
 class PeruDB:
     
@@ -48,6 +48,7 @@ class PeruDB:
     def executeCommand(self, commandString):
         try:
             cur = self.con.cursor()
+            print(commandString)
             cur.execute(commandString)
             return[0, cur.lastrowid]
         
