@@ -51,6 +51,7 @@ def getMatrixInfo(matrixPage):
             str(matrixPage.GetPage(0).Deaf.GetValue()),
             str(matrixPage.GetPage(0).Mute.GetValue()),
             str(matrixPage.GetPage(0).Crippled.GetValue()),
+            str(matrixPage.GetPage(0).OtherCondition.GetValue()),
             str(matrixPage.GetPage(0).OtherConditionText.GetValue()),
             str(matrixPage.GetPage(0).YesDevil.GetValue()),
             str(matrixPage.GetPage(0).NoDevil.GetValue()),
@@ -61,6 +62,7 @@ def getMatrixInfo(matrixPage):
             str(matrixPage.GetPage(0).Executed.GetValue()),
             str(matrixPage.GetPage(0).Exiled.GetValue()),
             str(matrixPage.GetPage(0).OtherPunishment.GetValue()),
+            str(matrixPage.GetPage(0).OtherPunishmentText.GetValue()),
             str(matrixPage.GetPage(0).Sacrifices.GetValue()),
             str(matrixPage.GetPage(0).Chants.GetValue()),
             str(matrixPage.GetPage(0).Incantations.GetValue()),
@@ -68,6 +70,7 @@ def getMatrixInfo(matrixPage):
             str(matrixPage.GetPage(0).Dance.GetValue()),
             str(matrixPage.GetPage(0).Ritual.GetValue()),
             str(matrixPage.GetPage(0).Celebration.GetValue()),
+            str(matrixPage.GetPage(0).OtherTechniques.GetValue()),
             str(matrixPage.GetPage(0).OtherTechniquesText.GetValue()),
             str(matrixPage.GetPage(0).NotesTechniquesText.GetValue()),
             str(matrixPage.GetPage(1).SpecialClothing.GetValue()),
@@ -221,7 +224,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         Celebration                      = self.Celebration = wx.CheckBox(self, -1, "Celebration")
         OtherTechniques                  = self.OtherTechniques = wx.CheckBox(self, -1, "Other")
         OtherTechniquesText              = self.OtherTechniquesText = wx.TextCtrl(self, size=(150,-1),name="OtherTechniquesText")
-        NotesTechniques                  = self.NotesTechniques = wx.CheckBox(self, -1, "Notes")
+        NotesTechniquesLabel = wx.StaticText(self, label="Notes: ")
         NotesTechniquesText              = self.NotesTechniquesText = wx.TextCtrl(self, size=(150,-1),name="NotesTechniquesText")
 
         space = 6
@@ -334,7 +337,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         OtherTechniquesSizer.Add(OtherTechniquesText  ,(0,1))
         infoSizer.Add(OtherTechniquesSizer            ,(8,16))
         NotesTechniquesSizer = wx.GridBagSizer(hgap=space, vgap=space)
-        NotesTechniquesSizer.Add(NotesTechniques      ,(0,0))
+        NotesTechniquesSizer.Add(NotesTechniquesLabel ,(0,0))
         NotesTechniquesSizer.Add(NotesTechniquesText  ,(0,1))
         infoSizer.Add(NotesTechniquesSizer            ,(9,16))   
 

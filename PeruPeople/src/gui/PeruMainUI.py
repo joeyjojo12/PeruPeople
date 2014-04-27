@@ -9,7 +9,7 @@ class PeruMainUIFrame(wx.Frame):
     Frame that holds all other widgets
     """
 
-    def __init__(self, parent, EntryInfo, PersonGroupID):
+    def __init__(self, parent, NewGroup, PersonGroupID):
         """Constructor"""
         wx.Frame.__init__(self, parent, wx.ID_ANY,"Traditional Healers - Peru",size=(1200,800))
         
@@ -33,7 +33,7 @@ class PeruMainUIFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.CloseWindow, id=101)
         self.Bind(wx.EVT_MENU, self.AboutInfo, id=201)
         
-        self.notebook = EntryUI.NestedEntryPanel(self, EntryInfo, PersonGroupID)
+        self.notebook = EntryUI.NestedEntryPanel(self, NewGroup, PersonGroupID)
 
         self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
         self.saveButton = wx.Button(self, -1, "Save")

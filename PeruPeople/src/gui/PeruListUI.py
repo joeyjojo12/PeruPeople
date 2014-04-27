@@ -91,9 +91,9 @@ class PeruListCtrlFrame(wx.Frame):
             self.curentPersonGroupID = int(people[len(people)-1][0])
         
         peopleDict = {}
-        
+                
         for person in people:
-            peopleDict[person[0]] = person[0]
+            peopleDict[person[0]] = PersonGroupDB.GetPersonName(person[0])
         
         for item in peopleDict.iteritems():
             index = self.list.InsertStringItem(0, str(item[1]))
@@ -183,7 +183,7 @@ class PeruListCtrlFrame(wx.Frame):
         self.PopulateList()
         
         #Start Main Window
-        win = PeruMainUI.PeruMainUIFrame(self, 1, self.curentPersonGroupID)
+        win = PeruMainUI.PeruMainUIFrame(self, True, self.curentPersonGroupID)
         win.Show(True)
         self.frame = win
         

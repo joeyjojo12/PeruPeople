@@ -22,9 +22,14 @@ class NestedEntryPanel(wx.Panel):
     """
     Panel contains multiple 'Entry' tabs
     """
-    def __init__(self, parent, EntryInfo, PersonGroupID):
+    def __init__(self, parent, NewGroup, PersonGroupID):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-        NumEntries = self.NumEntries = EntryInfo # GetEntries()        
+        if(NewGroup):
+            #do this
+            NumEntries = self.NumEntries = 1 # GetEntries()
+        else:
+            NumEntries = self.NumEntries = 1 # GetEntries()
+            
         self.PersonGroupID = PersonGroupID
         
         nestedNotebook = self.nestedNotebook = wx.Notebook(self, wx.ID_ANY)
