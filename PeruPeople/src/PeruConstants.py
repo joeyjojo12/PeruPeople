@@ -35,6 +35,12 @@ SOURCE = 'Source'
 MATRIX = 'Matrix'
 ENTRY  = 'Entry'
 
+PERSONGROUP_ID = 'PersonGroupID'
+PERSON_ID = 'PersonID'
+SOURCE_ID = 'SourceID'
+MATRIX_ID = 'MatrixID'
+ENTRY_ID  = 'EntryID'
+
 ENTRY_FIELDS  = ['EntryId','PersonGroupID','PersonID','SourceID','MatrixID']
 PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Age','AgeRange','Occupation','Religion','Profession','Notes']
 SOURCE_FIELDS = ['SourceId','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']

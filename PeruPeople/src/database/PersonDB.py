@@ -14,12 +14,11 @@ def PersonInsertFromList(people):
     return resultString
 
 
-def PersonReadSingleStatement(fields):    
-    return("SELECT * FROM PERSON WHERE " + PeruConstants.PERSON_FIELDS[0] + " = '" + fields[0] + "';\n")
+def PersonReadSingleStatement(PersonID):    
+    return("SELECT * FROM PERSON WHERE " + PeruConstants.PERSON_ID + " = '" + str(PersonID) + "';\n")
 
 
-def PersonInsertStatement(fields):
-    
+def PersonInsertStatement(fields):    
     if len(fields) > len(PeruConstants.PERSON_FIELDS) or len(fields) < (len(PeruConstants.PERSON_FIELDS) - 1):
         return [1,"Improper format"]
     
@@ -33,8 +32,7 @@ def PersonInsertStatement(fields):
         return "INSERT INTO " + PeruConstants.PERSON + " (" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" + " VALUES('" + "','".join(strFields[1:]) + "');\n"
 
 
-def PersonUpdateStatement(fields):
-    
+def PersonUpdateStatement(fields):    
     if len(fields) != len(PeruConstants.PERSON_FIELDS):
         return -1
     
@@ -47,9 +45,9 @@ def PersonUpdateStatement(fields):
 def PersonDeleteStatement(fields):    
     return("DELETE FROM PERSON WHERE " + PeruConstants.PERSON_FIELDS[0] + " = " + fields[0] + ";\n")
 
-def ReadPerson(fields):
+def ReadPerson(PersonID):
     database = PeruDB.PeruDB()
-    output = database.querry(PersonReadSingleStatement(fields));
+    output = database.querry(PersonReadSingleStatement(PersonID));
     database.closeDB()
     return output
     

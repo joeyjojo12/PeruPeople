@@ -21,13 +21,19 @@ def savePerson(database, personPage):
         return PersonDB.InsertUpdatePerson(database, getPersonInfo(personPage))
 
 class PersonPanel(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent, PersonID):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
         
-        PersonID = self.PersonID = ''
+        PersonFields = self.PersonFields = []
         
-        fieldList = []
+        if(PersonID > 0):
+            self.PersonID = PersonID
+            PersonFields = PersonDB.ReadPerson(PersonID)
+        else:
+            PersonID = self.PersonID = ''
+        
+        fieldList = self.fieldList = []
 
         FirstName = self.FirstName = wx.TextCtrl(self, size=(400,-1),name="First Name")
         fieldList.append((wx.StaticText(self, label="First Name :"), FirstName))
@@ -88,6 +94,10 @@ class PersonPanel(wx.Panel):
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
+        
+        #Populate fields with content from current person
+        if(PersonID != ''):
+            self.PopulateFields()
 
         self.SetSizer(sizer)
         
@@ -101,3 +111,9 @@ class PersonPanel(wx.Panel):
             self.AgeRange.SetSelection(10)
         else:
             self.AgeRange.SetSelection(age/10)
+            
+    def PopulateFields(self):
+        #populate
+        self.FirstName.WriteText(self.PersonFields[1])
+            
+        

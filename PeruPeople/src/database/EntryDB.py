@@ -15,6 +15,12 @@ def EntryInsertFromList(entries):
 def EntryReadSingleStatement(fields):    
     return("SELECT * FROM ENTRY WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = '" + fields[0] + "';\n")
 
+def EntryReadAllStatement(PersonGroupID):
+    if(int(PersonGroupID) > 0):
+        return("SELECT * FROM ENTRY WHERE PersonGroupID = " + str(PersonGroupID) + " ORDER BY EntryID")
+    else:
+        return("SELECT * FROM ENTRY ORDER BY EntryID")
+
 def EntryInsertStatement(fields):
     
     if len(fields) > len(PeruConstants.ENTRY_FIELDS) or len(fields) < (len(PeruConstants.ENTRY_FIELDS) - 1):
@@ -48,7 +54,12 @@ def ReadEntry(fields):
     output = database.querry(EntryReadSingleStatement(fields));
     database.closeDB()
     return output
-    
+
+def ReadEntries(PersonGroupID):
+    database = PeruDB.PeruDB()
+    output = database.querry(EntryReadAllStatement(PersonGroupID));
+    database.closeDB()
+    return output    
     
 def InsertUpdateEntry(database, fields):
     if fields[0] != '':

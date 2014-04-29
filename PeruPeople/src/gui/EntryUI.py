@@ -4,18 +4,19 @@ import PeruConstants
 from database import EntryDB
 from database import PeruDB
 
-def GetEntries():
-    return 2
-
-
 class EntryNotebook(wx.Notebook):
     
-    def __init__(self, parent):
+    def __init__(self, parent, currentEntry):
         wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=wx.BK_DEFAULT)
 
-        self.AddPage(PersonUI.PersonPanel(self), "Person")
-        self.AddPage(SourceUI.SourcePanel(self), "Source")
-        self.AddPage(MatrixUI.MatrixPanel(self), "Matrix")
+        if(len(currentEntry) > 0):
+            self.AddPage(PersonUI.PersonPanel(self, currentEntry[0]), "Person")
+            self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
+            self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")            
+        else:
+            self.AddPage(PersonUI.PersonPanel(self, 0), "Person")
+            self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
+            self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")
 
 
 class NestedEntryPanel(wx.Panel):
@@ -24,13 +25,12 @@ class NestedEntryPanel(wx.Panel):
     """
     def __init__(self, parent, NewGroup, PersonGroupID):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-        if(NewGroup):
-            #do this
-            NumEntries = self.NumEntries = 1 # GetEntries()
-        else:
-            NumEntries = self.NumEntries = 1 # GetEntries()
             
         self.PersonGroupID = PersonGroupID
+        EntryList = self.EntryList = []
+        
+        if(NewGroup != True):
+            EntryList = EntryDB.ReadEntries(PersonGroupID)
         
         nestedNotebook = self.nestedNotebook = wx.Notebook(self, wx.ID_ANY)
         
@@ -40,9 +40,12 @@ class NestedEntryPanel(wx.Panel):
         
         topSizer = self.topSizer = wx.BoxSizer(wx.HORIZONTAL)
         topSizer.Add(self.addEntryButton, 0, wx.ALIGN_RIGHT)
-
-        for i in range(1, NumEntries+1):
-            nestedNotebook.AddPage(EntryNotebook(nestedNotebook), "Entry " + str(i))
+        
+        if(len(EntryList) > 0):
+            for i in range(len(EntryList)):
+                nestedNotebook.AddPage(EntryNotebook(nestedNotebook, EntryList[i]), "Entry " + str(i+1))
+        else:
+            nestedNotebook.AddPage(EntryNotebook(nestedNotebook, []), "Entry " + str(i+1))
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(topSizer, 0, wx.ALIGN_RIGHT)
