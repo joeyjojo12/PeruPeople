@@ -42,7 +42,7 @@ MATRIX_ID = 'MatrixID'
 ENTRY_ID  = 'EntryID'
 
 ENTRY_FIELDS  = ['EntryId','PersonGroupID','PersonID','SourceID','MatrixID']
-PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Age','AgeRange','Occupation','Religion','Profession','Notes']
+PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Casta','Gender','Age','AgeRange','Occupation','Religion','Profession','Notes']
 SOURCE_FIELDS = ['SourceId','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
 MATRIX_FIELDS = ['MatrixId',
                  'Consulter',

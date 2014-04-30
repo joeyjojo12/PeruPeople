@@ -9,6 +9,7 @@ def getPersonInfo(personPage):
             str(personPage.Location.GetValue()),
             str(personPage.Ayllu.GetValue()),
             str(personPage.Region.GetValue()),
+            str(personPage.Casta.GetValue()),
             str(personPage.Gender.GetValue()),
             str(personPage.Age.GetValue()),
             str(personPage.AgeRange.GetValue()),
@@ -25,13 +26,13 @@ class PersonPanel(wx.Panel):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
         
-        PersonFields = self.PersonFields = []
         
         if(PersonID > 0):
             self.PersonID = PersonID
-            PersonFields = PersonDB.ReadPerson(PersonID)
+            self.PersonFields = PersonDB.ReadPerson(PersonID)[1][0]
         else:
             PersonID = self.PersonID = ''
+            self.PersonFields = self.PersonFields = []
         
         fieldList = self.fieldList = []
 
@@ -65,7 +66,7 @@ class PersonPanel(wx.Panel):
         Occupation = self.Occupation = wx.TextCtrl(self, size=(400,-1))
         fieldList.append((wx.StaticText(self, label="Occupation :"), Occupation))
         
-        Religion = self.Religion = wx.TextCtrl(self, value="Catholic", size=(400,-1))
+        Religion = self.Religion = wx.TextCtrl(self, size=(400,-1))
         fieldList.append((wx.StaticText(self, label="Religion :"), Religion))
         
         Profession = self.Profession = wx.TextCtrl(self, size=(400,-1))
@@ -114,6 +115,18 @@ class PersonPanel(wx.Panel):
             
     def PopulateFields(self):
         #populate
-        self.FirstName.WriteText(self.PersonFields[1])
+        print(self.PersonFields)
+        print(PeruConstants.PERSON_FIELDS)
+        self.FirstName.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('FirstName')])
+        self.LastName.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('LastName')])
+        self.Location.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Location')])
+        self.Ayllu.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Ayllu')])
+        
+        self.Age.WriteText(str(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Age')]))
+        
+        self.Occupation.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Occupation')])
+        self.Religion.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Religion')])
+        self.Profession.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Profession')])
+        self.Notes.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Notes')])
             
         

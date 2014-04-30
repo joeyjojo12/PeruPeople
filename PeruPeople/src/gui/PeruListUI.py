@@ -42,7 +42,7 @@ class PeruListCtrlFrame(wx.Frame):
         self.SetAutoLayout(True)
 
         self.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected, self.list)
-        self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected, self.list)
+        #self.Bind(wx.EVT_LIST_ITEM_DESELECTED, self.OnItemDeselected, self.list)
         self.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnItemActivated, self.list)
         self.Bind(wx.EVT_LIST_DELETE_ITEM, self.OnItemDelete, self.list)
         self.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, self.list)
@@ -115,21 +115,20 @@ class PeruListCtrlFrame(wx.Frame):
     def OnItemSelected(self, event):
         ##print event.GetItem().GetTextColour()
         self.currentItem = event.m_itemIndex
-        print("OnItemSelected: %s, %s, %s, %s\n" %
-                           (self.currentItem,
-                            self.list.GetItemText(self.currentItem),
-                            self.getColumnText(self.currentItem, 1),
-                            self.getColumnText(self.currentItem, 2)))
+        #print("OnItemSelected: %s, %s, %s\n" %
+        #                   (self.currentItem,
+        #                    self.list.GetItemText(self.currentItem),
+        #                    self.list.GetItemData(self.currentItem)))#
 
-        if self.currentItem == 10:
-            print("OnItemSelected: Veto'd selection\n")
+        #if self.currentItem == 10:
+        #    print("OnItemSelected: Veto'd selection\n")
             #event.Veto()  # doesn't work
             # this does
-            self.list.SetItemState(10, 0, wx.LIST_STATE_SELECTED)
+        #    self.list.SetItemState(10, 0, wx.LIST_STATE_SELECTED)
 
         event.Skip()
 
-
+    """
     def OnItemDeselected(self, evt):
         item = evt.GetItem()
         print("OnItemDeselected: %d" % evt.m_itemIndex)
@@ -137,12 +136,12 @@ class PeruListCtrlFrame(wx.Frame):
         # Show how to reselect something we don't want deselected
         if evt.m_itemIndex == 11:
             wx.CallAfter(self.list.SetItemState, 11, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
-
+    """
 
     def OnItemActivated(self, event):
         self.currentItem = event.m_itemIndex
-        print("OnItemActivated: %s\nTopItem: %s" %
-                           (self.list.GetItemText(self.currentItem), self.list.GetTopItem()))
+        #print("OnItemActivated: %s\nTopItem: %s" %
+        #                   (self.list.GetItemText(self.currentItem), self.list.GetTopItem()))
 
     def OnBeginEdit(self, event):
         print("OnBeginEdit")
@@ -166,7 +165,9 @@ class PeruListCtrlFrame(wx.Frame):
 
 
     def OnDoubleClick(self, event):
-        win = PeruMainUI.PeruMainUIFrame(self, 7)
+        
+        #Start Main Window
+        win = PeruMainUI.PeruMainUIFrame(self, False, self.list.GetItemData(self.currentItem))
         win.Show(True)
         self.frame = win
         

@@ -10,13 +10,13 @@ class EntryNotebook(wx.Notebook):
         wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=wx.BK_DEFAULT)
 
         if(len(currentEntry) > 0):
-            self.AddPage(PersonUI.PersonPanel(self, currentEntry[0]), "Person")
-            self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
-            self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")            
+            self.AddPage(PersonUI.PersonPanel(self, currentEntry[2]), "Person")
+            self.AddPage(SourceUI.SourcePanel(self), "Source")
+            self.AddPage(MatrixUI.MatrixPanel(self), "Matrix")            
         else:
             self.AddPage(PersonUI.PersonPanel(self, 0), "Person")
-            self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
-            self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")
+            self.AddPage(SourceUI.SourcePanel(self), "Source")
+            self.AddPage(MatrixUI.MatrixPanel(self), "Matrix")
 
 
 class NestedEntryPanel(wx.Panel):
@@ -30,7 +30,7 @@ class NestedEntryPanel(wx.Panel):
         EntryList = self.EntryList = []
         
         if(NewGroup != True):
-            EntryList = EntryDB.ReadEntries(PersonGroupID)
+            EntryList = EntryDB.ReadEntries(PersonGroupID)[1]
         
         nestedNotebook = self.nestedNotebook = wx.Notebook(self, wx.ID_ANY)
         
@@ -41,11 +41,12 @@ class NestedEntryPanel(wx.Panel):
         topSizer = self.topSizer = wx.BoxSizer(wx.HORIZONTAL)
         topSizer.Add(self.addEntryButton, 0, wx.ALIGN_RIGHT)
         
+        print(EntryList)
         if(len(EntryList) > 0):
             for i in range(len(EntryList)):
                 nestedNotebook.AddPage(EntryNotebook(nestedNotebook, EntryList[i]), "Entry " + str(i+1))
         else:
-            nestedNotebook.AddPage(EntryNotebook(nestedNotebook, []), "Entry " + str(i+1))
+            nestedNotebook.AddPage(EntryNotebook(nestedNotebook, []), "Entry 1")
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(topSizer, 0, wx.ALIGN_RIGHT)

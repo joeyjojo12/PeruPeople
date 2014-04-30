@@ -18,7 +18,10 @@ def GetPersonName(personGroupID):
                              "WHERE Entry.PersonGroupID = " + str(personGroupID) + ";");
     database.closeDB()
     if(output[0] == 0):
-        return output[1][0][0] + " " + output[1][0][1]
+        if(len(output[1]) > 0):
+            return output[1][0][0] + " " + output[1][0][1]
+        else:
+            return "UNUSED"
     else:
         return -1
     
