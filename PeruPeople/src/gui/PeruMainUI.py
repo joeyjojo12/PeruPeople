@@ -16,6 +16,7 @@ class PeruMainUIFrame(wx.Frame):
         self.CenterOnScreen()
         self.CreateStatusBar()
         self.SetStatusText("I love you!")
+        self.NewGroup = NewGroup
 
         # Prepare the menu bar test
         menuBar = wx.MenuBar()
@@ -55,6 +56,9 @@ class PeruMainUIFrame(wx.Frame):
         #if dlg.ShowModal() == wx.ID_YES:
             
         self.notebook.SaveEntries()
+        
+        if(self.NewGroup):
+            self.Parent.PopulateList()
             
         #dlg.Destroy()
 

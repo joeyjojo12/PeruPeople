@@ -3,7 +3,7 @@ import PeruConstants
 from database import MatrixDB
 
 def getMatrixInfo(matrixPage):
-    return [str(matrixPage.GetPage(0).MatrixID),
+    return [str(matrixPage.MatrixID),
             str(matrixPage.GetPage(0).Consulter.GetValue()),
             str(matrixPage.GetPage(0).Huaca.GetValue()),
             str(matrixPage.GetPage(0).Malqui.GetValue()),
@@ -80,7 +80,6 @@ def getMatrixInfo(matrixPage):
             str(matrixPage.GetPage(5).GeneralNotes.GetValue())]
     
 def saveMatrix(database, matrixPage):
-        print(getMatrixInfo(matrixPage))
         return MatrixDB.InsertUpdateMatrix(database, getMatrixInfo(matrixPage))
 
 class MainMatrixPanel(wx.ScrolledWindow):
@@ -104,8 +103,6 @@ class MainMatrixPanel(wx.ScrolledWindow):
 
         labelMinister = wx.StaticText(self, label="Type of Minister :")
         labelMinister.SetFont(largefont)
-        
-        MatrixID = self.MatrixID = ''
         
         Consulter                        = self.Consulter = wx.CheckBox(self, -1, "Consulter")
         Consulter.Font = boxfont
@@ -410,8 +407,15 @@ class GeneralNotesMatrixPanel(wx.Panel):
 
 class MatrixPanel(wx.Notebook):
     
-    def __init__(self, parent):
+    def __init__(self, parent, MatrixID):
         wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=wx.BK_DEFAULT)
+        
+        if(MatrixID > 0):
+            self.MatrixID = MatrixID
+            self.MatrixFields = MatrixDB.ReadMatrix(MatrixID)[1][0]
+        else:
+            MatrixID = self.MatrixID = ''
+            self.MatrixFields = self.MatrixFields = []
 
         self.AddPage(MainMatrixPanel(self), "Matrix")
         self.AddPage(SpecialClothingMatrixPanel(self), "Special Clothing Notes")
@@ -419,3 +423,83 @@ class MatrixPanel(wx.Notebook):
         self.AddPage(EthnomedicineMatrixPanel(self), "Ethnomedicine Notes")
         self.AddPage(AfricanMatrixPanel(self), "African Notes")
         self.AddPage(GeneralNotesMatrixPanel(self), "General Notes")
+        
+        #Populate fields with content from current person
+        if(MatrixID != ''):
+            self.PopulateFields()
+        
+    def PopulateFields(self):
+        self.GetPage(0).Consulter.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Consulter')])
+        self.GetPage(0).Huaca.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterHuaca')])
+        self.GetPage(0).Malqui.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterMalqui')])
+        self.GetPage(0).Lightning.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterLightning')])
+        self.GetPage(0).Sun.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterSun')])
+        self.GetPage(0).Capycocha.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterCapycocha')])
+        self.GetPage(0).OtherConsulter.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterOtherConsulter')])
+        self.GetPage(0).OtherConsulterText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterOtherConsulterText')])                        
+        self.GetPage(0).GuardianOf.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterGuardianOf')])
+        self.GetPage(0).GuardianOfText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterGuardianOfText')])
+        self.GetPage(0).Diviners.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Diviners')])
+        self.GetPage(0).Spiders.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersSpiders')])
+        self.GetPage(0).Molle.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersMolle')])
+        self.GetPage(0).Love.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersLove')])
+        self.GetPage(0).LostThings.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersLostThings')])
+        self.GetPage(0).Mushrooms.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersMushrooms')])
+        self.GetPage(0).CuyExaminers.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersCuyExaminers')])
+        self.GetPage(0).PurposeText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DivinersPurposeText')])
+        self.GetPage(0).Curer.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Curer')])
+        self.GetPage(0).Confessor.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Confessor')])
+        self.GetPage(0).Curandero.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Curandero')])
+        self.GetPage(0).HelperSacristan.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('HelperSacristan')])
+        self.GetPage(0).ChichaAsuacAccacMaker.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChichaAsuacAccacMaker')])
+        self.GetPage(0).ChacraLandGuardian.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChacraLandGuardian')])
+        self.GetPage(0).BloodsuckersDeathDealersCaptains.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('BloodsuckersDeathDealersCaptains')])
+        self.GetPage(0).Dogmatizer.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchDogmatizer')])
+        self.GetPage(0).EmbustaroLiar.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchEmbustaroLiar')])
+        self.GetPage(0).Hecicero.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchHecicero')])
+        self.GetPage(0).Brujo.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchBrujo')])
+        self.GetPage(0).Sortilejo.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchSortilejo')])
+        self.GetPage(0).SacristanHelper.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchSacristanHelper')])
+        self.GetPage(0).ChichaMaker.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchChichaMaker')])
+        self.GetPage(0).RelapserBackslider.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchRelapserBackslider')])
+        self.GetPage(0).OtherChurchClassText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ChurchOtherChurchClassText')])
+        self.GetPage(0).YesTortured.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TorturedYesTortured')])
+        self.GetPage(0).NoTortured.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TorturedNoTortured')])
+        self.GetPage(0).UnableToDetermineTorture.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TorturedUnableToDetermineTorture')])
+        self.GetPage(0).FamilySuccession.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ProfessionFamilySuccession')])
+        self.GetPage(0).Elected.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ProfessionElected')])
+        self.GetPage(0).PersonalElection.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ProfessionPersonalElection')])
+        self.GetPage(0).UnableToDetermineProf.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ProfessionUnableToDetermineProf')])
+        self.GetPage(0).Blind.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionBlind')])
+        self.GetPage(0).OneEyed.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionOneEyed')])
+        self.GetPage(0).Lame.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionLame')])
+        self.GetPage(0).Deaf.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionDeaf')])
+        self.GetPage(0).Mute.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionMute')])
+        self.GetPage(0).Crippled.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionCrippled')])
+        self.GetPage(0).OtherCondition.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionOtherCondition')])
+        self.GetPage(0).OtherConditionText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionOtherConditionText')])
+        self.GetPage(0).YesDevil.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DevilYesDevil')])
+        self.GetPage(0).NoDevil.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DevilNoDevil')])
+        self.GetPage(0).UnableToDetermineDevil.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DevilUnableToDetermineDevil')])
+        self.GetPage(0).Whipped.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentWhipped')])
+        self.GetPage(0).PublicService.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentPublicService')])
+        self.GetPage(0).CutHair.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentCutHair')])
+        self.GetPage(0).Executed.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentExecuted')])
+        self.GetPage(0).Exiled.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentExiled')])
+        self.GetPage(0).OtherPunishment.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentOtherPunishment')])
+        self.GetPage(0).OtherPunishmentText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('PunishmentOtherPunishmentText')])
+        self.GetPage(0).Sacrifices.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesSacrifices')])
+        self.GetPage(0).Chants.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesChants')])
+        self.GetPage(0).Incantations.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesIncantations')])
+        self.GetPage(0).Song.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesSong')])
+        self.GetPage(0).Dance.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesDance')])
+        self.GetPage(0).Ritual.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesRitual')])
+        self.GetPage(0).Celebration.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesCelebration')])
+        self.GetPage(0).OtherTechniques.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesOtherTechniques')])
+        self.GetPage(0).OtherTechniquesText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesOtherTechniquesText')])
+        self.GetPage(0).NotesTechniquesText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('TechniquesNotesTechniquesText')])
+        self.GetPage(1).SpecialClothing.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('SpecialClothing')])
+        self.GetPage(2).Cosmology.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Cosmology')])
+        self.GetPage(3).Ethnomedicine.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Ethnomedicine')])
+        self.GetPage(4).African.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('African')])
+        self.GetPage(5).GeneralNotes.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('GeneralNotes')])

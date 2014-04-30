@@ -12,13 +12,10 @@ def MatrixInsertFromList(matricies):
     
     return resultString
 
-def MatrixReadSingleStatement(fields):    
-    return("SELECT * FROM MATRIX WHERE " + PeruConstants.MATRIX_FIELDS[0] + " = '" + fields[0] + "';\n")
+def MatrixReadSingleStatement(MatrixID):    
+    return("SELECT * FROM MATRIX WHERE " + PeruConstants.MATRIX_ID + " = '" + str(MatrixID) + "';\n")
 
 def MatrixInsertStatement(fields):
-    
-    print(len(fields))
-    print(len(PeruConstants.MATRIX_FIELDS))
     if len(fields) > len(PeruConstants.MATRIX_FIELDS) or len(fields) < (len(PeruConstants.MATRIX_FIELDS) - 1):
         return -1
     
@@ -45,16 +42,18 @@ def MatrixUpdateStatement(fields):
 def MatrixDeleteStatement(fields):    
     return("DELETE FROM MATRIX WHERE " + PeruConstants.MATRIX_FIELDS[0] + " = " + fields[0] + ";\n")
 
-def ReadMatrix(fields):
+def ReadMatrix(MatrixID):
     database = PeruDB.PeruDB()
-    output = database.querry(MatrixReadSingleStatement(fields));
+    output = database.querry(MatrixReadSingleStatement(MatrixID));
     database.closeDB()
     return output
     
     
 def InsertUpdateMatrix(database, fields):
     if fields[0] != '':
-        return UpdateMatrix(database, fields)
+        #return UpdateMatrix(database, fields)
+        print("update Matrix")
+        return [0]
     else:
         return InsertMatrix(database, fields)
         

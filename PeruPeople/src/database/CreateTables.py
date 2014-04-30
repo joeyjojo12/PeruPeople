@@ -62,20 +62,21 @@ try:
         INSERT INTO GenderType(Gender, Seq) VALUES ('M', 1);
         INSERT INTO GenderType(Gender, Seq) VALUES ('F', 2);
 
-        CREATE TABLE Person(PersonID    INTEGER PRIMARY KEY,
-                            FirstName   TEXT,
-                            LastName    TEXT,
-                            Location    TEXT,
-                            Ayllu       TEXT,
-                            Region      REFERENCES RegionType(Region),
-                            Gender      REFERENCES GenderType(Gender),
-                            Casta       REFERENCES CastaType(Casta),
-                            Age         INTEGER,
-                            AgeRange    INTEGER,
-                            Occupation  TEXT,
-                            Religion    TEXT,
-                            Profession  TEXT,
-                            Notes       TEXT
+        CREATE TABLE Person(PersonID      INTEGER PRIMARY KEY,
+                            FirstName     TEXT,
+                            LastName      TEXT,
+                            Location      TEXT,
+                            Ayllu         TEXT,
+                            Region        REFERENCES RegionType(Region),
+                            Gender        REFERENCES GenderType(Gender),
+                            Casta         REFERENCES CastaType(Casta),
+                            Age           INTEGER,
+                            AgeRange      INTEGER,
+                            Occupation    TEXT,
+                            Religion      TEXT,
+                            Profession    TEXT,
+                            Notes         TEXT,
+                            TagForExample BOOLEAN
         );
         
         CREATE TABLE Source(SourceId          INTEGER PRIMARY KEY, 

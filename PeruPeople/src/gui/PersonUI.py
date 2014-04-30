@@ -16,7 +16,8 @@ def getPersonInfo(personPage):
             str(personPage.Occupation.GetValue()),
             str(personPage.Religion.GetValue()),
             str(personPage.Profession.GetValue()),
-            str(personPage.Notes.GetValue())]
+            str(personPage.Notes.GetValue()),
+            str(personPage.TagForExample.GetValue())]
     
 def savePerson(database, personPage):   
         return PersonDB.InsertUpdatePerson(database, getPersonInfo(personPage))
@@ -25,7 +26,6 @@ class PersonPanel(wx.Panel):
     def __init__(self, parent, PersonID):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-        
         
         if(PersonID > 0):
             self.PersonID = PersonID
@@ -114,19 +114,19 @@ class PersonPanel(wx.Panel):
             self.AgeRange.SetSelection(age/10)
             
     def PopulateFields(self):
-        #populate
-        print(self.PersonFields)
-        print(PeruConstants.PERSON_FIELDS)
         self.FirstName.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('FirstName')])
         self.LastName.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('LastName')])
         self.Location.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Location')])
         self.Ayllu.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Ayllu')])
-        
+        self.Region.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Region')])
+        self.Gender.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Gender')])
+        self.Casta.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Casta')])        
         self.Age.WriteText(str(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Age')]))
-        
+        # Age range self populates
         self.Occupation.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Occupation')])
         self.Religion.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Religion')])
         self.Profession.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Profession')])
         self.Notes.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Notes')])
+        self.TagForExample.SetValue('True' == self.PersonFields[PeruConstants.PERSON_FIELDS.index('TagForExample')])
             
         

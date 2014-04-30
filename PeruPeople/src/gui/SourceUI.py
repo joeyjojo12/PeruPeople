@@ -22,15 +22,17 @@ def getSourceInfo(sourcePage):
 def saveSource(database, sourcePage):
         return SourceDB.InsertUpdateSource(database, getSourceInfo(sourcePage))
 
-
-
-
 class SourcePanel(wx.Panel):
-    def __init__(self, parent):
+    def __init__(self, parent, SourceID):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-
-        SourceID = self.SourceID = ''
+        
+        if(SourceID > 0):
+            self.SourceID = SourceID
+            self.SourceFields = SourceDB.ReadSource(SourceID)[1][0]
+        else:
+            SourceID = self.SourceID = ''
+            self.SourceFields = self.SourceFields = []
         
         fieldList = []
 
@@ -87,10 +89,25 @@ class SourcePanel(wx.Panel):
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
+        
+        #Populate fields with content from current person
+        if(SourceID != ''):
+            self.PopulateFields()
 
         self.SetSizer(sizer)
-
-
-
-
-
+            
+    def PopulateFields(self):
+        self.Type.SetStringSelection(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Type')])
+        self.Citation.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Citation')])
+        self.Archive.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Archive')])
+        self.Stack.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Stack')])
+        self.PageNumbers.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('PageNumbers')])
+        self.Author.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Author')])
+        self.DocNameTitle.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('DocNameTitle')])
+        self.Publisher.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Publisher')])
+        self.PubPlace.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('PubPlace')])
+        self.Year.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Year')]))
+        self.ReferencedByFirst.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ReferencedByFirst')])
+        self.ReferencedByLast.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ReferencedByLast')])
+        self.Notes.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('Notes')])
+        

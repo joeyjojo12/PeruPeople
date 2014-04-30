@@ -10,13 +10,13 @@ class EntryNotebook(wx.Notebook):
         wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=wx.BK_DEFAULT)
 
         if(len(currentEntry) > 0):
-            self.AddPage(PersonUI.PersonPanel(self, currentEntry[2]), "Person")
-            self.AddPage(SourceUI.SourcePanel(self), "Source")
-            self.AddPage(MatrixUI.MatrixPanel(self), "Matrix")            
+            self.AddPage(PersonUI.PersonPanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('PersonID')]), "Person")
+            self.AddPage(SourceUI.SourcePanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('SourceID')]), "Source")
+            self.AddPage(MatrixUI.MatrixPanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('MatrixID')]), "Matrix")            
         else:
             self.AddPage(PersonUI.PersonPanel(self, 0), "Person")
-            self.AddPage(SourceUI.SourcePanel(self), "Source")
-            self.AddPage(MatrixUI.MatrixPanel(self), "Matrix")
+            self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
+            self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")
 
 
 class NestedEntryPanel(wx.Panel):
@@ -27,6 +27,7 @@ class NestedEntryPanel(wx.Panel):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
             
         self.PersonGroupID = PersonGroupID
+        self.NewGroup = NewGroup
         EntryList = self.EntryList = []
         
         if(NewGroup != True):
@@ -72,7 +73,8 @@ class NestedEntryPanel(wx.Panel):
                 print(result[1])
                 noErrors = False
                 break
-            Person = result[1]
+            #Person = result[1]
+            Person = 0
 
             #Save Source for this entry
             result = SourceUI.saveSource(database, self.nestedNotebook.GetPage(i).GetPage(1))
@@ -80,7 +82,8 @@ class NestedEntryPanel(wx.Panel):
                 print(result[1])
                 noErrors = False
                 break
-            Source = result[1]
+            #Source = result[1]
+            Source = 0
 
             #Save Matrix for this entry
             result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
@@ -88,9 +91,10 @@ class NestedEntryPanel(wx.Panel):
                 print(result[1])
                 noErrors = False
                 break
-            Matrix = result[1]
+           # Matrix = result[1]
+            Matrix = 0
             
-            EntryDB.InsertUpdateEntry(database, ['', self.PersonGroupID, Person, Source, Matrix])
+            #EntryDB.InsertUpdateEntry(database, ['', self.PersonGroupID, Person, Source, Matrix])
             
         if(noErrors):
             database.commit()

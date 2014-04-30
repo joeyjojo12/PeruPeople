@@ -14,12 +14,11 @@ def SourceInsertFromList(sources):
     return resultString
 
 
-def SourceReadSingleStatement(fields):
-    return("SELECT * FROM SOURCE WHERE " + PeruConstants.SOURCE_FIELDS[0] + " = '" + fields[0] + "';\n")
+def SourceReadSingleStatement(SourceID):
+    return("SELECT * FROM SOURCE WHERE " + PeruConstants.SOURCE_ID + " = '" + str(SourceID) + "';\n")
 
 
 def SourceInsertStatement(fields):
-
     if len(fields) > len(PeruConstants.SOURCE_FIELDS) or len(fields) < (len(PeruConstants.SOURCE_FIELDS) - 1):
         return -1
 
@@ -34,7 +33,6 @@ def SourceInsertStatement(fields):
 
 
 def SourceUpdateStatement(fields):
-
     if len(fields) != len(PeruConstants.SOURCE_FIELDS):
         return -1
 
@@ -50,16 +48,18 @@ def SourceDeleteStatement(fields):
     return("DELETE FROM SOURCE WHERE " + PeruConstants.SOURCE_FIELDS[0] + " = " + fields[0] + ";\n")
 
 
-def ReadSource(fields):
+def ReadSource(SourceID):
     database = PeruDB.PeruDB()
-    output = database.querry(SourceReadSingleStatement(fields));
+    output = database.querry(SourceReadSingleStatement(SourceID));
     database.closeDB()
     return output
 
 
 def InsertUpdateSource(database, fields):
     if fields[0] != '':
-        return UpdateSource(database, fields)
+        #return UpdateSource(database, fields)
+        print("update source")
+        return [0]
     else:
         return InsertSource(database, fields)
 
