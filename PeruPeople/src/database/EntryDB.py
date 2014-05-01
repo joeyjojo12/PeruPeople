@@ -64,8 +64,8 @@ def ReadEntries(PersonGroupID):
 def InsertUpdateEntry(database, fields):
     if fields[0] != '':
         #return UpdateEntry(database, fields)
-        print('update entry')
-        return [0]
+        #Entry currently has no reason to be update. Return empty response
+        return [0,[]]
     else:
         return InsertEntry(database, fields)
         

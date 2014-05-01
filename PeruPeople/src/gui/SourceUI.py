@@ -58,7 +58,7 @@ class SourcePanel(wx.Panel):
         fieldList.append((wx.StaticText(self, label="Document Name :"), DocNameTitle))
 
         Publisher = self.Publisher = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Place of Publication :"), Publisher))
+        fieldList.append((wx.StaticText(self, label="Publisher :"), Publisher))
 
         PubPlace = self.PubPlace = wx.TextCtrl(self, size=(400,-1))
         fieldList.append((wx.StaticText(self, label="Place of Publication :"), PubPlace))

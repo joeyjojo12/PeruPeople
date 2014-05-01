@@ -41,10 +41,10 @@ SOURCE_ID = 'SourceID'
 MATRIX_ID = 'MatrixID'
 ENTRY_ID  = 'EntryID'
 
-ENTRY_FIELDS  = ['EntryId','PersonGroupID','PersonID','SourceID','MatrixID']
-PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Casta','Gender','Age','AgeRange','Occupation','Religion','Profession','Notes','TagForExample']
-SOURCE_FIELDS = ['SourceId','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
-MATRIX_FIELDS = ['MatrixId',
+ENTRY_FIELDS  = ['EntryID','PersonGroupID','PersonID','SourceID','MatrixID']
+PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Occupation','Religion','Profession','Notes','TagForExample']
+SOURCE_FIELDS = ['SourceID','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
+MATRIX_FIELDS = ['MatrixID',
                  'Consulter',
                  'ConsulterHuaca',
                  'ConsulterMalqui',

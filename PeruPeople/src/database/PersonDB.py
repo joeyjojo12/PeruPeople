@@ -54,9 +54,7 @@ def ReadPerson(PersonID):
     
 def InsertUpdatePerson(database, fields):
     if fields[0] != '':
-        #return UpdatePerson(database, fields)
-        print("update person")
-        return [0]
+        return UpdatePerson(database, fields)
     else:
         return InsertPerson(database, fields)
         

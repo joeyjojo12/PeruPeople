@@ -9,8 +9,8 @@ def getPersonInfo(personPage):
             str(personPage.Location.GetValue()),
             str(personPage.Ayllu.GetValue()),
             str(personPage.Region.GetValue()),
-            str(personPage.Casta.GetValue()),
             str(personPage.Gender.GetValue()),
+            str(personPage.Casta.GetValue()),
             str(personPage.Age.GetValue()),
             str(personPage.AgeRange.GetValue()),
             str(personPage.Occupation.GetValue()),
@@ -120,7 +120,7 @@ class PersonPanel(wx.Panel):
         self.Ayllu.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Ayllu')])
         self.Region.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Region')])
         self.Gender.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Gender')])
-        self.Casta.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Casta')])        
+        self.Casta.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Casta')])
         self.Age.WriteText(str(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Age')]))
         # Age range self populates
         self.Occupation.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Occupation')])

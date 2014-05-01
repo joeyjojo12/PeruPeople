@@ -52,7 +52,7 @@ def ReadMatrix(MatrixID):
 def InsertUpdateMatrix(database, fields):
     if fields[0] != '':
         #return UpdateMatrix(database, fields)
-        print("update Matrix")
+        print(MatrixUpdateStatement(fields))
         return [0]
     else:
         return InsertMatrix(database, fields)

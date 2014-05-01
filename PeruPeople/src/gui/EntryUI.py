@@ -8,12 +8,14 @@ class EntryNotebook(wx.Notebook):
     
     def __init__(self, parent, currentEntry):
         wx.Notebook.__init__(self, parent, id=wx.ID_ANY, style=wx.BK_DEFAULT)
-
+        
         if(len(currentEntry) > 0):
+            self.EntryID = currentEntry[PeruConstants.ENTRY_FIELDS.index('EntryID')]
             self.AddPage(PersonUI.PersonPanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('PersonID')]), "Person")
             self.AddPage(SourceUI.SourcePanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('SourceID')]), "Source")
             self.AddPage(MatrixUI.MatrixPanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('MatrixID')]), "Matrix")            
         else:
+            self.EntryID = ''
             self.AddPage(PersonUI.PersonPanel(self, 0), "Person")
             self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
             self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")
@@ -42,7 +44,6 @@ class NestedEntryPanel(wx.Panel):
         topSizer = self.topSizer = wx.BoxSizer(wx.HORIZONTAL)
         topSizer.Add(self.addEntryButton, 0, wx.ALIGN_RIGHT)
         
-        print(EntryList)
         if(len(EntryList) > 0):
             for i in range(len(EntryList)):
                 nestedNotebook.AddPage(EntryNotebook(nestedNotebook, EntryList[i]), "Entry " + str(i+1))
@@ -66,35 +67,41 @@ class NestedEntryPanel(wx.Panel):
         
         database = PeruDB.PeruDB()
 
-        for i in range(self.nestedNotebook.GetPageCount()):
-            #Save Person for this entry
-            result = PersonUI.savePerson(database, self.nestedNotebook.GetPage(i).GetPage(0))
-            if result[0] != 0:
-                print(result[1])
-                noErrors = False
-                break
-            #Person = result[1]
-            Person = 0
-
-            #Save Source for this entry
-            result = SourceUI.saveSource(database, self.nestedNotebook.GetPage(i).GetPage(1))
-            if result[0] != 0:
-                print(result[1])
-                noErrors = False
-                break
-            #Source = result[1]
-            Source = 0
-
-            #Save Matrix for this entry
-            result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
-            if result[0] != 0:
-                print(result[1])
-                noErrors = False
-                break
-           # Matrix = result[1]
-            Matrix = 0
-            
-            #EntryDB.InsertUpdateEntry(database, ['', self.PersonGroupID, Person, Source, Matrix])
+        try:
+            for i in range(self.nestedNotebook.GetPageCount()):
+                #Save Person for this entry
+                result = PersonUI.savePerson(database, self.nestedNotebook.GetPage(i).GetPage(0))
+                if result[0] != 0:
+                    print(result[1])
+                    noErrors = False
+                    break
+                Person = result[1]
+                print(result)
+    
+                #Save Source for this entry
+                result = SourceUI.saveSource(database, self.nestedNotebook.GetPage(i).GetPage(1))
+                if result[0] != 0:
+                    print(result[1])
+                    noErrors = False
+                    break
+                #Source = result[1]
+                Source = self.nestedNotebook.GetPage(i).GetPage(1).SourceID
+                
+    
+                #Save Matrix for this entry
+                result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
+                if result[0] != 0:
+                    print(result[1])
+                    noErrors = False
+                    break
+                #Matrix = result[1]
+                Matrix = self.nestedNotebook.GetPage(i).GetPage(2)
+                
+                EntryDB.InsertUpdateEntry(database, [self.nestedNotebook.GetPage(i).EntryID, self.PersonGroupID, Person, Source, Matrix])
+                
+        except:
+            print("Database Error!")
+            noErrors = False
             
         if(noErrors):
             database.commit()

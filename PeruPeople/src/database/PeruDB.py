@@ -48,7 +48,6 @@ class PeruDB:
     def executeCommand(self, commandString):
         try:
             cur = self.con.cursor()
-            print(commandString)
             cur.execute(commandString)
             return[0, cur.lastrowid]
         
