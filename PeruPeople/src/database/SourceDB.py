@@ -57,9 +57,7 @@ def ReadSource(SourceID):
 
 def InsertUpdateSource(database, fields):
     if fields[0] != '':
-        #return UpdateSource(database, fields)
-        print(SourceUpdateStatement(fields))
-        return [0]
+        return UpdateSource(database, fields)
     else:
         return InsertSource(database, fields)
 

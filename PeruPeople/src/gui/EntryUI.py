@@ -30,10 +30,12 @@ class NestedEntryPanel(wx.Panel):
             
         self.PersonGroupID = PersonGroupID
         self.NewGroup = NewGroup
+        self.NumEntries = 1
         EntryList = self.EntryList = []
         
         if(NewGroup != True):
             EntryList = EntryDB.ReadEntries(PersonGroupID)[1]
+            self.NumEntries = len(EntryList)
         
         nestedNotebook = self.nestedNotebook = wx.Notebook(self, wx.ID_ANY)
         
@@ -59,7 +61,7 @@ class NestedEntryPanel(wx.Panel):
     # When the user selects something, we go here.
     def OnButtonAddEntry(self, evt):
         self.NumEntries += 1
-        self.nestedNotebook.AddPage(EntryNotebook(self.nestedNotebook), "Entry " + str(self.NumEntries))
+        self.nestedNotebook.AddPage(EntryNotebook(self.nestedNotebook, []), "Entry " + str(self.NumEntries))
     
     def SaveEntries(self):
 
@@ -76,7 +78,6 @@ class NestedEntryPanel(wx.Panel):
                     noErrors = False
                     break
                 Person = result[1]
-                print(result)
     
                 #Save Source for this entry
                 result = SourceUI.saveSource(database, self.nestedNotebook.GetPage(i).GetPage(1))
@@ -84,9 +85,7 @@ class NestedEntryPanel(wx.Panel):
                     print(result[1])
                     noErrors = False
                     break
-                #Source = result[1]
-                Source = self.nestedNotebook.GetPage(i).GetPage(1).SourceID
-                
+                Source = result[1]
     
                 #Save Matrix for this entry
                 result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
@@ -94,10 +93,13 @@ class NestedEntryPanel(wx.Panel):
                     print(result[1])
                     noErrors = False
                     break
-                #Matrix = result[1]
-                Matrix = self.nestedNotebook.GetPage(i).GetPage(2)
+                Matrix = result[1]
                 
-                EntryDB.InsertUpdateEntry(database, [self.nestedNotebook.GetPage(i).EntryID, self.PersonGroupID, Person, Source, Matrix])
+                result = EntryDB.InsertUpdateEntry(database, [self.nestedNotebook.GetPage(i).EntryID, self.PersonGroupID, Person, Source, Matrix])
+                if result[0] != 0:
+                    print(result[1])
+                    noErrors = False
+                    break
                 
         except:
             print("Database Error!")

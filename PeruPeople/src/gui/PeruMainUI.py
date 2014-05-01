@@ -56,9 +56,7 @@ class PeruMainUIFrame(wx.Frame):
         #if dlg.ShowModal() == wx.ID_YES:
             
         self.notebook.SaveEntries()
-        
-        if(self.NewGroup):
-            self.Parent.PopulateList()
+        self.Parent.PopulateList()
             
         #dlg.Destroy()
 
