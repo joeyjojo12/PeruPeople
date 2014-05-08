@@ -3,11 +3,11 @@
 
 import sqlite3 as lite
 import sys
-import PeruConstants
+import Parameters
 
 try:
   
-    con = lite.connect(PeruConstants.PERU_DB)
+    con = lite.connect(Parameters.PERU_DB)
     
     cur = con.cursor()
     cur.executescript("""

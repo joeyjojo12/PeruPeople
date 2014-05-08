@@ -1,6 +1,6 @@
 import sqlite3 as lite
 import sys
-import PeruConstants
+import Parameters
 
 class PeruDB:
     
@@ -11,7 +11,7 @@ class PeruDB:
     
     def openDB(self):
         try:
-            self.con = lite.connect(PeruConstants.PERU_DB)
+            self.con = lite.connect(Parameters.PERU_DB)
             cur = self.con.cursor()
             cur.execute('SELECT SQLITE_VERSION()')
             data = cur.fetchone()
