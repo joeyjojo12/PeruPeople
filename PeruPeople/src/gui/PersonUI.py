@@ -2,9 +2,11 @@ import wx
 import PeruConstants
 from database import PersonDB
 
-def getPersonInfo(personPage):    
+def getPersonInfo(personPage):
+    print(personPage.FirstName.GetValue())
+    print(personPage.LastName.GetValue())
     return [str(personPage.PersonID),
-            str(personPage.FirstName.GetValue()),
+            personPage.FirstName.GetValue(),
             str(personPage.LastName.GetValue()),
             str(personPage.Location.GetValue()),
             str(personPage.Ayllu.GetValue()),
