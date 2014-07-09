@@ -22,21 +22,19 @@ def SourceInsertStatement(fields):
     if len(fields) > len(PeruConstants.SOURCE_FIELDS) or len(fields) < (len(PeruConstants.SOURCE_FIELDS) - 1):
         return -1
 
-    strFields = [str(field) for field in fields]
-
     if len(fields) == (len(PeruConstants.SOURCE_FIELDS) - 1):
         return ("INSERT INTO " + PeruConstants.SOURCE + 
                 "(" + ",".join(PeruConstants.SOURCE_FIELDS[1:]) + ")" +
-                " VALUES(" + "\',\'".join(strFields) + ");\n")
+                " VALUES(" + "\',\'".join(fields) + ");\n")
     else:
-        return "INSERT INTO " + PeruConstants.SOURCE + " (" + ",".join(PeruConstants.SOURCE_FIELDS[1:]) + ")" + " VALUES('" + "','".join(strFields[1:]) + "');\n"
+        return "INSERT INTO " + PeruConstants.SOURCE + " (" + ",".join(PeruConstants.SOURCE_FIELDS[1:]) + ")" + " VALUES('" + "','".join(fields[1:]) + "');\n"
 
 
 def SourceUpdateStatement(fields):
     if len(fields) != len(PeruConstants.SOURCE_FIELDS):
         return -1
 
-    strFields = [(PeruConstants.SOURCE_FIELDS[i] + " = '" + str(fields[i]) + "'")  for i in range(1, len(fields))]
+    strFields = [(PeruConstants.SOURCE_FIELDS[i] + " = '" + fields[i] + "'")  for i in range(1, len(fields))]
 
     return ("UPDATE SOURCE" +
             " SET " + ",".join(strFields) +

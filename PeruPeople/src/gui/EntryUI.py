@@ -50,6 +50,7 @@ class NestedEntryPanel(wx.Panel):
             for i in range(len(EntryList)):
                 nestedNotebook.AddPage(EntryNotebook(nestedNotebook, EntryList[i]), "Entry " + str(i+1))
         else:
+            self.NumEntries = 1
             nestedNotebook.AddPage(EntryNotebook(nestedNotebook, []), "Entry 1")
             
         sizer = wx.BoxSizer(wx.VERTICAL)

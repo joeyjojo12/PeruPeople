@@ -41,7 +41,7 @@ ENTRY_ID  = 'EntryID'
 
 ENTRY_FIELDS  = ['EntryID','PersonGroupID','PersonID','SourceID','MatrixID']
 PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Occupation','Religion','Profession','Notes','TagForExample']
-SOURCE_FIELDS = ['SourceID','Type','Citation','Archive','Stack','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
+SOURCE_FIELDS = ['SourceID','Type','Citation','Archive','Collection','Stack','Expedientes','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
 MATRIX_FIELDS = ['MatrixID',
                  'Consulter',
                  'ConsulterHuaca',

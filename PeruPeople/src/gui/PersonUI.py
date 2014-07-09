@@ -7,18 +7,18 @@ def getPersonInfo(personPage):
     print(personPage.LastName.GetValue())
     return [str(personPage.PersonID),
             personPage.FirstName.GetValue(),
-            str(personPage.LastName.GetValue()),
-            str(personPage.Location.GetValue()),
-            str(personPage.Ayllu.GetValue()),
+            personPage.LastName.GetValue(),
+            personPage.Location.GetValue(),
+            personPage.Ayllu.GetValue(),
             str(personPage.Region.GetValue()),
             str(personPage.Gender.GetValue()),
             str(personPage.Casta.GetValue()),
             str(personPage.Age.GetValue()),
             str(personPage.AgeRange.GetValue()),
-            str(personPage.Occupation.GetValue()),
-            str(personPage.Religion.GetValue()),
-            str(personPage.Profession.GetValue()),
-            str(personPage.Notes.GetValue()),
+            personPage.Occupation.GetValue(),
+            personPage.Religion.GetValue(),
+            personPage.Profession.GetValue(),
+            personPage.Notes.GetValue(),
             str(personPage.TagForExample.GetValue())]
     
 def savePerson(database, personPage):   

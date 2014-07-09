@@ -22,14 +22,12 @@ def PersonInsertStatement(fields):
     if len(fields) > len(PeruConstants.PERSON_FIELDS) or len(fields) < (len(PeruConstants.PERSON_FIELDS) - 1):
         return [1,"Improper format"]
     
-    strFields = [field for field in fields]
-    
     if len(fields) == (len(PeruConstants.PERSON_FIELDS) - 1):
         return ("INSERT INTO " + PeruConstants.PERSON + 
                 "(" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" +
-                " VALUES(" + "\',\'".join(strFields) + ");\n")
+                " VALUES(" + "\',\'".join(fields) + ");\n")
     else:
-        return "INSERT INTO " + PeruConstants.PERSON + " (" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" + " VALUES('" + "','".join(strFields[1:]) + "');\n"
+        return "INSERT INTO " + PeruConstants.PERSON + " (" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" + " VALUES('" + "','".join(fields[1:]) + "');\n"
 
 
 def PersonUpdateStatement(fields):    
@@ -64,7 +62,6 @@ def InsertPerson(database, fields):
     return output
 
 def UpdatePerson(database, fields):
-    print(PersonUpdateStatement(fields))
     output = database.update(PersonUpdateStatement(fields))
     return output
 

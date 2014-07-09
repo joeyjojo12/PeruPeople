@@ -19,21 +19,19 @@ def MatrixInsertStatement(fields):
     if len(fields) > len(PeruConstants.MATRIX_FIELDS) or len(fields) < (len(PeruConstants.MATRIX_FIELDS) - 1):
         return -1
     
-    strFields = [str(field) for field in fields]
-    
     if len(fields) == (len(PeruConstants.MATRIX_FIELDS) - 1):
         return ("INSERT INTO " + PeruConstants.MATRIX + 
                 "(" + ",".join(PeruConstants.MATRIX_FIELDS[1:]) + ")" +
-                " VALUES(" + "\',\'".join(strFields) + ");\n")
+                " VALUES(" + "\',\'".join(fields) + ");\n")
     else:
-        return "INSERT INTO " + PeruConstants.MATRIX + " (" + ",".join(PeruConstants.MATRIX_FIELDS[1:]) + ")" + " VALUES('" + "','".join(strFields[1:]) + "');\n"
+        return "INSERT INTO " + PeruConstants.MATRIX + " (" + ",".join(PeruConstants.MATRIX_FIELDS[1:]) + ")" + " VALUES('" + "','".join(fields[1:]) + "');\n"
 
 def MatrixUpdateStatement(fields):
     
     if len(fields) != len(PeruConstants.MATRIX_FIELDS):
         return -1
     
-    strFields = [(PeruConstants.MATRIX_FIELDS[i] + " = '" + str(fields[i]) + "'")  for i in range(1, len(fields))]
+    strFields = [(PeruConstants.MATRIX_FIELDS[i] + " = '" + fields[i] + "'")  for i in range(1, len(fields))]
     
     return ("UPDATE MATRIX" +
             " SET " + ",".join(strFields) + 
