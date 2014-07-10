@@ -4,7 +4,7 @@ DEFAULT_GENDER = GENDER_LIST[0]
 REGION_LIST = ['Coastal','Andes','Jungle']
 DEFAULT_REGION = REGION_LIST[0]
 
-DOCUMENT_LIST = ['Book','Archival']
+DOCUMENT_LIST = ['Archival','Book','Article']
 DEFAULT_DOCUMENT = DOCUMENT_LIST[0]
 
 CASTA_LIST = ['Indigenous','Indigenous/Quetcha','Indigenous/Aymara','Spanish','Mestizo','African','Pardos','Mulattos','Zambos','Slave']
@@ -40,7 +40,7 @@ MATRIX_ID = 'MatrixID'
 ENTRY_ID  = 'EntryID'
 
 ENTRY_FIELDS  = ['EntryID','PersonGroupID','PersonID','SourceID','MatrixID']
-PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Occupation','Religion','Profession','Notes','TagForExample']
+PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Profession','Occupation','Religion','Notes','TagForExample']
 SOURCE_FIELDS = ['SourceID','Type','Citation','Archive','Collection','Stack','Expedientes','PageNumbers','Author','DocNameTitle','Publisher','PubPlace','Year','ReferencedByFirst','ReferencedByLast','Notes']
 MATRIX_FIELDS = ['MatrixID',
                  'Consulter',

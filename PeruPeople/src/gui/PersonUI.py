@@ -15,9 +15,9 @@ def getPersonInfo(personPage):
             str(personPage.Casta.GetValue()),
             str(personPage.Age.GetValue()),
             str(personPage.AgeRange.GetValue()),
+            personPage.Profession.GetValue(),
             personPage.Occupation.GetValue(),
             personPage.Religion.GetValue(),
-            personPage.Profession.GetValue(),
             personPage.Notes.GetValue(),
             str(personPage.TagForExample.GetValue())]
     
@@ -65,14 +65,14 @@ class PersonPanel(wx.Panel):
         AgeRange = self.AgeRange = wx.ComboBox(self, 500, PeruConstants.AGE_RANGE_DEFAULT, (90, 50), (90, -1), PeruConstants.AGE_RANGE_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
         fieldList.append((wx.StaticText(self, label="Age Range :"), AgeRange))
         
+        Profession = self.Profession = wx.TextCtrl(self, size=(400,-1))
+        fieldList.append((wx.StaticText(self, label="Profession/Skills :"), Profession))
+        
         Occupation = self.Occupation = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Occupation :"), Occupation))
+        fieldList.append((wx.StaticText(self, label="Occupation/Role :"), Occupation))
         
         Religion = self.Religion = wx.TextCtrl(self, size=(400,-1))
         fieldList.append((wx.StaticText(self, label="Religion :"), Religion))
-        
-        Profession = self.Profession = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Profession :"), Profession))
         
         Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         fieldList.append((wx.StaticText(self, label="Notes :"), Notes))
@@ -125,9 +125,9 @@ class PersonPanel(wx.Panel):
         self.Casta.SetStringSelection(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Casta')])
         self.Age.WriteText(str(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Age')]))
         # Age range self populates
+        self.Profession.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Profession')])
         self.Occupation.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Occupation')])
         self.Religion.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Religion')])
-        self.Profession.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Profession')])
         self.Notes.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Notes')])
         self.TagForExample.SetValue('True' == self.PersonFields[PeruConstants.PERSON_FIELDS.index('TagForExample')])
             

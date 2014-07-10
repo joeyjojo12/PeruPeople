@@ -72,9 +72,9 @@ try:
                             Casta         REFERENCES CastaType(Casta),
                             Age           INTEGER,
                             AgeRange      INTEGER,
+                            Profession    TEXT,
                             Occupation    TEXT,
                             Religion      TEXT,
-                            Profession    TEXT,
                             Notes         TEXT,
                             TagForExample BOOLEAN
         );

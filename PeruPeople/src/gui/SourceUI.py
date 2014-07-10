@@ -2,8 +2,10 @@ import wx
 import PeruConstants
 from database import SourceDB
 
-BOOK = 0
-ARCH = 1
+ARCHIVAL = 1
+BOOK = 2
+ARTICLE = 4
+
 
 def getSourceInfo(sourcePage):
     return [str(sourcePage.SourceID),
@@ -45,28 +47,28 @@ class SourcePanel(wx.Panel):
         fieldList.append((wx.StaticText(self, label="Type :"), Type))
         
         Citation = self.Citation = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Citation :"), Citation, ARCH))
+        fieldList.append((wx.StaticText(self, label="Citation :"), Citation ))
 
         Archive = self.Archive = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Archive :"), Archive, BOOK))
+        fieldList.append((wx.StaticText(self, label="Archive :"), Archive, ARCHIVAL))
 
         Collection = self.Collection = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Collection :"), Collection))
+        fieldList.append((wx.StaticText(self, label="Collection :"), Collection, ARCHIVAL))
         
         Stack = self.Stack = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Stack :"), Stack ))
+        fieldList.append((wx.StaticText(self, label="Stack :"), Stack, ARCHIVAL ))
         
         Expedientes = self.Expedientes = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Expedientes :"), Expedientes ))
+        fieldList.append((wx.StaticText(self, label="Expedientes :"), Expedientes, ARCHIVAL ))
 
         PageNumbers = self.PageNumbers = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Page Numbers :"), PageNumbers))
+        fieldList.append((wx.StaticText(self, label="Page Numbers :"), PageNumbers, ARCHIVAL ))
 
         Author = self.Author = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Author :"), Author))
+        fieldList.append((wx.StaticText(self, label="Author :"), Author, BOOK))
 
         DocNameTitle = self.DocNameTitle = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Document Name :"), DocNameTitle))
+        fieldList.append((wx.StaticText(self, label="Document Name :"), DocNameTitle, BOOK))
 
         Publisher = self.Publisher = wx.TextCtrl(self, size=(400,-1))
         fieldList.append((wx.StaticText(self, label="Publisher :"), Publisher))
@@ -75,7 +77,7 @@ class SourcePanel(wx.Panel):
         fieldList.append((wx.StaticText(self, label="Place of Publication :"), PubPlace))
 
         Year = self.Year = wx.TextCtrl(self, size=(100,-1))
-        fieldList.append((wx.StaticText(self, label="Year :"), Year))
+        fieldList.append((wx.StaticText(self, label="Year :"), Year, ARCHIVAL, BOOK))
 
         ReferencedByFirst = self.ReferencedByFirst = wx.TextCtrl(self, size=(400,-1))
         fieldList.append((wx.StaticText(self, label="Referenced By First Name :"), ReferencedByFirst))
@@ -106,7 +108,7 @@ class SourcePanel(wx.Panel):
         self.infoSizer.Clear()
         j=0
         for i in range(len(self.fieldList) - 1):
-            if(len(self.fieldList[i]) > 2 and self.fieldList[i][2] == docType):
+            if(len(self.fieldList[i]) > 2 and (self.fieldList[i][2] & docType) > 0):
                 self.fieldList[i][0].Hide()
                 self.fieldList[i][1].Hide()
                 j-=1                
