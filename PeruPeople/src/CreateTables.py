@@ -16,6 +16,7 @@ try:
         DROP TABLE IF EXISTS Entry;
         DROP TABLE IF EXISTS Person;
         DROP TABLE IF EXISTS Source;
+        DROP TABLE IF EXISTS SourceEntry;
         DROP TABLE IF EXISTS Matrix;
         DROP TABLE IF EXISTS RegionType;
         DROP TABLE IF EXISTS DocumentType;
@@ -30,19 +31,19 @@ try:
         
         INSERT INTO RegionType(Region, Seq) VALUES ('Costal', 1);
         INSERT INTO RegionType(Region, Seq) VALUES ('Andes',  2);
-        INSERT INTO RegionType(Region, Seq) VALUES ('Jungle', 3);
+        INSERT INTO RegionType(Region, Seq) VALUES ('Jungle', 3);        
+         
+        CREATE TABLE CastaType (Casta    TEXT PRIMARY KEY NOT NULL,
+                                Seq      INTEGER
+        );
 
         CREATE TABLE DocumentType (Document    TEXT PRIMARY KEY NOT NULL,
                                    Seq         INTEGER
         );
         
         INSERT INTO DocumentType(Document, Seq) VALUES ('Book', 1);
-        INSERT INTO DocumentType(Document, Seq) VALUES ('Archival',  2);
-        
-         
-        CREATE TABLE CastaType (Casta    TEXT PRIMARY KEY NOT NULL,
-                                Seq      INTEGER
-        );
+        INSERT INTO DocumentType(Document, Seq) VALUES ('Article',  2);
+        INSERT INTO DocumentType(Document, Seq) VALUES ('Archive',  3);
         
         INSERT INTO CastaType(Casta, Seq) VALUES ('Indigenous',         1);
         INSERT INTO CastaType(Casta, Seq) VALUES ('Indigenous/Quetcha', 2);
@@ -62,43 +63,74 @@ try:
         INSERT INTO GenderType(Gender, Seq) VALUES ('M', 1);
         INSERT INTO GenderType(Gender, Seq) VALUES ('F', 2);
 
-        CREATE TABLE Person(PersonID      INTEGER PRIMARY KEY,
-                            FirstName     TEXT,
-                            LastName      TEXT,
-                            Location      TEXT,
-                            Ayllu         TEXT,
-                            Region        REFERENCES RegionType(Region),
-                            Gender        REFERENCES GenderType(Gender),
-                            Casta         REFERENCES CastaType(Casta),
-                            Age           INTEGER,
-                            AgeRange      INTEGER,
-                            Profession    TEXT,
-                            Occupation    TEXT,
-                            Religion      TEXT,
-                            Notes         TEXT,
-                            TagForExample BOOLEAN
+        CREATE TABLE Person(PersonID                  INTEGER PRIMARY KEY,
+                            FirstName                 TEXT,
+                            LastName                  TEXT,
+                            Location                  TEXT,
+                            Ayllu                     TEXT,
+                            Region                    REFERENCES RegionType(Region),
+                            Gender                    REFERENCES GenderType(Gender),
+                            Casta                     REFERENCES CastaType(Casta),
+                            Age                       INTEGER,
+                            AgeRange                  INTEGER,
+                            Profession                TEXT,
+                            Occupation                TEXT,
+                            ReligionCatholic          BOOLEAN,
+                            ReligionNative            BOOLEAN,
+                            ReligionOther             BOOLEAN,
+                            ReligionOtherText         TEXT,
+                            ConsulterCapycocha        BOOLEAN, 
+                            ConsulterOtherConsulter   TEXT,
+                            Notes                     TEXT,
+                            PhotoReference            TEXT,
+                            TagForExample             BOOLEAN
         );
         
-        CREATE TABLE Source(SourceId          INTEGER PRIMARY KEY, 
-                            Type              REFERENCES DocumentType (Document),
-                            Citation          TEXT, 
-                            Archive           TEXT, 
-                            Collection        TEXT, 
-                            Stack             TEXT, 
-                            Expedientes       TEXT, 
-                            PageNumbers       TEXT,
-                            Author            TEXT,
-                            DocNameTitle      TEXT,
-                            Publisher         TEXT,
-                            PubPlace          TEXT,
-                            Year              INTEGER,
-                            ReferencedByFirst TEXT,
-                            ReferencedByLast  TEXT,
-                            Notes             TEXT
+        CREATE TABLE Source(SourceId              INTEGER PRIMARY KEY, 
+                            DocumentType          REFERENCES DocumentType(Document),
+                            BookTitle             TEXT,
+                            BookAuthor1           TEXT,
+                            BookAuthor2           TEXT,
+                            BookAuthor3           TEXT,
+                            BookAuthor4           TEXT,
+                            BookAuthor5           TEXT,
+                            BookPublisher         TEXT,
+                            BookPubPlace          TEXT,
+                            BookYear              INTEGER,
+                            ArticleTitle          TEXT,
+                            ArticleAuthor1        TEXT,
+                            ArticleAuthor2        TEXT,
+                            ArticleAuthor3        TEXT,
+                            ArticleAuthor4        TEXT,
+                            ArticleAuthor5        TEXT,
+                            ArticlePublication    TEXT,
+                            ArticleYear           INTEGER,
+                            ArticleVolume         TEXT,
+                            ArticleIssue          TEXT,
+                            ArchiveName           TEXT,
+                            ArchiveCollection     TEXT,
+                            ArchiveYear           INTEGER,
+                            ArchiveMonth          INTEGER, 
+                            ArchiveDay            INTEGER,
+                            ArchiveStack          TEXT, 
+                            ArchiveExpedientes    TEXT
+        );
+        
+        CREATE TABLE SourceEntry(SourceEntryId          INTEGER PRIMARY KEY,
+                                 DocumentType           REFERENCES DocumentType(Document),
+                                 BookPageNumbers        TEXT,
+                                 BookNotes              TEXT,
+                                 ArticlePageNumbers     TEXT,
+                                 ArticleNotes           TEXT,
+                                 ArchivePageNumbers     TEXT,
+                                 ArchiveNotes           TEXT
+                                 ArchivePhotoReference  TEXT
         );
 
            
-        CREATE TABLE Matrix(MatrixID                              INTEGER PRIMARY KEY,        
+        CREATE TABLE Matrix(MatrixID                              INTEGER PRIMARY KEY,    
+                            ReferencedByFirst                     TEXT,
+                            ReferencedByLast                      TEXT,    
                             Consulter                             BOOLEAN,
                             ConsulterHuaca                        BOOLEAN, 
                             ConsulterMalqui                       BOOLEAN,
@@ -143,9 +175,10 @@ try:
                             ConditionBlind                        BOOLEAN,   
                             ConditionOneEyed                      BOOLEAN,   
                             ConditionLame                         BOOLEAN,   
-                            ConditionDeaf                         BOOLEAN,   
-                            ConditionMute                         BOOLEAN,   
-                            ConditionCrippled                     BOOLEAN,   
+                            ConditionDeaf                         BOOLEAN,
+                            ConditionMute                         BOOLEAN,
+                            ConditionDisabled                     BOOLEAN,
+                            ConditionDisabledText                 TEXT,
                             ConditionOtherCondition               BOOLEAN,   
                             ConditionOtherConditionText           TEXT,
                             DevilYesDevil                         BOOLEAN,   
@@ -176,13 +209,16 @@ try:
         );
 
         CREATE TABLE Entry(EntryID INTEGER NOT NULL, 
-                           PersonGroupID INTEGER,
-                           PersonID      INTEGER,
-                           SourceID      INTEGER,
-                           MatrixID      INTEGER,
+                           PersonGroupID   INTEGER,
+                           PersonID        INTEGER,
+                           SourceID        INTEGER,
+                           SourceEntryId   INTEGER,
+                           MatrixID        INTEGER,
                            PRIMARY KEY(EntryID),
                            FOREIGN KEY(PersonGroupID) REFERENCES PersonGroup(PersonGroupID),
-                           FOREIGN KEY(PersonID) REFERENCES Person(PersonID)
+                           FOREIGN KEY(SourceID) REFERENCES Source(SourceID),
+                           FOREIGN KEY(SourceEntryId) REFERENCES SourceEntry(SourceEntryId),
+                           FOREIGN KEY(MatrixID) REFERENCES Matrix(MatrixID)
         );
         
         CREATE TABLE PersonGroup(PersonGroupId INTEGER NOT NULL, 
