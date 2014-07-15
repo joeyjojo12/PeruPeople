@@ -151,6 +151,14 @@ class SourcePanel(wx.Panel):
        
         space = 6
         infoSizer = self.infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
+        
+
+        
+        self.SelectSourceButton = wx.Button(self, -1, "Select Source")
+        self.Bind(wx.EVT_BUTTON, self.OnButtonSelectSource, self.SelectSourceButton)
+        
+        self.ClearFieldsButton = wx.Button(self, -1, "New Source")
+        self.Bind(wx.EVT_BUTTON, self.OnButtonClearFields, self.ClearFieldsButton)
        
         #Initially set document type as archive
         self.ArrangeFields(PeruConstants.ARCHIVE)
@@ -170,10 +178,15 @@ class SourcePanel(wx.Panel):
         self.infoSizer.Clear()        
         
         self.DocumentType.Show()
-        self.infoSizer.Add(self.DocumentType,(0,0))
+        self.infoSizer.Add(self.DocumentType,(0,0))        
+        
+        self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.buttonSizer.Add(self.SelectSourceButton, 0, wx.ALIGN_LEFT)
+        self.buttonSizer.Add(self.ClearFieldsButton, 0, wx.ALIGN_RIGHT)
+        self.infoSizer.Add(self.buttonSizer,(0,1))
         
         for i in range(len(self.SourceLists)):
-            k = 0
+            k = 1 #Giving a gap
             if i == docType:
                 for j in range(len(self.SourceLists[i])):
                     if (j == len(self.SourceLists[i]) - 2) and (docType == PeruConstants.ARCHIVE):
@@ -243,5 +256,18 @@ class SourcePanel(wx.Panel):
         
     def OnChangeType(self, evt):
         self.ArrangeFields(self.DocumentType.GetSelection())
+        
+    def OnButtonSelectSource(self, evt):
+        print("select")
+        
+    def OnButtonClearFields(self, evt):
+        documentType = PeruConstants.DOCUMENT_LIST.index(self.DocumentType.GetValue())
+        
+        self.SourceID = ''
+        self.SourceFields = []
+        self.SourceEntryID = ''
+        self.SourceEntryFields = []
+        self.PopulateFields()
+        self.ArrangeFields(documentType)
         
         
