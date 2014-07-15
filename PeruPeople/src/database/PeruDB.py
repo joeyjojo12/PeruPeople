@@ -16,7 +16,6 @@ def DatabaseBackup():
         
     curtime = str(datetime.datetime.now())        
     backup = backupdir + curtime[curtime.index(' ') + 1:curtime.index('.')].replace(':','-') + ".db"
-    print(backup)
     shutil.copyfile(curDir + PeruConstants.PERU_DB, backup)
 
 class PeruDB:

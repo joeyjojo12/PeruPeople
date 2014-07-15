@@ -191,22 +191,53 @@ class PeruListCtrlFrame(wx.Frame):
         event.Skip()
 
     def OnRightClick(self, event):
-        print("OnRightClick %s\n" % self.list.GetItemText(self.currentItem))
+        # only do this part the first time so the events are only bound once
+        if not hasattr(self, "popupID1"):
+            self.popupEdit = wx.NewId()
+            self.popupDelete = wx.NewId()
+
+            self.Bind(wx.EVT_MENU, self.OnPopupEdit, id=self.popupEdit)
+            self.Bind(wx.EVT_MENU, self.OnPopupDelete, id=self.popupDelete)
 
         # make a menu
         menu = wx.Menu()
-        # add some items
-        menu.Append(self.popupID1, "FindItem tests")
-        menu.Append(self.popupID2, "Iterate Selected")
-        menu.Append(self.popupID3, "ClearAll and repopulate")
-        menu.Append(self.popupID4, "DeleteAllItems")
-        menu.Append(self.popupID5, "GetItem")
-        menu.Append(self.popupID6, "Edit")
+        # add items
+        menu.Append(self.popupEdit, "Edit")
+        menu.Append(self.popupDelete, "Delete")
 
         # Popup the menu.  If an item is selected then its handler
         # will be called before PopupMenu returns.
         self.PopupMenu(menu)
         menu.Destroy()
+
+    def OnPopupEdit(self, event):
+        
+        #Start Main Window
+        win = PeruMainUI.PeruMainUIFrame(self, False, self.list.GetItemData(self.currentItem))
+        win.Show(True)
+        self.frame = win
+        
+        event.Skip()
+
+    def OnPopupDelete(self, event):
+        noErrors = True        
+        database = PeruDB.PeruDB()
+                
+        try:
+            PersonGroupDB.DeletePersonGroup(database, self.list.GetItemData(self.currentItem))                
+        except:
+            print("Database Error!")
+            print(sys.exc_info()[0])
+            noErrors = False
+            
+        if(noErrors):
+            database.commit()
+        else:
+            database.rollback()
+            
+        self.PopulateList()
+        
+        event.Skip()
 
 
 

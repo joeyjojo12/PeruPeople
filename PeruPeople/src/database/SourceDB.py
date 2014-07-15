@@ -51,8 +51,8 @@ def SourceUpdateStatement(fields):
             " = " + fields[0] + ";\n")
 
 
-def SourceDeleteStatement(fields):    
-    return("DELETE FROM SOURCE WHERE " + PeruConstants.SOURCE_FIELDS[0] + " = " + fields[0] + ";\n")
+def SourceDeleteStatement(SourceID):    
+    return("DELETE FROM SOURCE WHERE " + PeruConstants.SOURCE_FIELDS[0] + " = '" + str(SourceID) + "';\n")
 
 
 def ReadSource(SourceID):
@@ -79,8 +79,8 @@ def UpdateSource(database, fields):
     return output
 
 
-def DeleteSource(database, fields):
-    output = database.delete(SourceDeleteStatement(fields))
+def DeleteSource(database, SourceID):
+    output = database.delete(SourceDeleteStatement(SourceID))
     return output
 
 

@@ -42,8 +42,8 @@ def SourceEntryUpdateStatement(fields):
             " = " + fields[0] + ";\n")
 
 
-def SourceEntryDeleteStatement(fields):    
-    return("DELETE FROM SOURCEENTRY WHERE " + PeruConstants.SOURCE_ENTRY_FIELDS[0] + " = " + fields[0] + ";\n")
+def SourceEntryDeleteStatement(SourceEntryID):    
+    return("DELETE FROM SOURCEENTRY WHERE " + PeruConstants.SOURCE_ENTRY_FIELDS[0] + " = '" + str(SourceEntryID) + "';\n")
 
 
 def ReadSourceEntry(SourceEntryID):
@@ -70,10 +70,6 @@ def UpdateSourceEntry(database, fields):
     return output
 
 
-def DeleteSourceEntry(database, fields):
-    output = database.delete(SourceEntryDeleteStatement(fields))
+def DeleteSourceEntry(database, SourceEntryID):
+    output = database.delete(SourceEntryDeleteStatement(SourceEntryID))
     return output
-
-
-def SourceEntryReadStatement(ID):
-    return "SELECT * FROM " + PeruConstants.SOURCE_ENTRY + " WHERE SourceEntryId = " + ID + ";\n"

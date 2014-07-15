@@ -40,8 +40,8 @@ def PersonUpdateStatement(fields):
             " SET " + ",".join(strFields) + 
             " WHERE " + PeruConstants.PERSON_FIELDS[0] + " = " + fields[0] + ";\n")
 
-def PersonDeleteStatement(fields):    
-    return("DELETE FROM PERSON WHERE " + PeruConstants.PERSON_FIELDS[0] + " = " + fields[0] + ";\n")
+def PersonDeleteStatement(PersonID):    
+    return("DELETE FROM PERSON WHERE " + PeruConstants.PERSON_FIELDS[0] + " = '" + str(PersonID) + "';\n")
 
 def ReadPerson(PersonID):
     database = PeruDB.PeruDB()
@@ -65,12 +65,6 @@ def UpdatePerson(database, fields):
     output = database.update(PersonUpdateStatement(fields))
     return output
 
-def DeletePerson(database, fields):
-    output = database.delete(PersonDeleteStatement(fields))
+def DeletePerson(database, PersonID):
+    output = database.delete(PersonDeleteStatement(PersonID))
     return output
-
-def PersonReadStatement(ID):
-    return "SELECT * FROM " + PeruConstants.PERSON + " WHERE PersonId = " + ID + ";\n"
-
-
-

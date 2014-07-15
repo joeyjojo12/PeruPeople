@@ -161,6 +161,7 @@ class SourcePanel(wx.Panel):
         #Populate fields with content from current person
         if(SourceID != ''):
             self.PopulateFields()
+            self.ArrangeFields(PeruConstants.DOCUMENT_LIST.index(DocumentType.GetValue()))
 
         self.SetSizer(sizer)
         

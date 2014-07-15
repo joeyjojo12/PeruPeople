@@ -1,4 +1,4 @@
-import PeruDB
+import PeruDB, EntryDB
 import PeruConstants
 
 def ListPersonGroups():
@@ -24,4 +24,22 @@ def GetPersonName(personGroupID):
             return "UNUSED"
     else:
         return -1
+    
+def PersonGroupDeleteStatement(PersonGroupID):
+    return("DELETE FROM PERSONGROUP WHERE " + PeruConstants.PERSONGROUP_ID + " = '" + str(PersonGroupID) + "';\n")
+    
+    
+def DeletePersonGroup(database, personGroupID):
+    output = EntryDB.ReadEntries(personGroupID)
+    if output[0] != 0:
+        return output
+    
+    entryList = output[1]
+    
+    for entry in entryList:
+        output = EntryDB.DeleteEntry(database, entry[PeruConstants.ENTRY_FIELDS.index('EntryID')])
+        if output[0] != 0:
+            return output
+    
+    output = database.delete(PersonGroupDeleteStatement(personGroupID))
     

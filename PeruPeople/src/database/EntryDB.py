@@ -1,4 +1,4 @@
-import PeruDB
+import PeruDB, PersonDB, SourceEntryDB, MatrixDB
 import PeruConstants
 
 def EntryInsertFromList(entries):
@@ -12,8 +12,8 @@ def EntryInsertFromList(entries):
     
     return resultString
 
-def EntryReadSingleStatement(fields):    
-    return("SELECT * FROM ENTRY WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = '" + fields[0] + "';\n")
+def EntryReadSingleStatement(EntryID):    
+    return("SELECT * FROM ENTRY WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = '" + str(EntryID) + "';\n")
 
 def EntryReadAllStatement(PersonGroupID):
     if(int(PersonGroupID) > 0):
@@ -46,12 +46,12 @@ def EntryUpdateStatement(fields):
             " SET " + ",".join(strFields) + 
             " WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = " + str(fields[0]) + ";\n")
 
-def EntryDeleteStatement(fields):    
-    return("DELETE FROM ENTRY WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = " + fields[0] + ";\n")
+def EntryDeleteStatement(EntryID):    
+    return("DELETE FROM ENTRY WHERE " + PeruConstants.ENTRY_FIELDS[0] + " = '" + str(EntryID) + "';\n")
 
-def ReadEntry(fields):
+def ReadEntry(EntryID):
     database = PeruDB.PeruDB()
-    output = database.querry(EntryReadSingleStatement(fields));
+    output = database.querry(EntryReadSingleStatement(EntryID));
     database.closeDB()
     return output
 
@@ -78,8 +78,24 @@ def UpdateEntry(database, fields):
     output = database.update(EntryUpdateStatement(fields))
     return output
 
-def DeleteEntry(database, fields):    
-    output = database.delete(EntryDeleteStatement(fields))
+def DeleteEntry(database, EntryID):
+    entry = ReadEntry(EntryID)
+    if entry[0] != 0:
+        return entry
+    
+    output = PersonDB.DeletePerson(database, entry[1][0][PeruConstants.ENTRY_FIELDS.index('PersonID')])
+    if output[0] != 0:
+        return output
+    
+    output = SourceEntryDB.DeleteSourceEntry(database, entry[1][0][PeruConstants.ENTRY_FIELDS.index('SourceEntryId')])
+    if output[0] != 0:
+        return output
+    
+    output = MatrixDB.DeleteMatrix(database, entry[1][0][PeruConstants.ENTRY_FIELDS.index('MatrixID')])
+    if output[0] != 0:
+        return output
+    
+    output = database.delete(EntryDeleteStatement(EntryID))
     return output
 
 def EntryReadStatement(ID):

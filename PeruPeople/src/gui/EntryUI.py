@@ -1,4 +1,5 @@
 import wx
+import sys
 import PersonUI, SourceUI, MatrixUI
 import PeruConstants
 from database import EntryDB
@@ -52,10 +53,17 @@ class NestedEntryPanel(wx.Panel):
         else:
             self.NumEntries = 1
             nestedNotebook.AddPage(EntryNotebook(nestedNotebook, []), "Entry 1")
+
+        self.buttonSizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.deleteButton = wx.Button(self, -1, "Delete Entry")
+        self.buttonSizer.Add(self.deleteButton, 0, wx.ALIGN_RIGHT)
+        
+        self.Bind(wx.EVT_BUTTON, self.OnButtonDelete, self.deleteButton)
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(topSizer, 0, wx.ALIGN_RIGHT)
         sizer.Add(nestedNotebook, 1, wx.ALL|wx.EXPAND, 5)
+        sizer.Add(self.buttonSizer, 2, wx.ALIGN_RIGHT)
 
         self.SetSizer(sizer)
         
@@ -63,6 +71,25 @@ class NestedEntryPanel(wx.Panel):
     def OnButtonAddEntry(self, evt):
         self.NumEntries += 1
         self.nestedNotebook.AddPage(EntryNotebook(self.nestedNotebook, []), "Entry " + str(self.NumEntries))
+        
+    # When the user selects something, we go here.
+    def OnButtonDelete(self, evt):
+        noErrors = True        
+        database = PeruDB.PeruDB()
+                
+        try:
+            EntryDB.DeleteEntry(database, self.nestedNotebook.GetCurrentPage().EntryID)                
+        except:
+            print("Database Error!")
+            print(sys.exc_info()[0])
+            noErrors = False
+            
+        if(noErrors):
+            database.commit()
+            self.nestedNotebook.DeletePage(self.nestedNotebook.GetSelection())
+        else:
+            database.rollback()
+        
     
     def SaveEntries(self):
 

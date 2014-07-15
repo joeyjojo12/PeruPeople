@@ -37,8 +37,8 @@ def MatrixUpdateStatement(fields):
             " SET " + ",".join(strFields) + 
             " WHERE " + PeruConstants.MATRIX_FIELDS[0] + " = " + fields[0] + ";\n")
 
-def MatrixDeleteStatement(fields):    
-    return("DELETE FROM MATRIX WHERE " + PeruConstants.MATRIX_FIELDS[0] + " = " + fields[0] + ";\n")
+def MatrixDeleteStatement(MatrixID):    
+    return("DELETE FROM MATRIX WHERE " + PeruConstants.MATRIX_FIELDS[0] + " = '" + str(MatrixID) + "';\n")
 
 def ReadMatrix(MatrixID):
     database = PeruDB.PeruDB()
@@ -62,10 +62,6 @@ def UpdateMatrix(database, fields):
     output = database.update(MatrixUpdateStatement(fields))
     return output
 
-def DeleteMatrix(database, fields):
-    output = database.delete(MatrixDeleteStatement(fields))
+def DeleteMatrix(database, MatrixID):
+    output = database.delete(MatrixDeleteStatement(MatrixID))
     return output
-
-def MatrixReadStatement(ID):
-    
-    return "SELECT * FROM " + PeruConstants.MATRIX + " WHERE MatrixId = " + ID + ";\n"
