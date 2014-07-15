@@ -1,19 +1,23 @@
 import sqlite3 as lite
 import sys, datetime, shutil, os
-import Parameters
+import PeruConstants
+
+curDir = str(os.getcwd()) + '\\'
 
 def DatabaseBackup():
-    if not os.path.exists(Parameters.BACKUP_DIR):
-        os.mkdir(Parameters.BACKUP_DIR)
+    backupdir = curDir + 'backups\\'
+
+    if not os.path.exists(backupdir):
+        os.mkdir(backupdir)
         
-    backupdir = Parameters.BACKUP_DIR + 'backup_' + str(datetime.date.today()) + '/'    
+    backupdir = backupdir + 'backup_' + str(datetime.date.today()) + '\\'    
     if not os.path.exists(backupdir):
         os.mkdir(backupdir)
         
     curtime = str(datetime.datetime.now())        
     backup = backupdir + curtime[curtime.index(' ') + 1:curtime.index('.')].replace(':','-') + ".db"
     print(backup)
-    shutil.copyfile(Parameters.PERU_DB, backup)
+    shutil.copyfile(curDir + PeruConstants.PERU_DB, backup)
 
 class PeruDB:
     
@@ -24,7 +28,7 @@ class PeruDB:
     
     def openDB(self):
         try:
-            self.con = lite.connect(Parameters.PERU_DB)
+            self.con = lite.connect(curDir + PeruConstants.PERU_DB)
             cur = self.con.cursor()
             cur.execute('SELECT SQLITE_VERSION()')
             data = cur.fetchone()

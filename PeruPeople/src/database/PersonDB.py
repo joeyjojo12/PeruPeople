@@ -25,7 +25,7 @@ def PersonInsertStatement(fields):
     if len(fields) == (len(PeruConstants.PERSON_FIELDS) - 1):
         return ("INSERT INTO " + PeruConstants.PERSON + 
                 "(" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" +
-                " VALUES(" + "\',\'".join(fields) + ");\n")
+                " VALUES('" + "\',\'".join(fields) + "');\n")
     else:
         return "INSERT INTO " + PeruConstants.PERSON + " (" + ",".join(PeruConstants.PERSON_FIELDS[1:]) + ")" + " VALUES('" + "','".join(fields[1:]) + "');\n"
 

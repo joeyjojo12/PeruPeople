@@ -3,8 +3,6 @@ import PeruConstants
 from database import PersonDB
 
 def getPersonInfo(personPage):
-    print(personPage.FirstName.GetValue())
-    print(personPage.LastName.GetValue())
     return [str(personPage.PersonID),
             personPage.FirstName.GetValue(),
             personPage.LastName.GetValue(),
@@ -17,7 +15,10 @@ def getPersonInfo(personPage):
             str(personPage.AgeRange.GetValue()),
             personPage.Profession.GetValue(),
             personPage.Occupation.GetValue(),
-            personPage.Religion.GetValue(),
+            str(personPage.ReligionCatholic.GetValue()),
+            str(personPage.ReligionNative.GetValue()),
+            str(personPage.ReligionOther.GetValue()),
+            personPage.ReligionOtherText.GetValue(),
             personPage.Notes.GetValue(),
             str(personPage.TagForExample.GetValue())]
     
@@ -27,7 +28,9 @@ def savePerson(database, personPage):
 class PersonPanel(wx.Panel):
     def __init__(self, parent, PersonID):
 
-        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
+        wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)        
+        
+        space = 6
         
         if(PersonID > 0):
             self.PersonID = PersonID
@@ -69,10 +72,18 @@ class PersonPanel(wx.Panel):
         fieldList.append((wx.StaticText(self, label="Profession/Skills :"), Profession))
         
         Occupation = self.Occupation = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Occupation/Role :"), Occupation))
+        fieldList.append((wx.StaticText(self, label="Occupation/Role :"), Occupation))        
         
-        Religion = self.Religion = wx.TextCtrl(self, size=(400,-1))
-        fieldList.append((wx.StaticText(self, label="Religion :"), Religion))
+        ReligionCatholic = self.ReligionCatholic = wx.CheckBox(self, -1, "Catholic")
+        ReligionNative = self.ReligionNative = wx.CheckBox(self, -1, "Native")
+        ReligionOther = self.ReligionOther = wx.CheckBox(self, -1, "Other")
+        ReligionOtherText = self.ReligionOtherText = wx.TextCtrl(self, size=(400,-1))
+        ReligionSizer = wx.GridBagSizer(hgap=space, vgap=space)
+        ReligionSizer.Add(ReligionCatholic, (0,0))
+        ReligionSizer.Add(ReligionNative,   (0,1))
+        ReligionSizer.Add(ReligionOther,    (0,2))
+        ReligionSizer.Add(ReligionOtherText,(0,3))        
+        fieldList.append((wx.StaticText(self, label="Religion :"), ReligionSizer))
         
         Notes = self.Notes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         fieldList.append((wx.StaticText(self, label="Notes :"), Notes))
@@ -81,12 +92,11 @@ class PersonPanel(wx.Panel):
         
         self.Bind(wx.EVT_TEXT, self.EvtText, Age)
 
-        space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
         
-        for i in range(len(fieldList) - 1):
+        for i in range(len(fieldList) - 1):                
             infoSizer.Add(fieldList[i][0],    (i+1,0))
-            infoSizer.Add(fieldList[i][1],    (i+1,1))
+            infoSizer.Add(fieldList[i][1],    (i+1,1))                
         
         #Add notes    
         infoSizer.Add(fieldList[len(fieldList)-1][0],     (len(fieldList),0))
@@ -127,7 +137,10 @@ class PersonPanel(wx.Panel):
         # Age range self populates
         self.Profession.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Profession')])
         self.Occupation.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Occupation')])
-        self.Religion.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Religion')])
+        self.ReligionCatholic.SetValue('True' == self.PersonFields[PeruConstants.PERSON_FIELDS.index('ReligionCatholic')])
+        self.ReligionNative.SetValue('True' == self.PersonFields[PeruConstants.PERSON_FIELDS.index('ReligionNative')])
+        self.ReligionOther.SetValue('True' == self.PersonFields[PeruConstants.PERSON_FIELDS.index('ReligionOther')])
+        self.ReligionOtherText.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('ReligionOtherText')])
         self.Notes.WriteText(self.PersonFields[PeruConstants.PERSON_FIELDS.index('Notes')])
         self.TagForExample.SetValue('True' == self.PersonFields[PeruConstants.PERSON_FIELDS.index('TagForExample')])
             

@@ -18,6 +18,15 @@ def SourceReadSingleStatement(SourceID):
     return("SELECT * FROM SOURCE WHERE " + PeruConstants.SOURCE_ID + " = '" + str(SourceID) + "';\n")
 
 
+def SourceListByTyepStatement(DocumentType):
+    if DocumentType == PeruConstants.BOOK:
+        return("SELECT BookTitle FROM Source WHERE DocumentType='Book'")
+    elif DocumentType == PeruConstants.ARTICLE:
+        return("SELECT ArticleTitle FROM Source WHERE DocumentType='Article'")
+    else:
+        return("SELECT ArchiveName FROM Source WHERE DocumentType='Archive'")
+
+
 def SourceInsertStatement(fields):
     if len(fields) > len(PeruConstants.SOURCE_FIELDS) or len(fields) < (len(PeruConstants.SOURCE_FIELDS) - 1):
         return -1
@@ -25,7 +34,7 @@ def SourceInsertStatement(fields):
     if len(fields) == (len(PeruConstants.SOURCE_FIELDS) - 1):
         return ("INSERT INTO " + PeruConstants.SOURCE + 
                 "(" + ",".join(PeruConstants.SOURCE_FIELDS[1:]) + ")" +
-                " VALUES(" + "\',\'".join(fields) + ");\n")
+                " VALUES('" + "\',\'".join(fields) + "');\n")
     else:
         return "INSERT INTO " + PeruConstants.SOURCE + " (" + ",".join(PeruConstants.SOURCE_FIELDS[1:]) + ")" + " VALUES('" + "','".join(fields[1:]) + "');\n"
 
@@ -75,5 +84,8 @@ def DeleteSource(database, fields):
     return output
 
 
-def SourceReadStatement(ID):
-    return "SELECT * FROM " + PeruConstants.SOURCE + " WHERE SourceId = " + ID + ";\n"
+def ListSourceByType(database, documentType):
+    database = PeruDB.PeruDB()
+    output = database.querry(SourceListByTyepStatement(documentType));
+    database.closeDB()
+    return output

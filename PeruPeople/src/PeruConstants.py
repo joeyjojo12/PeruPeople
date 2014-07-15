@@ -1,3 +1,5 @@
+PERU_DB = 'peru.db'
+
 GENDER_LIST = ['M', 'F']
 DEFAULT_GENDER = GENDER_LIST[0]
 
@@ -6,6 +8,7 @@ DEFAULT_REGION = REGION_LIST[0]
 
 DOCUMENT_LIST = ['Book','Article','Archive']
 DEFAULT_DOCUMENT = DOCUMENT_LIST[2]
+
 BOOK = 0
 ARTICLE = 1
 ARCHIVE = 2
@@ -44,10 +47,10 @@ SOURCE_ENTRY_ID = 'SourceEntryID'
 MATRIX_ID = 'MatrixID'
 ENTRY_ID  = 'EntryID'
 
-ENTRY_FIELDS  = ['EntryID','PersonGroupID','PersonID','Document','SourceID','SourceEntryId','ArticleID','ArticleEntryId','ArchiveID','ArchiveEntryId','MatrixID']
-PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Profession','Occupation','ReligionCatholic','ReligionNative','ReligionOther','ReligionOtherText','ConsulterCapycocha','ConsulterOtherConsulter','Notes','PhotoReference','TagForExample']
+ENTRY_FIELDS  = ['EntryID','PersonGroupID','PersonID','SourceID','SourceEntryId','MatrixID']
+PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Profession','Occupation','ReligionCatholic','ReligionNative','ReligionOther','ReligionOtherText','Notes','TagForExample']
 SOURCE_FIELDS = ['SourceId','DocumentType','BookTitle','BookAuthor1','BookAuthor2','BookAuthor3','BookAuthor4','BookAuthor5','BookPublisher','BookPubPlace','BookYear','ArticleTitle','ArticleAuthor1','ArticleAuthor2','ArticleAuthor3','ArticleAuthor4','ArticleAuthor5','ArticlePublication','ArticleYear','ArticleVolume','ArticleIssue','ArchiveName','ArchiveCollection','ArchiveYear','ArchiveMonth','ArchiveDay','ArchiveStack','ArchiveExpedientes']
-SOURCE_ENTRY_FIELDS = ['SourceEntryId','DocumentType','BookPageNumbers','BookNotes','ArticlePageNumbers','ArticleNotes','ArchivePageNumbers','ArchiveNotes','ArchivePhotoReference']
+SOURCE_ENTRY_FIELDS = ['SourceEntryId','DocumentType','BookPageNumbers','BookNotes','ArticlePageNumbers','ArticleNotes','ArchivePageNumbers','ArchivePhotoReference','ArchiveNotes']
 MATRIX_FIELDS = ['MatrixID',
                  'ReferencedByFirst',
                  'ReferencedByLast',
@@ -97,7 +100,8 @@ MATRIX_FIELDS = ['MatrixID',
                  'ConditionLame',
                  'ConditionDeaf',
                  'ConditionMute',
-                 'ConditionCrippled',
+                 'ConditionDisabled',
+                 'ConditionDisabledText',
                  'ConditionOtherCondition',
                  'ConditionOtherConditionText',
                  'DevilYesDevil',

@@ -6,23 +6,49 @@ from database import SourceDB, SourceEntryDB
 def getSourceInfo(sourcePage):
     return [str(sourcePage.SourceID),
             str(sourcePage.DocumentType.GetValue()),
-            sourcePage.Citation.GetValue(),
-            sourcePage.Archive.GetValue(),
-            sourcePage.Collection.GetValue(),
-            sourcePage.Stack.GetValue(),
-            sourcePage.Expedientes.GetValue(),
-            sourcePage.PageNumbers.GetValue(),
-            sourcePage.Author.GetValue(),
-            sourcePage.DocNameTitle.GetValue(),
-            sourcePage.Publisher.GetValue(),
-            sourcePage.PubPlace.GetValue(),
-            str(sourcePage.Year.GetValue()),
-            sourcePage.ReferencedByFirst.GetValue(),
-            sourcePage.ReferencedByLast.GetValue(),
-            sourcePage.Notes.GetValue()]
+            sourcePage.BookTitle.GetValue(),
+            sourcePage.BookAuthor1.GetValue(),
+            sourcePage.BookAuthor2.GetValue(),
+            sourcePage.BookAuthor3.GetValue(),
+            sourcePage.BookAuthor4.GetValue(),
+            sourcePage.BookAuthor5.GetValue(),
+            sourcePage.BookPublisher.GetValue(),
+            sourcePage.BookPubPlace.GetValue(),
+            str(sourcePage.BookYear.GetValue()),
+            sourcePage.ArticleTitle.GetValue(),
+            sourcePage.ArticleAuthor1.GetValue(),
+            sourcePage.ArticleAuthor2.GetValue(),
+            sourcePage.ArticleAuthor3.GetValue(),
+            sourcePage.ArticleAuthor4.GetValue(),
+            sourcePage.ArticleAuthor5.GetValue(),
+            sourcePage.ArticlePublication.GetValue(),
+            str(sourcePage.ArticleYear.GetValue()),
+            sourcePage.ArticleVolume.GetValue(),
+            sourcePage.ArticleIssue.GetValue(),
+            sourcePage.ArchiveName.GetValue(),
+            sourcePage.ArchiveCollection.GetValue(),
+            str(sourcePage.ArchiveYear.GetValue()),
+            str(sourcePage.ArchiveMonth.GetValue()),
+            str(sourcePage.ArchiveDay.GetValue()),
+            sourcePage.ArchiveStack.GetValue(),
+            sourcePage.ArchiveExpedientes.GetValue()]
     
 def saveSource(database, sourcePage):
         return SourceDB.InsertUpdateSource(database, getSourceInfo(sourcePage))
+    
+def getSourceEntryInfo(sourcePage):
+    return [str(sourcePage.SourceEntryID),
+            str(sourcePage.DocumentType.GetValue()),
+            sourcePage.BookPageNumbers.GetValue(),
+            sourcePage.BookNotes.GetValue(),
+            sourcePage.ArticlePageNumbers.GetValue(),
+            sourcePage.ArticleNotes.GetValue(),
+            sourcePage.ArchivePageNumbers.GetValue(),
+            sourcePage.ArchivePhotoReference.GetValue(),
+            sourcePage.ArchiveNotes.GetValue()]
+    
+def saveSourceEntry(database, sourcePage):
+        return SourceEntryDB.InsertUpdateSourceEntry(database, getSourceEntryInfo(sourcePage))
 
 class SourcePanel(wx.Panel):
     def __init__(self, parent, SourceID, SourceEntryID):
@@ -41,10 +67,9 @@ class SourcePanel(wx.Panel):
             self.SourceEntryFields = SourceEntryDB.ReadSourceEntry(SourceEntryID)[1][0]
         else:
             SourceEntryID = self.SourceEntryID = ''
-            self.SourceEntryFields = []
-        
+            self.SourceEntryFields = []        
 
-        Type = self.DocumentType = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (150, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
+        DocumentType = self.DocumentType = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (150, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
         self.Bind(wx.EVT_COMBOBOX, self.OnChangeType, self.DocumentType)
         
         # Book fields
@@ -67,7 +92,7 @@ class SourcePanel(wx.Panel):
         bookList.append((wx.StaticText(self, label="Publisher Location :"), BookPubPlace))
         BookYear = self.BookYear = wx.TextCtrl(self, size=(100,-1))
         bookList.append((wx.StaticText(self, label="Year :"), BookYear))
-        BookPageNumbers = self.BookPageNumbers = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
+        BookPageNumbers = self.BookPageNumbers = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Page Numbers :"), BookPageNumbers))        
         BookNotes = self.BookNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         bookList.append((wx.StaticText(self, label="Notes :"), BookNotes))
@@ -94,7 +119,7 @@ class SourcePanel(wx.Panel):
         articleList.append((wx.StaticText(self, label="Volume :"), ArticleVolume))
         ArticleIssue = self.ArticleIssue = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Issue :"), ArticleIssue))
-        ArticlePageNumbers = self.ArticlePageNumbers = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
+        ArticlePageNumbers = self.ArticlePageNumbers = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Page Numbers :"), ArticlePageNumbers))
         ArticleNotes = self.ArticleNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         articleList.append((wx.StaticText(self, label="Notes :"), ArticleNotes))
@@ -115,20 +140,20 @@ class SourcePanel(wx.Panel):
         archiveList.append((wx.StaticText(self, label="Stack :"), ArchiveStack ))
         ArchiveExpedientes = self.ArchiveExpedientes = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Expedientes :"), ArchiveExpedientes ))
-        ArchivePageNumbers = self.ArchivePageNumbers = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
+        ArchivePageNumbers = self.ArchivePageNumbers = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Page Numbers :"), ArchivePageNumbers))
-        ArchiveNotes = self.ArchiveNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
-        archiveList.append((wx.StaticText(self, label="Notes :"), ArchiveNotes))
         ArchivePhotoReference = self.ArchivePhotoReference = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         archiveList.append((wx.StaticText(self, label="Photo Reference(s) :"), ArchivePhotoReference))
+        ArchiveNotes = self.ArchiveNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
+        archiveList.append((wx.StaticText(self, label="Notes :"), ArchiveNotes))
         
-        sourceLists = [bookList, articleList, archiveList]
+        SourceLists = self.SourceLists = [bookList, articleList, archiveList]
        
         space = 6
         infoSizer = self.infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
        
         #Initially set document type as archive
-        self.ArrangeFields(PeruConstants.DEFAULT_DOCUMENT)
+        self.ArrangeFields(PeruConstants.ARCHIVE)
             
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(infoSizer, 1, wx.EXPAND)
@@ -141,24 +166,39 @@ class SourcePanel(wx.Panel):
         
     # Arrange fields, removing fields that are not required for the specified document type.
     def ArrangeFields(self, docType):
-        self.infoSizer.Clear()
-        j=0
-        for i in range(len(self.fieldList) - 1):
-            if(len(self.fieldList[i]) > 2 and (self.fieldList[i][2] & docType) > 0):
-                self.fieldList[i][0].Hide()
-                self.fieldList[i][1].Hide()
-                j-=1                
+        self.infoSizer.Clear()        
+        
+        self.DocumentType.Show()
+        self.infoSizer.Add(self.DocumentType,(0,0))
+        
+        for i in range(len(self.SourceLists)):
+            k = 0
+            if i == docType:
+                for j in range(len(self.SourceLists[i])):
+                    if (j == len(self.SourceLists[i]) - 2) and (docType == PeruConstants.ARCHIVE):
+                        #This takes care of the photo reference field    
+                        self.infoSizer.Add(self.SourceLists[i][len(self.SourceLists[i])-2][0],     (k+1,0))
+                        self.infoSizer.Add(self.SourceLists[i][len(self.SourceLists[i])-2][1],     (k+1,1), (4,2), wx.EXPAND)
+                        k += 4
+                        
+                    elif (j == len(self.SourceLists[i]) - 1):
+                        #This takes care of the notes field    
+                        self.infoSizer.Add(self.SourceLists[i][len(self.SourceLists[i])-1][0],     (k+1,0))
+                        self.infoSizer.Add(self.SourceLists[i][len(self.SourceLists[i])-1][1],     (k+1,1), (4,2), wx.EXPAND)
+                        k += 4
+                                                
+                    else:
+                        self.SourceLists[i][j][0].Show()
+                        self.SourceLists[i][j][1].Show()
+                        self.infoSizer.Add(self.SourceLists[i][j][0],    (k+1,0))
+                        self.infoSizer.Add(self.SourceLists[i][j][1],    (k+1,1))
+                    
+                    k += 1
             else:
-                self.fieldList[i][0].Show()
-                self.fieldList[i][1].Show()
-                self.infoSizer.Add(self.fieldList[i][0],    (j+1,0))
-                self.infoSizer.Add(self.fieldList[i][1],    (j+1,1))
-            j+=1
-        
-        #Add notes    
-        self.infoSizer.Add(self.fieldList[len(self.fieldList)-1][0],     (j+1,0))
-        self.infoSizer.Add(self.fieldList[len(self.fieldList)-1][1],     (j+1,1), (4,2), wx.EXPAND)
-        
+                for j in range(len(self.SourceLists[i])):
+                    self.SourceLists[i][j][0].Hide()
+                    self.SourceLists[i][j][1].Hide()
+                
         self.infoSizer.Layout()
         
             
@@ -172,33 +212,35 @@ class SourcePanel(wx.Panel):
         self.BookAuthor5.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookAuthor5')])
         self.BookPublisher.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookPublisher')])
         self.BookPubPlace.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookPubPlace')])
-        self.BookYear.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookYear')])
-        self.BookPageNumbers.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookPageNumbers')])
-        self.BookNotes.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookNotes')])
+        self.BookYear.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookYear')]))
+        self.BookPageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookPageNumbers')])
+        self.BookNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookNotes')])
+        
         self.ArticleTitle.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleTitle')])
-        self.ArticleAuthor2.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor1')])
+        self.ArticleAuthor1.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor1')])
         self.ArticleAuthor2.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor2')])
         self.ArticleAuthor3.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor3')])
         self.ArticleAuthor4.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor4')])
         self.ArticleAuthor5.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor5')])
         self.ArticlePublication.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticlePublication')])
-        self.ArticleYear.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleYear')])
+        self.ArticleYear.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleYear')]))
         self.ArticleVolume.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleVolume')])
         self.ArticleIssue.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleIssue')])
-        self.ArticlePageNumbers.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticlePageNumbers')])
-        self.ArticleNotes.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticleNotes')])
+        self.ArticlePageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticlePageNumbers')])
+        self.ArticleNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticleNotes')])
+        
         self.ArchiveName.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveName')])
         self.ArchiveCollection.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveCollection')])
-        self.ArchiveYear.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveYear')])
-        self.ArchiveMonth.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveMonth')])
-        self.ArchiveDay.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveDay')])
-        self.ArchiveStackWriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveStack')])
+        self.ArchiveYear.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveYear')]))
+        self.ArchiveMonth.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveMonth')]))
+        self.ArchiveDay.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveDay')]))
+        self.ArchiveStack.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveStack')])
         self.ArchiveExpedientes.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveExpedientes')])
-        self.ArchivePageNumbers.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePageNumbers')])
-        self.ArchiveNotes.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchiveNotes')])
-        self.ArchivePhotoReference.WriteText(self.SourceFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePhotoReference')])
+        self.ArchivePageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePageNumbers')])
+        self.ArchivePhotoReference.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePhotoReference')])
+        self.ArchiveNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchiveNotes')])
         
     def OnChangeType(self, evt):
-        self.ArrangeFields(self.Type.GetSelection())
+        self.ArrangeFields(self.DocumentType.GetSelection())
         
         

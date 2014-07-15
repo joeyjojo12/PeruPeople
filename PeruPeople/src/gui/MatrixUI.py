@@ -4,6 +4,8 @@ from database import MatrixDB
 
 def getMatrixInfo(matrixPage):
     return [str(matrixPage.MatrixID),
+            matrixPage.GetPage(0).ReferencedByFirst.GetValue(),
+            matrixPage.GetPage(0).ReferencedByLast.GetValue(),
             str(matrixPage.GetPage(0).Consulter.GetValue()),
             str(matrixPage.GetPage(0).Huaca.GetValue()),
             str(matrixPage.GetPage(0).Malqui.GetValue()),
@@ -50,7 +52,8 @@ def getMatrixInfo(matrixPage):
             str(matrixPage.GetPage(0).Lame.GetValue()),
             str(matrixPage.GetPage(0).Deaf.GetValue()),
             str(matrixPage.GetPage(0).Mute.GetValue()),
-            str(matrixPage.GetPage(0).Crippled.GetValue()),
+            str(matrixPage.GetPage(0).Disabled.GetValue()),
+            matrixPage.GetPage(0).DisabledText.GetValue(),
             str(matrixPage.GetPage(0).OtherCondition.GetValue()),
             matrixPage.GetPage(0).OtherConditionText.GetValue(),
             str(matrixPage.GetPage(0).YesDevil.GetValue()),
@@ -100,6 +103,11 @@ class MainMatrixPanel(wx.ScrolledWindow):
         
         largefont = wx.Font(11, wx.SWISS, wx.NORMAL, wx.BOLD)
         boxfont = wx.Font(9, wx.SWISS, wx.NORMAL, wx.BOLD)
+        
+        ReferencedByFirstLabel = wx.StaticText(self, label="Referenced By First Name :")
+        ReferencedByFirst      = self.ReferencedByFirst = wx.TextCtrl(self, size=(150,-1),name="ReferencedByFirst")
+        ReferencedByLastLabel  = wx.StaticText(self, label="Referenced By Last Name :")
+        ReferencedByLast       = self.ReferencedByLast = wx.TextCtrl(self, size=(150,-1),name="ReferencedByLast")
 
         labelMinister = wx.StaticText(self, label="Type of Minister :")
         labelMinister.SetFont(largefont)
@@ -184,7 +192,8 @@ class MainMatrixPanel(wx.ScrolledWindow):
         Lame                             = self.Lame = wx.CheckBox(self, -1, "Lame")
         Deaf                             = self.Deaf = wx.CheckBox(self, -1, "Deaf")
         Mute                             = self.Mute = wx.CheckBox(self, -1, "Mute")
-        Crippled                         = self.Crippled = wx.CheckBox(self, -1, "Crippled")
+        Disabled                         = self.Disabled = wx.CheckBox(self, -1, "Disabled")
+        DisabledText                     = self.DisabledText = wx.TextCtrl(self, size=(150,-1),name="DisabledText")
         OtherCondition                   = self.OtherCondition = wx.CheckBox(self, -1, "Other")
         OtherConditionText               = self.OtherConditionText = wx.TextCtrl(self, size=(150,-1),name="OtherConditionText")
         
@@ -227,42 +236,52 @@ class MainMatrixPanel(wx.ScrolledWindow):
         space = 6
         infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
         
-        infoSizer.Add(labelMinister                   ,(0,0))
-        infoSizer.Add(Consulter                       ,(1,0))
-        infoSizer.Add(Huaca                           ,(2,0))
-        infoSizer.Add(Malqui                          ,(3,0))
-        infoSizer.Add(Lightning                       ,(4,0))
-        infoSizer.Add(Sun                             ,(5,0))
-        infoSizer.Add(Capycocha                       ,(6,0))
+        ReferencedByFirstSizer = wx.GridBagSizer(hgap=space, vgap=space)
+        ReferencedByFirstSizer.Add(ReferencedByFirstLabel          ,(0,0))
+        ReferencedByFirstSizer.Add(ReferencedByFirst               ,(0,1))
+        infoSizer.Add(ReferencedByFirstSizer                       ,(0,0))
+        ReferencedByLastSizer = wx.GridBagSizer(hgap=space, vgap=space)        
+        ReferencedByLastSizer.Add(ReferencedByLastLabel            ,(0,0))
+        ReferencedByLastSizer.Add(ReferencedByLast                 ,(0,1))
+        infoSizer.Add(ReferencedByLastSizer                        ,(1,0))
+        
+        
+        infoSizer.Add(labelMinister                   ,(3,0))
+        infoSizer.Add(Consulter                       ,(4,0))
+        infoSizer.Add(Huaca                           ,(5,0))
+        infoSizer.Add(Malqui                          ,(6,0))
+        infoSizer.Add(Lightning                       ,(7,0))
+        infoSizer.Add(Sun                             ,(8,0))
+        infoSizer.Add(Capycocha                       ,(9,0))
         otherConsulterSizer = wx.GridBagSizer(hgap=space, vgap=space)
         otherConsulterSizer.Add(OtherConsulter        ,(0,0))
         otherConsulterSizer.Add(OtherConsulterText    ,(0,1))
-        infoSizer.Add(otherConsulterSizer             ,(7,0))
+        infoSizer.Add(otherConsulterSizer             ,(10,0))
         GuardianOfSizer = wx.GridBagSizer(hgap=space, vgap=space)
         GuardianOfSizer.Add(GuardianOf                ,(0,0))
         GuardianOfSizer.Add(GuardianOfText            ,(0,1))
-        infoSizer.Add(GuardianOfSizer                 ,(8,0))
+        infoSizer.Add(GuardianOfSizer                 ,(11,0))
         
-        infoSizer.Add(Diviners                        ,(10,0))        
-        infoSizer.Add(Spiders                         ,(11,0))
-        infoSizer.Add(Molle                           ,(12,0))
-        infoSizer.Add(Love                            ,(13,0))
-        infoSizer.Add(LostThings                      ,(14,0))
-        infoSizer.Add(Mushrooms                       ,(15,0))
+        infoSizer.Add(Diviners                        ,(13,0))        
+        infoSizer.Add(Spiders                         ,(14,0))
+        infoSizer.Add(Molle                           ,(15,0))
+        infoSizer.Add(Love                            ,(16,0))
+        infoSizer.Add(LostThings                      ,(17,0))
+        infoSizer.Add(Mushrooms                       ,(18,0))
         
-        infoSizer.Add(CuyExaminers                    ,(17,0))
+        infoSizer.Add(CuyExaminers                    ,(20,0))
         PurposeSizer = wx.GridBagSizer(hgap=space, vgap=space)
         PurposeSizer.Add(labelPurpose                 ,(0,0))
         PurposeSizer.Add(PurposeText                  ,(0,1))
-        infoSizer.Add(PurposeSizer                    ,(18,0))
+        infoSizer.Add(PurposeSizer                    ,(21,0))
                 
-        infoSizer.Add(Curer                           ,(20,0))        
-        infoSizer.Add(Confessor                       ,(21,0))        
-        infoSizer.Add(Curandero                       ,(22,0))        
-        infoSizer.Add(HelperSacristan                 ,(23,0))        
-        infoSizer.Add(ChichaAsuacAccacMaker           ,(24,0))        
-        infoSizer.Add(ChacraLandGuardian              ,(25,0))        
-        infoSizer.Add(BloodsuckersDeathDealersCaptains,(26,0))    
+        infoSizer.Add(Curer                           ,(23,0))        
+        infoSizer.Add(Confessor                       ,(24,0))        
+        infoSizer.Add(Curandero                       ,(25,0))        
+        infoSizer.Add(HelperSacristan                 ,(26,0))        
+        infoSizer.Add(ChichaAsuacAccacMaker           ,(27,0))        
+        infoSizer.Add(ChacraLandGuardian              ,(28,0))        
+        infoSizer.Add(BloodsuckersDeathDealersCaptains,(29,0))    
 
         infoSizer.Add(labelChurch                     ,(0,4))
         infoSizer.Add(Dogmatizer                      ,(1,4))
@@ -297,7 +316,10 @@ class MainMatrixPanel(wx.ScrolledWindow):
         infoSizer.Add(Lame                            ,(9,8))
         infoSizer.Add(Deaf                            ,(10,8))
         infoSizer.Add(Mute                            ,(11,8))
-        infoSizer.Add(Crippled                        ,(12,8))
+        DisabledSizer = wx.GridBagSizer(hgap=space, vgap=space)
+        DisabledSizer.Add(Disabled                    ,(0,0))
+        DisabledSizer.Add(DisabledText                ,(0,1))
+        infoSizer.Add(DisabledSizer                   ,(12,8))
         OtherConditionSizer = wx.GridBagSizer(hgap=space, vgap=space)
         OtherConditionSizer.Add(OtherCondition        ,(0,0))
         OtherConditionSizer.Add(OtherConditionText    ,(0,1))
@@ -336,7 +358,7 @@ class MainMatrixPanel(wx.ScrolledWindow):
         NotesTechniquesSizer = wx.GridBagSizer(hgap=space, vgap=space)
         NotesTechniquesSizer.Add(NotesTechniquesLabel ,(0,0))
         NotesTechniquesSizer.Add(NotesTechniquesText  ,(0,1))
-        infoSizer.Add(NotesTechniquesSizer            ,(9,16))   
+        infoSizer.Add(NotesTechniquesSizer            ,(9,16))
 
 
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -429,6 +451,8 @@ class MatrixPanel(wx.Notebook):
             self.PopulateFields()
         
     def PopulateFields(self):
+        self.GetPage(0).ReferencedByFirst.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ReferencedByFirst')])   
+        self.GetPage(0).ReferencedByLast.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ReferencedByLast')])   
         self.GetPage(0).Consulter.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('Consulter')])
         self.GetPage(0).Huaca.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterHuaca')])
         self.GetPage(0).Malqui.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConsulterMalqui')])
@@ -475,7 +499,7 @@ class MatrixPanel(wx.Notebook):
         self.GetPage(0).Lame.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionLame')])
         self.GetPage(0).Deaf.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionDeaf')])
         self.GetPage(0).Mute.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionMute')])
-        self.GetPage(0).Crippled.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionCrippled')])
+        self.GetPage(0).Disabled.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionDisabled')])
         self.GetPage(0).OtherCondition.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionOtherCondition')])
         self.GetPage(0).OtherConditionText.WriteText(self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('ConditionOtherConditionText')])
         self.GetPage(0).YesDevil.SetValue('True' == self.MatrixFields[PeruConstants.MATRIX_FIELDS.index('DevilYesDevil')])

@@ -2,12 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import sqlite3 as lite
-import sys
-import Parameters
+import sys, os
+import PeruConstants
 
 try:
-  
-    con = lite.connect(Parameters.PERU_DB)
+    con = lite.connect(str(os.getcwd()) + '\\' + PeruConstants.PERU_DB)
     
     cur = con.cursor()
     cur.executescript("""
@@ -79,10 +78,7 @@ try:
                             ReligionNative            BOOLEAN,
                             ReligionOther             BOOLEAN,
                             ReligionOtherText         TEXT,
-                            ConsulterCapycocha        BOOLEAN, 
-                            ConsulterOtherConsulter   TEXT,
                             Notes                     TEXT,
-                            PhotoReference            TEXT,
                             TagForExample             BOOLEAN
         );
         
@@ -123,8 +119,8 @@ try:
                                  ArticlePageNumbers     TEXT,
                                  ArticleNotes           TEXT,
                                  ArchivePageNumbers     TEXT,
+                                 ArchivePhotoReference  TEXT,
                                  ArchiveNotes           TEXT
-                                 ArchivePhotoReference  TEXT
         );
 
            
@@ -243,3 +239,6 @@ finally:
         con.close()
     
   
+#
+#                            ConsulterCapycocha        BOOLEAN, 
+#                            ConsulterOtherConsulter   TEXT,

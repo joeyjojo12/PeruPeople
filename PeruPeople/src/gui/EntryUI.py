@@ -12,12 +12,12 @@ class EntryNotebook(wx.Notebook):
         if(len(currentEntry) > 0):
             self.EntryID = currentEntry[PeruConstants.ENTRY_FIELDS.index('EntryID')]
             self.AddPage(PersonUI.PersonPanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('PersonID')]), "Person")
-            self.AddPage(SourceUI.SourcePanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('SourceID')]), "Source")
+            self.AddPage(SourceUI.SourcePanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('SourceID')], currentEntry[PeruConstants.ENTRY_FIELDS.index('SourceEntryId')]), "Source")
             self.AddPage(MatrixUI.MatrixPanel(self, currentEntry[PeruConstants.ENTRY_FIELDS.index('MatrixID')]), "Matrix")            
         else:
             self.EntryID = ''
             self.AddPage(PersonUI.PersonPanel(self, 0), "Person")
-            self.AddPage(SourceUI.SourcePanel(self, 0), "Source")
+            self.AddPage(SourceUI.SourcePanel(self, 0, 0), "Source")
             self.AddPage(MatrixUI.MatrixPanel(self, 0), "Matrix")
 
 
@@ -88,6 +88,14 @@ class NestedEntryPanel(wx.Panel):
                     break
                 Source = result[1]
     
+                #Save SourceEntry for this entry
+                result = SourceUI.saveSourceEntry(database, self.nestedNotebook.GetPage(i).GetPage(1))
+                if result[0] != 0:
+                    print(result[1])
+                    noErrors = False
+                    break
+                SourceEntry = result[1]
+    
                 #Save Matrix for this entry
                 result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
                 if result[0] != 0:
@@ -96,7 +104,7 @@ class NestedEntryPanel(wx.Panel):
                     break
                 Matrix = result[1]
                 
-                result = EntryDB.InsertUpdateEntry(database, [self.nestedNotebook.GetPage(i).EntryID, self.PersonGroupID, Person, Source, Matrix])
+                result = EntryDB.InsertUpdateEntry(database, [self.nestedNotebook.GetPage(i).EntryID, self.PersonGroupID, Person, Source, SourceEntry, Matrix])
                 if result[0] != 0:
                     print(result[1])
                     noErrors = False

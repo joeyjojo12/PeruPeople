@@ -22,7 +22,7 @@ def MatrixInsertStatement(fields):
     if len(fields) == (len(PeruConstants.MATRIX_FIELDS) - 1):
         return ("INSERT INTO " + PeruConstants.MATRIX + 
                 "(" + ",".join(PeruConstants.MATRIX_FIELDS[1:]) + ")" +
-                " VALUES(" + "\',\'".join(fields) + ");\n")
+                " VALUES('" + "\',\'".join(fields) + "');\n")
     else:
         return "INSERT INTO " + PeruConstants.MATRIX + " (" + ",".join(PeruConstants.MATRIX_FIELDS[1:]) + ")" + " VALUES('" + "','".join(fields[1:]) + "');\n"
 
