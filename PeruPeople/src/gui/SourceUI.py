@@ -12,8 +12,7 @@ def getSourceInfo(sourcePage):
             sourcePage.BookAuthor3.GetValue(),
             sourcePage.BookAuthor4.GetValue(),
             sourcePage.BookAuthor5.GetValue(),
-            sourcePage.BookPublisher.GetValue(),
-            sourcePage.BookPubPlace.GetValue(),
+            sourcePage.BookPublisher.GetValue(),            sourcePage.BookPubPlace.GetValue(),
             str(sourcePage.BookYear.GetValue()),
             sourcePage.ArticleTitle.GetValue(),
             sourcePage.ArticleAuthor1.GetValue(),
@@ -69,7 +68,7 @@ class SourcePanel(wx.Panel):
             SourceEntryID = self.SourceEntryID = ''
             self.SourceEntryFields = []        
 
-        DocumentType = self.DocumentType = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (150, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
+        DocumentType = self.DocumentType = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (120, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
         self.Bind(wx.EVT_COMBOBOX, self.OnChangeType, self.DocumentType)
         
         # Book fields
@@ -152,8 +151,6 @@ class SourcePanel(wx.Panel):
         space = 6
         infoSizer = self.infoSizer = wx.GridBagSizer(hgap=space, vgap=space)
         
-
-        
         self.SelectSourceButton = wx.Button(self, -1, "Select Source")
         self.Bind(wx.EVT_BUTTON, self.OnButtonSelectSource, self.SelectSourceButton)
         
@@ -202,10 +199,11 @@ class SourcePanel(wx.Panel):
                         k += 4
                                                 
                     else:
-                        self.SourceLists[i][j][0].Show()
-                        self.SourceLists[i][j][1].Show()
                         self.infoSizer.Add(self.SourceLists[i][j][0],    (k+1,0))
                         self.infoSizer.Add(self.SourceLists[i][j][1],    (k+1,1))
+                    
+                    self.SourceLists[i][j][0].Show()
+                    self.SourceLists[i][j][1].Show()
                     
                     k += 1
             else:
@@ -253,6 +251,14 @@ class SourcePanel(wx.Panel):
         self.ArchivePageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePageNumbers')])
         self.ArchivePhotoReference.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePhotoReference')])
         self.ArchiveNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchiveNotes')])
+                
+    def ClearFields(self):
+        for tupple in self.bookList:
+            tupple[1].Clear()   
+        for tupple in self.articleList:
+            tupple[1].Clear()   
+        for tupple in self.archiveList:
+            tupple[1].Clear()        
         
     def OnChangeType(self, evt):
         self.ArrangeFields(self.DocumentType.GetSelection())
@@ -267,7 +273,7 @@ class SourcePanel(wx.Panel):
         self.SourceFields = []
         self.SourceEntryID = ''
         self.SourceEntryFields = []
-        self.PopulateFields()
+        self.ClearFields()
         self.ArrangeFields(documentType)
         
         
