@@ -20,11 +20,11 @@ def SourceReadSingleStatement(SourceID):
 
 def SourceListByTyepStatement(DocumentType):
     if DocumentType == PeruConstants.BOOK:
-        return("SELECT BookTitle FROM Source WHERE DocumentType='Book'")
+        return("SELECT SourceId,BookTitle FROM Source WHERE DocumentType='Book' ORDER BY BookTitle;")
     elif DocumentType == PeruConstants.ARTICLE:
-        return("SELECT ArticleTitle FROM Source WHERE DocumentType='Article'")
+        return("SELECT SourceId,ArticleTitle FROM Source WHERE DocumentType='Article' ORDER BY ArticleTitle;")
     else:
-        return("SELECT ArchiveName FROM Source WHERE DocumentType='Archive'")
+        return("SELECT SourceId,ArchiveName FROM Source WHERE DocumentType='Archive' ORDER BY ArchiveName;")
 
 
 def SourceInsertStatement(fields):
@@ -84,7 +84,7 @@ def DeleteSource(database, SourceID):
     return output
 
 
-def ListSourceByType(database, documentType):
+def ListSourceByType(documentType):
     database = PeruDB.PeruDB()
     output = database.querry(SourceListByTyepStatement(documentType));
     database.closeDB()

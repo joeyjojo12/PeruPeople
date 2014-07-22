@@ -1,5 +1,5 @@
 import wx
-import PeruConstants
+import PeruConstants, SourceListUI
 from database import SourceDB, SourceEntryDB
 
 
@@ -12,7 +12,8 @@ def getSourceInfo(sourcePage):
             sourcePage.BookAuthor3.GetValue(),
             sourcePage.BookAuthor4.GetValue(),
             sourcePage.BookAuthor5.GetValue(),
-            sourcePage.BookPublisher.GetValue(),            sourcePage.BookPubPlace.GetValue(),
+            sourcePage.BookPublisher.GetValue(),            
+            sourcePage.BookPubPlace.GetValue(),
             str(sourcePage.BookYear.GetValue()),
             sourcePage.ArticleTitle.GetValue(),
             sourcePage.ArticleAuthor1.GetValue(),
@@ -55,11 +56,13 @@ class SourcePanel(wx.Panel):
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
         
         if(SourceID > 0):
-            self.SourceID = SourceID
+            self.SourceID = self.initialSourceID = SourceID
             self.SourceFields = SourceDB.ReadSource(SourceID)[1][0]
+            self.initialType = self.SourceFields[PeruConstants.SOURCE_FIELDS.index('DocumentType')]
         else:
-            SourceID = self.SourceID = ''
+            SourceID = self.SourceID = self.initialSourceID = ''
             self.SourceFields = []
+            self.initialType = ''
         
         if(SourceEntryID > 0):
             self.SourceEntryID = SourceEntryID
@@ -213,9 +216,7 @@ class SourcePanel(wx.Panel):
                 
         self.infoSizer.Layout()
         
-            
-    def PopulateFields(self):
-        self.DocumentType.SetStringSelection(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('DocumentType')])
+    def PopulateSourceFields(self):
         self.BookTitle.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookTitle')])
         self.BookAuthor1.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookAuthor1')])
         self.BookAuthor2.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookAuthor2')])
@@ -225,8 +226,6 @@ class SourcePanel(wx.Panel):
         self.BookPublisher.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookPublisher')])
         self.BookPubPlace.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookPubPlace')])
         self.BookYear.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('BookYear')]))
-        self.BookPageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookPageNumbers')])
-        self.BookNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookNotes')])
         
         self.ArticleTitle.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleTitle')])
         self.ArticleAuthor1.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleAuthor1')])
@@ -238,8 +237,6 @@ class SourcePanel(wx.Panel):
         self.ArticleYear.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleYear')]))
         self.ArticleVolume.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleVolume')])
         self.ArticleIssue.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArticleIssue')])
-        self.ArticlePageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticlePageNumbers')])
-        self.ArticleNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticleNotes')])
         
         self.ArchiveName.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveName')])
         self.ArchiveCollection.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveCollection')])
@@ -248,32 +245,59 @@ class SourcePanel(wx.Panel):
         self.ArchiveDay.WriteText(str(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveDay')]))
         self.ArchiveStack.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveStack')])
         self.ArchiveExpedientes.WriteText(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('ArchiveExpedientes')])
+        
+    def PopulateSourceEntryFields(self):
+        self.BookPageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookPageNumbers')])
+        self.BookNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('BookNotes')])
+        
+        self.ArticlePageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticlePageNumbers')])
+        self.ArticleNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArticleNotes')])
+        
         self.ArchivePageNumbers.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePageNumbers')])
         self.ArchivePhotoReference.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchivePhotoReference')])
         self.ArchiveNotes.WriteText(self.SourceEntryFields[PeruConstants.SOURCE_ENTRY_FIELDS.index('ArchiveNotes')])
+        
+            
+    def PopulateFields(self):
+        self.DocumentType.SetStringSelection(self.SourceFields[PeruConstants.SOURCE_FIELDS.index('DocumentType')])
+        self.PopulateSourceFields()
+        self.PopulateSourceEntryFields()
+        
+        
                 
-    def ClearFields(self):
-        for tupple in self.bookList:
-            tupple[1].Clear()   
-        for tupple in self.articleList:
-            tupple[1].Clear()   
-        for tupple in self.archiveList:
-            tupple[1].Clear()        
-        
-    def OnChangeType(self, evt):
-        self.ArrangeFields(self.DocumentType.GetSelection())
-        
-    def OnButtonSelectSource(self, evt):
-        print("select")
-        
-    def OnButtonClearFields(self, evt):
-        documentType = PeruConstants.DOCUMENT_LIST.index(self.DocumentType.GetValue())
-        
+    def ClearFields(self):        
         self.SourceID = ''
         self.SourceFields = []
         self.SourceEntryID = ''
         self.SourceEntryFields = []
+        for tupple in self.bookList:
+            tupple[1].Clear()
+        for tupple in self.articleList:
+            tupple[1].Clear()
+        for tupple in self.archiveList:
+            tupple[1].Clear()
+        
+    def OnChangeType(self, evt):
+        if self.DocumentType.GetValue() == self.initialType:
+            self.SourceID = self.initialSourceID
+        else:
+            self.SourceID = ''
+            
+        print(self.SourceID)
+            
+        self.ArrangeFields(self.DocumentType.GetSelection())
+        
+    def OnButtonClearFields(self, evt):
+        documentType = self.DocumentType.GetSelection()
         self.ClearFields()
         self.ArrangeFields(documentType)
+        
+    def OnButtonSelectSource(self, evt):
+        #Start Source List Window
+        print(self.DocumentType.GetValue())
+        win = SourceListUI.SourceListCtrlFrame(self, self.DocumentType.GetSelection())
+        win.Show(True)
+        self.frame = win        
+        evt.Skip()
         
         

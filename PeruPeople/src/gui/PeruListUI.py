@@ -96,7 +96,7 @@ class PeruListCtrlFrame(wx.Frame):
             peopleDict[person[0]] = PersonGroupDB.GetPersonName(person[0])
         
         for item in peopleDict.iteritems():
-            index = self.list.InsertStringItem(0, item[1])
+            index = self.list.InsertStringItem(sys.maxint, item[1])
             self.list.SetItemData(index, item[0])
 
         self.list.SetColumnWidth(0, 100)
