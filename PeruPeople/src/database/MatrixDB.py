@@ -1,5 +1,5 @@
 import PeruDB
-import PeruConstants
+import PeruConstants, CommonFunctions
 
 def MatrixInsertFromList(matricies):
     resultString = ""
@@ -48,6 +48,7 @@ def ReadMatrix(MatrixID):
     
     
 def InsertUpdateMatrix(database, fields):
+    fields = CommonFunctions.FormatFields(fields)
     if fields[0] != '':
         return UpdateMatrix(database, fields)
     else:
@@ -60,6 +61,8 @@ def InsertMatrix(database, fields):
 
 def UpdateMatrix(database, fields):
     output = database.update(MatrixUpdateStatement(fields))
+    if output[0] == 0:
+        output = [0, fields[0]]
     return output
 
 def DeleteMatrix(database, MatrixID):

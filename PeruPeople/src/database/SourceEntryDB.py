@@ -1,5 +1,5 @@
 import PeruDB
-import PeruConstants
+import PeruConstants, CommonFunctions
 
 
 def SourceEntryInsertFromList(sources):
@@ -54,6 +54,7 @@ def ReadSourceEntry(SourceEntryID):
 
 
 def InsertUpdateSourceEntry(database, fields):
+    fields = CommonFunctions.FormatFields(fields)
     if fields[0] != '':
         return UpdateSourceEntry(database, fields)
     else:
@@ -67,6 +68,8 @@ def InsertSourceEntry(database, fields):
 
 def UpdateSourceEntry(database, fields):
     output = database.update(SourceEntryUpdateStatement(fields))
+    if output[0] == 0:
+        output = [0, fields[0]]
     return output
 
 

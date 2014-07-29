@@ -1,5 +1,5 @@
 import PeruDB, PersonDB, SourceEntryDB, MatrixDB
-import PeruConstants
+import PeruConstants, CommonFunctions
 
 def EntryInsertFromList(entries):
     resultString = ""
@@ -63,9 +63,7 @@ def ReadEntries(PersonGroupID):
     
 def InsertUpdateEntry(database, fields):
     if fields[0] != '':
-        #return UpdateEntry(database, fields)
-        #Entry currently has no reason to be update. Return empty response
-        return [0,[]]
+        return UpdateEntry(database, fields)
     else:
         return InsertEntry(database, fields)
         
@@ -76,6 +74,8 @@ def InsertEntry(database, fields):
 
 def UpdateEntry(database, fields):
     output = database.update(EntryUpdateStatement(fields))
+    if output[0] == 0:
+        output = [0, fields[0]]
     return output
 
 def DeleteEntry(database, EntryID):
@@ -98,6 +98,5 @@ def DeleteEntry(database, EntryID):
     output = database.delete(EntryDeleteStatement(EntryID))
     return output
 
-def EntryReadStatement(ID):
-    
+def EntryReadStatement(ID):    
     return "SELECT * FROM " + PeruConstants.ENTRY + " WHERE EntryId = " + ID + ";\n"

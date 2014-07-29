@@ -1,5 +1,5 @@
 import PeruDB
-import PeruConstants
+import PeruConstants, CommonFunctions
 
 
 def PersonInsertFromList(people):
@@ -51,6 +51,7 @@ def ReadPerson(PersonID):
     
     
 def InsertUpdatePerson(database, fields):
+    fields = CommonFunctions.FormatFields(fields)
     if fields[0] != '':
         return UpdatePerson(database, fields)
     else:
@@ -63,6 +64,8 @@ def InsertPerson(database, fields):
 
 def UpdatePerson(database, fields):
     output = database.update(PersonUpdateStatement(fields))
+    if output[0] == 0:
+        output = [0, fields[0]]
     return output
 
 def DeletePerson(database, PersonID):

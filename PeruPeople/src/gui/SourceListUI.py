@@ -61,11 +61,9 @@ class SourceListCtrlFrame(wx.Frame):
         
         sources = SourceDB.ListSourceByType(self.SourceType)[1]
         
-        print(sources)
-        
         sourceDict = {}
                 
-        for source in sources:            
+        for source in sources:
             sourceDict[source[0]] = source[1]
             """
             if(self.SourceType == PeruConstants.BOOK):
