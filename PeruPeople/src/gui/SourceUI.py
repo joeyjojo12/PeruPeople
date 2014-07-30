@@ -4,48 +4,61 @@ from database import SourceDB, SourceEntryDB
 
 
 def getSourceInfo(sourcePage):
-    return [str(sourcePage.SourceID),
-            str(sourcePage.DocumentType.GetValue()),
-            sourcePage.BookTitle.GetValue(),
-            sourcePage.BookAuthor1.GetValue(),
-            sourcePage.BookAuthor2.GetValue(),
-            sourcePage.BookAuthor3.GetValue(),
-            sourcePage.BookAuthor4.GetValue(),
-            sourcePage.BookAuthor5.GetValue(),
-            sourcePage.BookPublisher.GetValue(),            
-            sourcePage.BookPubPlace.GetValue(),
-            str(sourcePage.BookYear.GetValue()),
-            sourcePage.ArticleTitle.GetValue(),
-            sourcePage.ArticleAuthor1.GetValue(),
-            sourcePage.ArticleAuthor2.GetValue(),
-            sourcePage.ArticleAuthor3.GetValue(),
-            sourcePage.ArticleAuthor4.GetValue(),
-            sourcePage.ArticleAuthor5.GetValue(),
-            sourcePage.ArticlePublication.GetValue(),
-            str(sourcePage.ArticleYear.GetValue()),
-            sourcePage.ArticleVolume.GetValue(),
-            sourcePage.ArticleIssue.GetValue(),
-            sourcePage.ArchiveName.GetValue(),
-            sourcePage.ArchiveCollection.GetValue(),
-            str(sourcePage.ArchiveYear.GetValue()),
-            str(sourcePage.ArchiveMonth.GetValue()),
-            str(sourcePage.ArchiveDay.GetValue()),
-            sourcePage.ArchiveStack.GetValue(),
-            sourcePage.ArchiveExpedientes.GetValue()]
+    returnList = []
+    documentType = sourcePage.DocumentType.GetValue()
+    
+    returnList.append(str(sourcePage.SourceID))
+    returnList.append(str(sourcePage.DocumentType.GetValue()))
+    
+    for i in range(len(PeruConstants.BOOK_FIELDS)):
+        if documentType == 'Book':
+            returnList.append(sourcePage.bookList[i])
+        else:
+            returnList.append("")
+    
+    for i in range(len(PeruConstants.ARTICLE_FIELDS)):
+        if documentType == 'Article':
+            returnList.append(sourcePage.articleList[i])
+        else:
+            returnList.append("")
+    
+    for i in range(len(PeruConstants.ARCHIVE_FIELDS)):
+        if documentType == 'Archive':
+            returnList.append(sourcePage.archiveList[i])
+        else:
+            returnList.append("")
+            
+    return returnList
     
 def saveSource(database, sourcePage):
         return SourceDB.InsertUpdateSource(database, getSourceInfo(sourcePage))
     
 def getSourceEntryInfo(sourcePage):
-    return [str(sourcePage.SourceEntryID),
-            str(sourcePage.DocumentType.GetValue()),
-            sourcePage.BookPageNumbers.GetValue(),
-            sourcePage.BookNotes.GetValue(),
-            sourcePage.ArticlePageNumbers.GetValue(),
-            sourcePage.ArticleNotes.GetValue(),
-            sourcePage.ArchivePageNumbers.GetValue(),
-            sourcePage.ArchivePhotoReference.GetValue(),
-            sourcePage.ArchiveNotes.GetValue()]
+    returnList = []
+    documentType = sourcePage.DocumentType.GetValue()
+    
+    returnList.append(str(sourcePage.SourceEntryID))
+    returnList.append(str(sourcePage.DocumentType.GetValue()))
+    
+    for i in range(len(PeruConstants.BOOK_FIELDS), len(PeruConstants.BOOK_ENTRY_FIELDS)):
+        if documentType == 'Book':
+            returnList.append(sourcePage.bookList[i])
+        else:
+            returnList.append("")
+    
+    for i in range(len(PeruConstants.ARTICLE_FIELDS), len(PeruConstants.ARTICLE_ENTRY_FIELDS)):
+        if documentType == 'Article':
+            returnList.append(sourcePage.articleList[i])
+        else:
+            returnList.append("")
+    
+    for i in range(len(PeruConstants.ARCHIVE_FIELDS), len(PeruConstants.ARCHIVE_ENTRY_FIELDS)):
+        if documentType == 'Archive':
+            returnList.append(sourcePage.archiveList[i])
+        else:
+            returnList.append("")
+    
+    return returnList
     
 def saveSourceEntry(database, sourcePage):
         return SourceEntryDB.InsertUpdateSourceEntry(database, getSourceEntryInfo(sourcePage))

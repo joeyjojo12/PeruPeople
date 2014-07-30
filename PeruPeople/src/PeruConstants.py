@@ -1,3 +1,5 @@
+import itertools
+
 PERU_DB = 'peru.db'
 
 GENDER_LIST = ['M', 'F']
@@ -49,8 +51,17 @@ ENTRY_ID  = 'EntryID'
 
 ENTRY_FIELDS  = ['EntryID','PersonGroupID','PersonID','SourceID','SourceEntryId','MatrixID']
 PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','Gender','Casta','Age','AgeRange','Profession','Occupation','ReligionCatholic','ReligionNative','ReligionOther','ReligionOtherText','Notes','TagForExample']
-SOURCE_FIELDS = ['SourceId','DocumentType','BookTitle','BookAuthor1','BookAuthor2','BookAuthor3','BookAuthor4','BookAuthor5','BookPublisher','BookPubPlace','BookYear','ArticleTitle','ArticleAuthor1','ArticleAuthor2','ArticleAuthor3','ArticleAuthor4','ArticleAuthor5','ArticlePublication','ArticleYear','ArticleVolume','ArticleIssue','ArchiveName','ArchiveCollection','ArchiveYear','ArchiveMonth','ArchiveDay','ArchiveStack','ArchiveExpedientes']
-SOURCE_ENTRY_FIELDS = ['SourceEntryId','DocumentType','BookPageNumbers','BookNotes','ArticlePageNumbers','ArticleNotes','ArchivePageNumbers','ArchivePhotoReference','ArchiveNotes']
+
+BOOK_FIELDS = ['BookTitle','BookAuthor1','BookAuthor2','BookAuthor3','BookAuthor4','BookAuthor5','BookPublisher','BookPubPlace','BookYear']
+ARTICLE_FIELDS = ['ArticleTitle','ArticleAuthor1','ArticleAuthor2','ArticleAuthor3','ArticleAuthor4','ArticleAuthor5','ArticlePublication','ArticleYear','ArticleVolume','ArticleIssue']
+ARCHIVE_FIELDS = ['ArchiveName','ArchiveCollection','ArchiveYear','ArchiveMonth','ArchiveDay','ArchiveStack','ArchiveExpedientes']
+SOURCE_FIELDS = itertools.chain(['SourceId','DocumentType'], BOOK_FIELDS, ARTICLE_FIELDS, ARCHIVE_FIELDS)
+
+BOOK_ENTRY_FIELDS = ['BookPageNumbers','BookNotes']
+ARTICLE_ENTRY_FIELDS = ['ArticlePageNumbers','ArticleNotes']
+ARCHIVE_ENTRY_FIELDS = ['ArchivePageNumbers','ArchivePhotoReference','ArchiveNotes']
+SOURCE_ENTRY_FIELDS = itertools.chain(['SourceEntryId','DocumentType'], BOOK_ENTRY_FIELDS, ARTICLE_ENTRY_FIELDS, ARCHIVE_ENTRY_FIELDS)
+
 MATRIX_FIELDS = ['MatrixID',
                  'ReferencedByFirst',
                  'ReferencedByLast',
