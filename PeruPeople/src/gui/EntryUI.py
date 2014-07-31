@@ -96,6 +96,7 @@ class NestedEntryPanel(wx.Panel):
         noErrors = True
         
         database = PeruDB.PeruDB()
+        ErrorMessage = ""
 
         try:
             for i in range(self.nestedNotebook.GetPageCount()):
@@ -103,6 +104,7 @@ class NestedEntryPanel(wx.Panel):
                 result = PersonUI.savePerson(database, self.nestedNotebook.GetPage(i).GetPage(0))
                 if result[0] != 0:
                     print(result[1])
+                    ErrorMessage = result[1]
                     noErrors = False
                     break
                 Person = result[1]
@@ -111,6 +113,7 @@ class NestedEntryPanel(wx.Panel):
                 result = SourceUI.saveSource(database, self.nestedNotebook.GetPage(i).GetPage(1))
                 if result[0] != 0:
                     print(result[1])
+                    ErrorMessage = result[1]
                     noErrors = False
                     break
                 Source = result[1]
@@ -119,6 +122,7 @@ class NestedEntryPanel(wx.Panel):
                 result = SourceUI.saveSourceEntry(database, self.nestedNotebook.GetPage(i).GetPage(1))
                 if result[0] != 0:
                     print(result[1])
+                    ErrorMessage = result[1]
                     noErrors = False
                     break
                 SourceEntry = result[1]
@@ -127,6 +131,7 @@ class NestedEntryPanel(wx.Panel):
                 result = MatrixUI.saveMatrix(database, self.nestedNotebook.GetPage(i).GetPage(2))
                 if result[0] != 0:
                     print(result[1])
+                    ErrorMessage = result[1]
                     noErrors = False
                     break
                 Matrix = result[1]
@@ -134,6 +139,7 @@ class NestedEntryPanel(wx.Panel):
                 result = EntryDB.InsertUpdateEntry(database, [self.nestedNotebook.GetPage(i).EntryID, self.PersonGroupID, Person, Source, SourceEntry, Matrix])
                 if result[0] != 0:
                     print(result[1])
+                    ErrorMessage = result[1]
                     noErrors = False
                     break
                 
@@ -143,10 +149,21 @@ class NestedEntryPanel(wx.Panel):
             
         if(noErrors):
             database.commit()
+            self.DisplayMessage(PeruConstants.SUCCESSFULL_SAVING_HEADER, PeruConstants.SUCCESSFULL_SAVING_MESSAGE)
         else:
             database.rollback()
+            self.DisplayMessage(PeruConstants.ERROR_SAVING_HEADER, PeruConstants.ERROR_SAVING_MESSAGE + ErrorMessage)
 
         database.closeDB()
+        
+    def DisplayMessage(self, Header, Message):
+        
+        dlg = wx.MessageDialog(self, Message, Header,
+                               wx.OK | wx.ICON_INFORMATION
+                               #wx.YES_NO | wx.NO_DEFAULT | wx.CANCEL | wx.ICON_INFORMATION
+                               )
+        dlg.ShowModal()
+        dlg.Destroy()
             
         
         

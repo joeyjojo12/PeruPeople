@@ -55,12 +55,12 @@ PERSON_FIELDS = ['PersonID','FirstName','LastName','Location','Ayllu','Region','
 BOOK_FIELDS = ['BookTitle','BookAuthor1','BookAuthor2','BookAuthor3','BookAuthor4','BookAuthor5','BookPublisher','BookPubPlace','BookYear']
 ARTICLE_FIELDS = ['ArticleTitle','ArticleAuthor1','ArticleAuthor2','ArticleAuthor3','ArticleAuthor4','ArticleAuthor5','ArticlePublication','ArticleYear','ArticleVolume','ArticleIssue']
 ARCHIVE_FIELDS = ['ArchiveName','ArchiveCollection','ArchiveYear','ArchiveMonth','ArchiveDay','ArchiveStack','ArchiveExpedientes']
-SOURCE_FIELDS = itertools.chain(['SourceId','DocumentType'], BOOK_FIELDS, ARTICLE_FIELDS, ARCHIVE_FIELDS)
+SOURCE_FIELDS = list(['SourceId','DocumentType'] + BOOK_FIELDS + ARTICLE_FIELDS + ARCHIVE_FIELDS)
 
 BOOK_ENTRY_FIELDS = ['BookPageNumbers','BookNotes']
 ARTICLE_ENTRY_FIELDS = ['ArticlePageNumbers','ArticleNotes']
 ARCHIVE_ENTRY_FIELDS = ['ArchivePageNumbers','ArchivePhotoReference','ArchiveNotes']
-SOURCE_ENTRY_FIELDS = itertools.chain(['SourceEntryId','DocumentType'], BOOK_ENTRY_FIELDS, ARTICLE_ENTRY_FIELDS, ARCHIVE_ENTRY_FIELDS)
+SOURCE_ENTRY_FIELDS = list(['SourceEntryId','DocumentType'] + BOOK_ENTRY_FIELDS + ARTICLE_ENTRY_FIELDS + ARCHIVE_ENTRY_FIELDS)
 
 MATRIX_FIELDS = ['MatrixID',
                  'ReferencedByFirst',
@@ -143,6 +143,11 @@ MATRIX_FIELDS = ['MatrixID',
 
 
 
+ERROR_SAVING_HEADER = "ERROR SAVING!"
+ERROR_SAVING_MESSAGE = "There was an error saving. Let me know about it."
+
+SUCCESSFULL_SAVING_HEADER = "Saved"
+SUCCESSFULL_SAVING_MESSAGE = "Successfully saved." 
 
 
 

@@ -12,26 +12,30 @@ def getSourceInfo(sourcePage):
     
     for i in range(len(PeruConstants.BOOK_FIELDS)):
         if documentType == 'Book':
-            returnList.append(sourcePage.bookList[i])
+            returnList.append(sourcePage.bookList[i][1].GetValue())
         else:
             returnList.append("")
     
     for i in range(len(PeruConstants.ARTICLE_FIELDS)):
         if documentType == 'Article':
-            returnList.append(sourcePage.articleList[i])
+            returnList.append(sourcePage.articleList[i][1].GetValue())
         else:
             returnList.append("")
     
     for i in range(len(PeruConstants.ARCHIVE_FIELDS)):
         if documentType == 'Archive':
-            returnList.append(sourcePage.archiveList[i])
+            returnList.append(sourcePage.archiveList[i][1].GetValue())
         else:
             returnList.append("")
             
     return returnList
     
 def saveSource(database, sourcePage):
+    # If the source hasn't changed, don't update. Just return the ID.
+    if(sourcePage.SourceChanged):
         return SourceDB.InsertUpdateSource(database, getSourceInfo(sourcePage))
+    else:
+        return [0,sourcePage.SourceID]
     
 def getSourceEntryInfo(sourcePage):
     returnList = []
@@ -40,34 +44,34 @@ def getSourceEntryInfo(sourcePage):
     returnList.append(str(sourcePage.SourceEntryID))
     returnList.append(str(sourcePage.DocumentType.GetValue()))
     
-    for i in range(len(PeruConstants.BOOK_FIELDS), len(PeruConstants.BOOK_ENTRY_FIELDS)):
+    for i in range(len(PeruConstants.BOOK_FIELDS), len(PeruConstants.BOOK_FIELDS) + len(PeruConstants.BOOK_ENTRY_FIELDS)):
         if documentType == 'Book':
-            returnList.append(sourcePage.bookList[i])
+            returnList.append(sourcePage.bookList[i][1].GetValue())
         else:
             returnList.append("")
     
-    for i in range(len(PeruConstants.ARTICLE_FIELDS), len(PeruConstants.ARTICLE_ENTRY_FIELDS)):
+    for i in range(len(PeruConstants.ARTICLE_FIELDS), len(PeruConstants.ARTICLE_FIELDS) + len(PeruConstants.ARTICLE_ENTRY_FIELDS)):
         if documentType == 'Article':
-            returnList.append(sourcePage.articleList[i])
+            returnList.append(sourcePage.articleList[i][1].GetValue())
         else:
             returnList.append("")
     
-    for i in range(len(PeruConstants.ARCHIVE_FIELDS), len(PeruConstants.ARCHIVE_ENTRY_FIELDS)):
+    for i in range(len(PeruConstants.ARCHIVE_FIELDS), len(PeruConstants.ARCHIVE_FIELDS) + len(PeruConstants.ARCHIVE_ENTRY_FIELDS)):
         if documentType == 'Archive':
-            returnList.append(sourcePage.archiveList[i])
+            returnList.append(sourcePage.archiveList[i][1].GetValue())
         else:
             returnList.append("")
     
     return returnList
     
 def saveSourceEntry(database, sourcePage):
-        return SourceEntryDB.InsertUpdateSourceEntry(database, getSourceEntryInfo(sourcePage))
+    return SourceEntryDB.InsertUpdateSourceEntry(database, getSourceEntryInfo(sourcePage))
 
 class SourcePanel(wx.Panel):
     def __init__(self, parent, SourceID, SourceEntryID):
 
         wx.Panel.__init__(self, parent=parent, id=wx.ID_ANY)
-        
+                
         if(SourceID > 0):
             self.SourceID = self.initialSourceID = SourceID
             self.SourceFields = SourceDB.ReadSource(SourceID)[1][0]
@@ -76,6 +80,7 @@ class SourcePanel(wx.Panel):
             SourceID = self.SourceID = self.initialSourceID = ''
             self.SourceFields = []
             self.initialType = ''
+            self.SourceChanged = True
         
         if(SourceEntryID > 0):
             self.SourceEntryID = SourceEntryID
@@ -89,76 +94,134 @@ class SourcePanel(wx.Panel):
         
         # Book fields
         bookList = self.bookList = []
+        
         BookTitle = self.BookTitle = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Title :"), BookTitle ))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookTitle)
+        
         BookAuthor1 = self.BookAuthor1 = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Author 1 :"), BookAuthor1))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookAuthor1)
+        
         BookAuthor2 = self.BookAuthor2 = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Author 2 :"), BookAuthor2))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookAuthor2)
+        
         BookAuthor3 = self.BookAuthor3 = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Author 3 :"), BookAuthor3))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookAuthor3)
+        
         BookAuthor4 = self.BookAuthor4 = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Author 4 :"), BookAuthor4))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookAuthor4)
+        
         BookAuthor5 = self.BookAuthor5 = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Author 5 :"), BookAuthor5))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookAuthor5)
+        
         BookPublisher = self.BookPublisher = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Publisher :"), BookPublisher))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookPublisher)
+        
         BookPubPlace = self.BookPubPlace = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Publisher Location :"), BookPubPlace))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookPubPlace)
+        
         BookYear = self.BookYear = wx.TextCtrl(self, size=(100,-1))
         bookList.append((wx.StaticText(self, label="Year :"), BookYear))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, BookYear)
+        
         BookPageNumbers = self.BookPageNumbers = wx.TextCtrl(self, size=(400,-1))
         bookList.append((wx.StaticText(self, label="Page Numbers :"), BookPageNumbers))        
+        
         BookNotes = self.BookNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         bookList.append((wx.StaticText(self, label="Notes :"), BookNotes))
         
         # Article fields
         articleList = self.articleList = []
+        
         ArticleTitle = self.ArticleTitle = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Title :"), ArticleTitle ))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleTitle)
+        
         ArticleAuthor1 = self.ArticleAuthor1 = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Author 1 :"), ArticleAuthor1))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleAuthor1)
+        
         ArticleAuthor2 = self.ArticleAuthor2 = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Author 2 :"), ArticleAuthor2))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleAuthor2)
+        
         ArticleAuthor3 = self.ArticleAuthor3 = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Author 3 :"), ArticleAuthor3))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleAuthor3)
+        
         ArticleAuthor4 = self.ArticleAuthor4 = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Author 4 :"), ArticleAuthor4))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleAuthor4)
+        
         ArticleAuthor5 = self.ArticleAuthor5 = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Author 5 :"), ArticleAuthor5))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleAuthor5)
+        
         ArticlePublication = self.ArticlePublication = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Publication :"), ArticlePublication))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticlePublication)
+        
         ArticleYear = self.ArticleYear = wx.TextCtrl(self, size=(100,-1))
         articleList.append((wx.StaticText(self, label="Year :"), ArticleYear))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleYear)
+        
         ArticleVolume = self.ArticleVolume = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Volume :"), ArticleVolume))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleVolume)
+        
         ArticleIssue = self.ArticleIssue = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Issue :"), ArticleIssue))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArticleIssue)
+        
         ArticlePageNumbers = self.ArticlePageNumbers = wx.TextCtrl(self, size=(400,-1))
         articleList.append((wx.StaticText(self, label="Page Numbers :"), ArticlePageNumbers))
+        
         ArticleNotes = self.ArticleNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         articleList.append((wx.StaticText(self, label="Notes :"), ArticleNotes))
         
         # Archive fields
         archiveList = self.archiveList = []
+        
         ArchiveName = self.ArchiveName = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Archive Name :"), ArchiveName))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArchiveName)
+        
         ArchiveCollection = self.ArchiveCollection = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Collection :"), ArchiveCollection ))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArchiveCollection)
+        
         ArchiveYear = self.ArchiveYear = wx.TextCtrl(self, size=(100,-1))
         archiveList.append((wx.StaticText(self, label="Year :"), ArchiveYear))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArchiveYear)
+        
         ArchiveMonth = self.ArchiveMonth = wx.TextCtrl(self, size=(100,-1))
         archiveList.append((wx.StaticText(self, label="Month :"), ArchiveMonth))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArchiveMonth)
+        
         ArchiveDay = self.ArchiveDay = wx.TextCtrl(self, size=(100,-1))
-        archiveList.append((wx.StaticText(self, label="Day :"), ArchiveDay))        
+        archiveList.append((wx.StaticText(self, label="Day :"), ArchiveDay))  
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArchiveDay)
+              
         ArchiveStack = self.ArchiveStack = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Stack :"), ArchiveStack ))
+        self.Bind(wx.EVT_TEXT, self.SourceHasChanged, ArchiveStack)
+        
         ArchiveExpedientes = self.ArchiveExpedientes = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Expedientes :"), ArchiveExpedientes ))
+        
         ArchivePageNumbers = self.ArchivePageNumbers = wx.TextCtrl(self, size=(400,-1))
         archiveList.append((wx.StaticText(self, label="Page Numbers :"), ArchivePageNumbers))
+        
         ArchivePhotoReference = self.ArchivePhotoReference = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         archiveList.append((wx.StaticText(self, label="Photo Reference(s) :"), ArchivePhotoReference))
+        
         ArchiveNotes = self.ArchiveNotes = wx.TextCtrl(self, -1, style=wx.TE_MULTILINE)
         archiveList.append((wx.StaticText(self, label="Notes :"), ArchiveNotes))
         
@@ -183,6 +246,7 @@ class SourcePanel(wx.Panel):
         if(SourceID != ''):
             self.PopulateFields()
             self.ArrangeFields(PeruConstants.DOCUMENT_LIST.index(DocumentType.GetValue()))
+            self.SourceChanged = False
 
         self.SetSizer(sizer)
         
@@ -296,21 +360,23 @@ class SourcePanel(wx.Panel):
         else:
             self.SourceID = ''
             
-        print(self.SourceID)
-            
         self.ArrangeFields(self.DocumentType.GetSelection())
+        self.SourceChanged = True
         
     def OnButtonClearFields(self, evt):
         documentType = self.DocumentType.GetSelection()
         self.ClearFields()
         self.ArrangeFields(documentType)
+        self.SourceChanged = True
         
     def OnButtonSelectSource(self, evt):
         #Start Source List Window
-        print(self.DocumentType.GetValue())
         win = SourceListUI.SourceListCtrlFrame(self, self.DocumentType.GetSelection())
         win.Show(True)
         self.frame = win        
         evt.Skip()
+        
+    def SourceHasChanged(self, evt):
+        self.SourceChanged = True
         
         
