@@ -63,7 +63,7 @@ class NestedEntryPanel(wx.Panel):
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(topSizer, 0, wx.ALIGN_RIGHT)
         sizer.Add(nestedNotebook, 1, wx.ALL|wx.EXPAND, 5)
-        sizer.Add(self.buttonSizer, 2, wx.ALIGN_RIGHT)
+        sizer.Add(self.buttonSizer, 0, wx.ALIGN_RIGHT)
 
         self.SetSizer(sizer)
         
@@ -74,21 +74,38 @@ class NestedEntryPanel(wx.Panel):
         
     # When the user selects something, we go here.
     def OnButtonDelete(self, evt):
-        noErrors = True        
-        database = PeruDB.PeruDB()
-                
-        try:
-            EntryDB.DeleteEntry(database, self.nestedNotebook.GetCurrentPage().EntryID)                
-        except:
-            print("Database Error!")
-            print(sys.exc_info()[0])
-            noErrors = False
+        
+        dlg = wx.MessageDialog(self, 'Are you sure you want to delete this entry?',
+                               'Delete Entry',
+                               wx.YES_NO | wx.NO_DEFAULT
+                               )
+        response = dlg.ShowModal()
+        dlg.Destroy()
+        
+        if(response == wx.ID_YES):
+            if(self.nestedNotebook.GetCurrentPage().EntryID != ""):
+                noErrors = True        
+                database = PeruDB.PeruDB()
             
-        if(noErrors):
-            database.commit()
-            self.nestedNotebook.DeletePage(self.nestedNotebook.GetSelection())
-        else:
-            database.rollback()
+                try:
+                    EntryDB.DeleteEntry(database, self.nestedNotebook.GetCurrentPage().EntryID)                
+                except:
+                    print("Database Error!")
+                    print(sys.exc_info()[0])
+                    noErrors = False
+                    
+                if(noErrors):
+                    database.commit()
+                    self.nestedNotebook.DeletePage(self.nestedNotebook.GetSelection())
+                else:
+                    database.rollback()
+                
+                database.closeDB()
+            else:
+                self.nestedNotebook.DeletePage(self.nestedNotebook.GetSelection())
+                
+        
+        evt.Skip()
         
     
     def SaveEntries(self):

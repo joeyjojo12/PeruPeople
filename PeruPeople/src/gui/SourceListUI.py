@@ -97,10 +97,12 @@ class SourceListCtrlFrame(wx.Frame):
         self.parent.ClearFields()
         self.parent.SourceFields = SourceDB.ReadSource(SourceID)[1][0]
         self.parent.PopulateSourceFields()
-        self.parent.ArrangeFields(self.SourceType)
+        print(self.parent.DocumentType.GetSelection())
+        self.parent.ArrangeFields(self.parent.DocumentType.GetSelection())
         self.parent.SourceID = SourceID
         self.parent.initialSourceID = SourceID
         self.parent.SourceEntryID = ''
+        self.parent.SourceChanged = False
         
         self.Close()
         

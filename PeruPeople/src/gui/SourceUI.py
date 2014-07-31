@@ -91,6 +91,7 @@ class SourcePanel(wx.Panel):
 
         DocumentType = self.DocumentType = wx.ComboBox(self, 500, PeruConstants.DEFAULT_DOCUMENT, (90, 50), (120, -1), PeruConstants.DOCUMENT_LIST, wx.CB_DROPDOWN | wx.TE_PROCESS_ENTER )
         self.Bind(wx.EVT_COMBOBOX, self.OnChangeType, self.DocumentType)
+        self.DocumentType.SetStringSelection(PeruConstants.DEFAULT_DOCUMENT)
         
         # Book fields
         bookList = self.bookList = []

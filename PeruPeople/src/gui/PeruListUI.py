@@ -220,22 +220,34 @@ class PeruListCtrlFrame(wx.Frame):
         event.Skip()
 
     def OnPopupDelete(self, event):
-        noErrors = True        
-        database = PeruDB.PeruDB()
+        
+        dlg = wx.MessageDialog(self, 'Are you sure you want to delete this person?',
+                               'Delete Person',
+                               wx.YES_NO | wx.NO_DEFAULT
+                               )
+        response = dlg.ShowModal()
+        dlg.Destroy()
+        
+        if(response == wx.ID_YES):
+            noErrors = True        
+            database = PeruDB.PeruDB()
+                    
+            try:
+                PersonGroupDB.DeletePersonGroup(database, self.list.GetItemData(self.currentItem))                
+            except:
+                print("Database Error!")
+                print(sys.exc_info()[0])
+                noErrors = False
                 
-        try:
-            PersonGroupDB.DeletePersonGroup(database, self.list.GetItemData(self.currentItem))                
-        except:
-            print("Database Error!")
-            print(sys.exc_info()[0])
-            noErrors = False
+            if(noErrors):
+                database.commit()
+            else:
+                database.rollback()
+                
+            database.closeDB()
+                
+            self.PopulateList()
             
-        if(noErrors):
-            database.commit()
-        else:
-            database.rollback()
-            
-        self.PopulateList()
         
         event.Skip()
 
